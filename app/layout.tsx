@@ -7,18 +7,18 @@ import { Analytics } from "./components/analytics";
 export const metadata: Metadata = {
 	title: {
 		default: "Parsa",
-		template: "%s | parsa.com",
+		template: "%s | Parsa",
 	},
-	description: "Software engineer at upstash.com and founder of planetfall.io",
+	description: "Frontend developer",
 	openGraph: {
-		title: "parsa.com",
+		title: "Parsa",
 		description:
-			"Software engineer at upstash.com and founder of planetfall.io",
-		url: "https://parsa.com",
-		siteName: "parsa.com",
+			"Frontend developer",
+		url: "https://Parsa",
+		siteName: "Parsa",
 		images: [
 			{
-				url: "https://parsa.com/og.png",
+				url: "https://Parsa/og.png",
 				width: 1920,
 				height: 1080,
 			},
