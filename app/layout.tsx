@@ -12,9 +12,8 @@ export const metadata: Metadata = {
 	description: "Frontend developer",
 	openGraph: {
 		title: "Parsa",
-		description:
-			"Frontend developer",
-		url: "https://Parsa",
+		description: "Frontend developer",
+		url: "https://parsa-five.vercel.app",
 		siteName: "Parsa",
 		images: [
 			{
