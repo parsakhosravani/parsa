@@ -6,14 +6,14 @@ import { Analytics } from "./components/analytics";
 
 export const metadata: Metadata = {
 	title: {
-		default: "Parsa",
-		template: "%s | Parsa",
+		default: "Parsa Khosravani",
+		template: "%s | Parsa Khosravani",
 	},
-	description: "Frontend developer",
+	description: "Frontend developer | Parsa Khosravani",
 	openGraph: {
-		title: "Parsa",
-		description: "Frontend developer",
-		url: "https://parsa-five.vercel.app",
+		title: "Parsa Khosravani | Frontend developer",
+		description: "Frontend developer | Parsa Khosravani",
+		url: "https://parsakhosravani.vercel.app",
 		siteName: "Parsa",
 		images: [
 			{
