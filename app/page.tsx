@@ -5,6 +5,7 @@ import { Github, Twitter, ArrowDown, Code, Database, Globe } from "lucide-react"
 import { SnakeGame } from "./components/snake-game";
 import { StarlightCursor } from "./components/starlight-cursor";
 import { Terminal } from "./components/terminal";
+import { TetrisGame } from "./components/tetris-game";
 
 const navigation = [
 	{ name: "Projects", href: "/projects" },
@@ -74,9 +75,10 @@ export default function Home() {
 				</div>
 			</nav>
 
-			{/* Games - Top Right */}
+			{/* Games & Tools - Top Right */}
 			<div className="fixed top-20 right-6 z-40 space-y-2">
 				<SnakeGame />
+				<TetrisGame />
 				<Terminal />
 			</div>
 
