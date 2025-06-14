@@ -4,6 +4,7 @@ import Particles from "./components/particles";
 import { Github, Twitter, ArrowDown, Code, Database, Globe } from "lucide-react";
 import { SnakeGame } from "./components/snake-game";
 import { StarlightCursor } from "./components/starlight-cursor";
+import { Terminal } from "./components/terminal";
 
 const navigation = [
 	{ name: "Projects", href: "/projects" },
@@ -51,7 +52,7 @@ export default function Home() {
 			<StarlightCursor />
 
 			{/* Enhanced Navigation */}
-			<nav className="fixed top-0 left-0 right-0 z-50 my-6 animate-fade-in">
+			<nav className="fixed z-10 top-0 left-0 right-0 my-6 animate-fade-in">
 				<div className="flex items-center justify-between max-w-6xl mx-auto px-6">
 					<Link
 						href="/"
@@ -73,9 +74,10 @@ export default function Home() {
 				</div>
 			</nav>
 
-			{/* Snake Game - Top Right */}
-			<div className="fixed top-20 right-6 z-40">
+			{/* Games - Top Right */}
+			<div className="fixed top-20 right-6 z-40 space-y-2">
 				<SnakeGame />
+				<Terminal />
 			</div>
 
 			{/* Animated Lines */}

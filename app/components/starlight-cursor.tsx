@@ -103,9 +103,11 @@ export function StarlightCursor() {
         setStars(prev => [...prev, ...newStars]);
     }, [mousePosition, isMoving]);
 
-    // Animate stars
+    // Animate stars using requestAnimationFrame
     useEffect(() => {
-        const interval = setInterval(() => {
+        let animationFrameId: number;
+
+        const animate = () => {
             setStars(prev =>
                 prev
                     .map(star => ({
@@ -116,9 +118,12 @@ export function StarlightCursor() {
                     }))
                     .filter(star => star.life > 0)
             );
-        }, 16);
+            animationFrameId = requestAnimationFrame(animate);
+        };
 
-        return () => clearInterval(interval);
+        animationFrameId = requestAnimationFrame(animate);
+
+        return () => cancelAnimationFrame(animationFrameId);
     }, []);
 
     // Animate explosions
