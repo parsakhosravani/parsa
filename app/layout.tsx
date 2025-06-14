@@ -62,10 +62,10 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className={[inter.variable, calSans.variable].join(" ")}>
-			<Head>
+			<head>
 				<Analytics />
 				<meta name="darkreader-lock" />
-			</Head>
+			</head>
 			<body
 				className={`bg-black ${process.env.NODE_ENV === "development" ? "debug-screens" : undefined
 					}`}

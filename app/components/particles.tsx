@@ -63,7 +63,17 @@ export default function Particles({
 	}, [mousePosition.x, mousePosition.y]);
 
 	useEffect(() => {
+		// Cancel any existing animation frame before starting a new one
+		if (animationId.current) {
+			cancelAnimationFrame(animationId.current);
+		}
 		initCanvas();
+		animate();
+		return () => {
+			if (animationId.current) {
+				cancelAnimationFrame(animationId.current);
+			}
+		};
 	}, [refresh, effectiveQuantity]);
 
 	const initCanvas = useCallback(() => {

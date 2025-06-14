@@ -114,7 +114,7 @@ const ProjectCard: React.FC<{ project: Project; featured?: boolean }> = ({
                         ))}
                     </div>
                     <span className="text-xs text-zinc-500">
-                        Updated {new Date(project.updatedAt).toLocaleDateString()}
+                        Updated {Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(new Date(project.updatedAt))}
                     </span>
                 </div>
             </div>
@@ -185,7 +185,7 @@ export default function ProjectsPage() {
                     </div>
                     <div className="w-full h-px bg-zinc-800" />
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        {[...Array(6)].map((_, i) => (
+                        {[...Array(24)].map((_, i) => (
                             <Card key={i}>
                                 <div className="p-4 md:p-8 animate-pulse">
                                     <div className="h-4 bg-zinc-800 rounded mb-4"></div>
@@ -231,7 +231,7 @@ export default function ProjectsPage() {
                         Projects
                     </h1>
                     <p className="mt-4 text-zinc-400">
-                        A collection of my open source projects and experiments. 
+                        A collection of my open source projects and experiments.
                         All sourced directly from my GitHub repositories.
                     </p>
                 </div>

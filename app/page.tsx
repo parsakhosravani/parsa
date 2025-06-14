@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import Particles from "./components/particles";
 import { Github, Twitter, ArrowDown, Code, Database, Globe } from "lucide-react";
+import { SnakeGame } from "./components/snake-game";
 
 const navigation = [
 	{ name: "Projects", href: "/projects" },
@@ -67,6 +68,11 @@ export default function Home() {
 					</ul>
 				</div>
 			</nav>
+
+			{/* Snake Game - Top Right */}
+			<div className="fixed top-20 right-6 z-40">
+				<SnakeGame />
+			</div>
 
 			{/* Animated Lines */}
 			<div className="hidden w-screen h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />

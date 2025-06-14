@@ -10,7 +10,6 @@ export function Analytics() {
 			return;
 		}
 
-		// Load analytics script dynamically with error handling
 		const script = document.createElement("script");
 		script.src = "https://beamanalytics.b-cdn.net/beam.min.js";
 		script.setAttribute("data-token", token);
