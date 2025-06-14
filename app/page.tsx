@@ -3,6 +3,7 @@ import React from "react";
 import Particles from "./components/particles";
 import { Github, Twitter, ArrowDown, Code, Database, Globe } from "lucide-react";
 import { SnakeGame } from "./components/snake-game";
+import { StarlightCursor } from "./components/starlight-cursor";
 
 const navigation = [
 	{ name: "Projects", href: "/projects" },
@@ -45,7 +46,10 @@ const highlights = [
 
 export default function Home() {
 	return (
-		<div className="flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black relative">
+		<div className="flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black relative cursor-none">
+			{/* Starlight Cursor */}
+			<StarlightCursor />
+
 			{/* Enhanced Navigation */}
 			<nav className="fixed top-0 left-0 right-0 z-50 my-6 animate-fade-in">
 				<div className="flex items-center justify-between max-w-6xl mx-auto px-6">
