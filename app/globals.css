@@ -6,6 +6,16 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --zinc-50: #fafafa;
+  --zinc-100: #f4f4f5;
+  --zinc-200: #e4e4e7;
+  --zinc-300: #d4d4d8;
+  --zinc-400: #a1a1aa;
+  --zinc-500: #71717a;
+  --zinc-600: #52525b;
+  --zinc-700: #3f3f46;
+  --zinc-800: #27272a;
+  --zinc-900: #18181b;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,12 +26,144 @@
   }
 }
 
+/* Dark Reader protection */
+html[data-darkreader-mode],
+html[data-darkreader-scheme] {
+  filter: none !important;
+}
+
+html[data-darkreader-mode] *,
+html[data-darkreader-scheme] * {
+  background-color: inherit !important;
+  color: inherit !important;
+  border-color: inherit !important;
+}
+
+/* Base styling with forced colors */
 body {
-  color: rgb(var(--foreground-rgb));
+  color: rgb(var(--foreground-rgb)) !important;
   background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)) !important;
+  font-feature-settings: "rlig" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure consistent styling across components */
+.portfolio-text-primary {
+  color: rgb(244, 244, 245) !important;
+}
+
+.portfolio-text-secondary {
+  color: rgb(161, 161, 170) !important;
+}
+
+.portfolio-bg-card {
+  background-color: rgba(39, 39, 42, 0.1) !important;
+  border-color: rgb(82, 82, 91) !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(39, 39, 42, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(161, 161, 170, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(161, 161, 170, 0.5);
+}
+
+/* Selection styling */
+::selection {
+  background-color: rgba(161, 161, 170, 0.3);
+  color: rgb(244, 244, 245);
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid rgb(161, 161, 170);
+  outline-offset: 2px;
+}
+
+/* Animation utilities */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+/* Animation delays */
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+.animation-delay-800 {
+  animation-delay: 800ms;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1000ms;
+}
+
+.animation-delay-1200 {
+  animation-delay: 1200ms;
+}
+
+/* Text edge outline effect */
+.text-edge-outline {
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3),
+    0 0 2px rgba(255, 255, 255, 0.2), 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced glow animation */
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Custom utility classes */
+.gradient-text {
+  background: linear-gradient(135deg, rgb(244, 244, 245), rgb(161, 161, 170));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

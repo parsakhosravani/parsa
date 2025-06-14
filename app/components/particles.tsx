@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { useMousePosition } from "@/util/mouse";
 
 interface ParticlesProps {
@@ -9,6 +9,7 @@ interface ParticlesProps {
 	staticity?: number;
 	ease?: number;
 	refresh?: boolean;
+	color?: string;
 }
 
 export default function Particles({
@@ -17,15 +18,29 @@ export default function Particles({
 	staticity = 50,
 	ease = 50,
 	refresh = false,
+	color = "255, 255, 255",
 }: ParticlesProps) {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const canvasContainerRef = useRef<HTMLDivElement>(null);
 	const context = useRef<CanvasRenderingContext2D | null>(null);
-	const circles = useRef<any[]>([]);
+	const circles = useRef<Circle[]>([]);
 	const mousePosition = useMousePosition();
 	const mouse = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 	const canvasSize = useRef<{ w: number; h: number }>({ w: 0, h: 0 });
+	const animationId = useRef<number>(0);
 	const dpr = typeof window !== "undefined" ? window.devicePixelRatio : 1;
+
+	// Performance optimization: reduce quantity on mobile
+	const [isMobile, setIsMobile] = useState(false);
+
+	useEffect(() => {
+		const checkMobile = () => setIsMobile(window.innerWidth < 768);
+		checkMobile();
+		window.addEventListener("resize", checkMobile);
+		return () => window.removeEventListener("resize", checkMobile);
+	}, []);
+
+	const effectiveQuantity = isMobile ? Math.floor(quantity * 0.5) : quantity;
 
 	useEffect(() => {
 		if (canvasRef.current) {
@@ -37,6 +52,9 @@ export default function Particles({
 
 		return () => {
 			window.removeEventListener("resize", initCanvas);
+			if (animationId.current) {
+				cancelAnimationFrame(animationId.current);
+			}
 		};
 	}, []);
 
@@ -46,14 +64,14 @@ export default function Particles({
 
 	useEffect(() => {
 		initCanvas();
-	}, [refresh]);
+	}, [refresh, effectiveQuantity]);
 
-	const initCanvas = () => {
+	const initCanvas = useCallback(() => {
 		resizeCanvas();
 		drawParticles();
-	};
+	}, [effectiveQuantity]);
 
-	const onMouseMove = () => {
+	const onMouseMove = useCallback(() => {
 		if (canvasRef.current) {
 			const rect = canvasRef.current.getBoundingClientRect();
 			const { w, h } = canvasSize.current;
@@ -65,7 +83,7 @@ export default function Particles({
 				mouse.current.y = y;
 			}
 		}
-	};
+	}, [mousePosition.x, mousePosition.y]);
 
 	type Circle = {
 		x: number;
@@ -124,7 +142,7 @@ export default function Particles({
 			context.current.translate(translateX, translateY);
 			context.current.beginPath();
 			context.current.arc(x, y, size, 0, 2 * Math.PI);
-			context.current.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+			context.current.fillStyle = `rgba(${color}, ${alpha})`;
 			context.current.fill();
 			context.current.setTransform(dpr, 0, 0, dpr, 0, 0);
 
@@ -147,8 +165,7 @@ export default function Particles({
 
 	const drawParticles = () => {
 		clearContext();
-		const particleCount = quantity;
-		for (let i = 0; i < particleCount; i++) {
+		for (let i = 0; i < effectiveQuantity; i++) {
 			const circle = circleParams();
 			drawCircle(circle);
 		}
@@ -196,19 +213,16 @@ export default function Particles({
 			circle.translateY +=
 				(mouse.current.y / (staticity / circle.magnetism) - circle.translateY) /
 				ease;
-			// circle gets out of the canvas
+
 			if (
 				circle.x < -circle.size ||
 				circle.x > canvasSize.current.w + circle.size ||
 				circle.y < -circle.size ||
 				circle.y > canvasSize.current.h + circle.size
 			) {
-				// remove the circle from the array
 				circles.current.splice(i, 1);
-				// create a new circle
 				const newCircle = circleParams();
 				drawCircle(newCircle);
-				// update the circle position
 			} else {
 				drawCircle(
 					{
@@ -223,12 +237,23 @@ export default function Particles({
 				);
 			}
 		});
-		window.requestAnimationFrame(animate);
+		animationId.current = window.requestAnimationFrame(animate);
 	};
 
 	return (
-		<div className={className} ref={canvasContainerRef} aria-hidden="true">
-			<canvas ref={canvasRef} />
+		<div
+			className={className}
+			ref={canvasContainerRef}
+			aria-hidden="true"
+			style={{ filter: "none" }} // Prevent Dark Reader interference
+		>
+			<canvas
+				ref={canvasRef}
+				style={{
+					filter: "none",
+					backgroundColor: "transparent",
+				}}
+			/>
 		</div>
 	);
 }
