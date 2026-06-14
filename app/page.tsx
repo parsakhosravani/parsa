@@ -13,6 +13,7 @@ type TimelineItem = {
   id: string;
   period: string;
   company: string;
+  linkedin: string;
   title: string;
   summary: string;
   href: string;
@@ -28,6 +29,7 @@ const timeline: TimelineItem[] = [
     id: "mofid",
     period: frameworkStories.angular.period,
     company: frameworkStories.angular.company,
+    linkedin: "https://www.linkedin.com/company/mofidsecurities",
     title: "Scale, structure, and market-grade reliability",
     summary:
       "At Mofid, the work expanded to larger systems and teams: legacy modernization, real-time data, platform quality, and better long-term balance.",
@@ -56,6 +58,7 @@ const timeline: TimelineItem[] = [
     id: "amr-tech",
     period: frameworkStories.react.period,
     company: frameworkStories.react.company,
+    linkedin: "https://www.linkedin.com/company/amr-tech-co",
     title: "Startup velocity, OTA deadlines, and overnight pushes",
     summary:
       "AMR was fast and ambitious: React performance work, AI-assisted operations, and shipping under tight deadlines without losing quality.",
@@ -84,6 +87,7 @@ const timeline: TimelineItem[] = [
     id: "khanoumi",
     period: frameworkStories.vue.period,
     company: frameworkStories.vue.company,
+    linkedin: "https://www.linkedin.com/company/khanoumi",
     title: "Ecommerce pressure, campaign days, and Vue/Nuxt migration",
     summary:
       "From coronavirus-era demand shifts to Black Friday spikes, this chapter was about keeping trust and uptime when traffic became intense.",
@@ -228,9 +232,14 @@ export default function Home() {
                     <p className="text-xs uppercase tracking-widest text-zinc-500">
                       {item.period}
                     </p>
-                    <h3 className="mt-1 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+                    <a
+                      href={item.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 inline-block text-lg font-semibold text-zinc-900 transition hover:underline dark:text-zinc-100"
+                    >
                       {item.company}
-                    </h3>
+                    </a>
                   </div>
                   <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-zinc-200 bg-white p-1 shadow-sm dark:border-zinc-700 dark:bg-zinc-100">
                     <Image

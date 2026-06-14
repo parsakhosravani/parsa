@@ -7,6 +7,7 @@ import VueStory from "./vue-story";
 
 const accentText = frameworks.find((f) => f.slug === "vue")!.accentText;
 const story = frameworkStories.vue;
+const companyLinkedIn = "https://www.linkedin.com/company/khanoumi";
 
 const khanoumiMoments = [
   {
@@ -61,6 +62,14 @@ export default function VueStoryPage() {
           <p className="mt-1 text-sm text-zinc-800 dark:text-zinc-200">
             {story.company}
           </p>
+          <a
+            href={companyLinkedIn}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-1 inline-block text-xs text-zinc-500 transition hover:underline dark:text-zinc-400"
+          >
+            LinkedIn
+          </a>
         </div>
         <div className="rounded-2xl border border-zinc-200 bg-white/70 px-4 py-3 dark:border-zinc-800 dark:bg-zinc-900/40">
           <p className="text-xs uppercase tracking-widest text-zinc-500">
