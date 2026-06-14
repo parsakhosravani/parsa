@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { StoryNav } from "../components/story-nav";
 import { frameworks } from "../lib/story";
 
-const accent = frameworks.find((f) => f.slug === "vue")!.accent;
+const accentText = frameworks.find((f) => f.slug === "vue")!.accentText;
 
 const VueStory = dynamic(() => import("./vue-story"), {
   ssr: false,
@@ -18,11 +18,11 @@ export default function VueStoryPage() {
       <header className="mb-8">
         <p
           className="text-sm font-semibold uppercase tracking-[0.3em]"
-          style={{ color: accent }}
+          style={{ color: accentText }}
         >
           Vue · Live mounted app
         </p>
-        <h1 className="mt-2 text-3xl font-bold text-zinc-100 sm:text-4xl">
+        <h1 className="mt-2 text-3xl font-bold text-zinc-900 dark:text-zinc-100 sm:text-4xl">
           My Journey
         </h1>
       </header>

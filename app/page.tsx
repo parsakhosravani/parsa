@@ -1,17 +1,21 @@
 import Link from "next/link";
 import { intro, chapters, frameworks } from "./lib/story";
+import { ThemeToggle } from "./components/theme-toggle";
 
 export default function Home() {
   return (
     <main className="mx-auto max-w-4xl px-6 py-20">
-      <section className="rounded-3xl border border-zinc-800/70 bg-zinc-900/40 p-8 backdrop-blur-sm sm:p-12">
-        <p className="text-sm uppercase tracking-[0.3em] text-zinc-400">
+      <div className="mb-6 flex justify-end">
+        <ThemeToggle />
+      </div>
+      <section className="rounded-3xl border border-zinc-200 bg-white/70 p-8 backdrop-blur-sm dark:border-zinc-800/70 dark:bg-zinc-900/40 sm:p-12">
+        <p className="text-sm uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
           {intro.role}
         </p>
-        <h1 className="mt-4 bg-gradient-to-r from-zinc-100 to-zinc-400 bg-clip-text text-4xl font-bold text-transparent sm:text-6xl">
+        <h1 className="mt-4 bg-gradient-to-r from-zinc-900 to-zinc-500 bg-clip-text text-4xl font-bold text-transparent dark:from-zinc-100 dark:to-zinc-400 sm:text-6xl">
           {intro.name}
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-700 dark:text-zinc-300">
           {intro.tagline}
         </p>
       </section>
@@ -25,7 +29,7 @@ export default function Home() {
             <Link
               key={fw.slug}
               href={`/${fw.slug}`}
-              className="group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 transition hover:border-zinc-600"
+              className="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-white/70 p-6 transition hover:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-zinc-600"
             >
               <span
                 className="absolute inset-x-0 top-0 h-1"
@@ -33,12 +37,14 @@ export default function Home() {
               />
               <h3
                 className="text-xl font-semibold"
-                style={{ color: fw.accent }}
+                style={{ color: fw.accentText }}
               >
                 {fw.name}
               </h3>
-              <p className="mt-2 text-sm text-zinc-400">{fw.blurb}</p>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm text-zinc-300 transition group-hover:gap-2">
+              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                {fw.blurb}
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm text-zinc-700 transition group-hover:gap-2 dark:text-zinc-300">
                 Enter the story
                 <span aria-hidden>→</span>
               </span>
@@ -55,16 +61,18 @@ export default function Home() {
           {chapters.map((chapter, index) => (
             <li
               key={chapter.id}
-              className="flex items-baseline gap-4 rounded-xl border border-zinc-800/60 bg-zinc-900/20 px-5 py-4"
+              className="flex items-baseline gap-4 rounded-xl border border-zinc-200 bg-white/50 px-5 py-4 dark:border-zinc-800/60 dark:bg-zinc-900/20"
             >
-              <span className="font-mono text-sm text-zinc-600">
+              <span className="font-mono text-sm text-zinc-400 dark:text-zinc-600">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div>
                 <p className="text-xs uppercase tracking-widest text-zinc-500">
                   {chapter.era}
                 </p>
-                <p className="text-zinc-200">{chapter.title}</p>
+                <p className="text-zinc-800 dark:text-zinc-200">
+                  {chapter.title}
+                </p>
               </div>
             </li>
           ))}
@@ -76,14 +84,14 @@ export default function Home() {
           href="https://github.com/parsakhosravani"
           target="_blank"
           rel="noopener noreferrer"
-          className="transition hover:text-zinc-200"
+          className="transition hover:text-zinc-900 dark:hover:text-zinc-200"
         >
           GitHub
         </a>
         <span aria-hidden>·</span>
         <a
           href="mailto:parsakhosravani@gmail.com"
-          className="transition hover:text-zinc-200"
+          className="transition hover:text-zinc-900 dark:hover:text-zinc-200"
         >
           Email
         </a>

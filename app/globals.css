@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: light;
+}
+
+html.dark {
   color-scheme: dark;
 }
 
@@ -13,7 +17,15 @@ body {
 
 body {
   margin: 0;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  color: #18181b;
+  background: radial-gradient(circle at top right, #e2e8f0 0%, #f8fafc 55%);
+  transition:
+    background 0.4s ease,
+    color 0.4s ease;
+}
+
+html.dark body {
   color: #e4e4e7;
   background: radial-gradient(circle at top right, #1f2937 0%, #09090b 55%);
-  font-family: var(--font-inter), system-ui, sans-serif;
 }
