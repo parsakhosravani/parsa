@@ -1,11 +1,39 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { StoryNav } from "../components/story-nav";
 import { frameworkStories, frameworks } from "../lib/story";
 
 const accentText = frameworks.find((f) => f.slug === "angular")!.accentText;
 const story = frameworkStories.angular;
+
+const mofidMoments = [
+  {
+    src: "/experiences/mofid/trading-dashboard.png",
+    alt: "Mofid online trading dashboard interface",
+    caption:
+      "A product-facing view of the domain: realtime market data, transaction depth, and clear trader workflows.",
+  },
+  {
+    src: "/experiences/mofid/team-circle.jpg",
+    alt: "Mofid team in a collaborative discussion session",
+    caption:
+      "Regular discussion sessions improved alignment across product and engineering decisions.",
+  },
+  {
+    src: "/experiences/mofid/balloon-session.jpg",
+    alt: "Mofid team celebration with blue balloons",
+    caption:
+      "Celebration moments kept morale high while we handled demanding delivery cycles.",
+  },
+  {
+    src: "/experiences/mofid/birthday-group.jpg",
+    alt: "Mofid engineering team birthday event photo",
+    caption:
+      "Strong team relationships supported consistent execution and better ownership at scale.",
+  },
+];
 
 const AngularStory = dynamic(() => import("./angular-story"), {
   ssr: false,
@@ -56,6 +84,34 @@ export default function AngularStoryPage() {
           </p>
         </div>
       </div>
+
+      <section className="mb-8 rounded-2xl border border-zinc-200 bg-white/70 p-5 dark:border-zinc-800 dark:bg-zinc-900/40">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">
+          Mofid Moments
+        </h2>
+        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
+          Culture and collaboration are part of the architecture story too.
+          These moments show the team environment behind the platform work.
+        </p>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          {mofidMoments.map((moment) => (
+            <figure key={moment.src}>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
+                <Image
+                  src={moment.src}
+                  alt={moment.alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 420px"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="mt-2 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+                {moment.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
       <AngularStory />
     </main>
   );

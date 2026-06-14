@@ -3,7 +3,27 @@ import Image from "next/image";
 import { frameworkStories, intro, frameworks } from "./lib/story";
 import { ThemeToggle } from "./components/theme-toggle";
 
-const timeline = [
+type TimelineMedia = {
+  src: string;
+  alt: string;
+  caption: string;
+};
+
+type TimelineItem = {
+  id: string;
+  period: string;
+  company: string;
+  title: string;
+  summary: string;
+  href: string;
+  accent: string;
+  cta: string;
+  logo: string;
+  tags: string[];
+  media?: TimelineMedia[];
+};
+
+const timeline: TimelineItem[] = [
   {
     id: "mofid",
     period: frameworkStories.angular.period,
@@ -17,6 +37,20 @@ const timeline = [
     cta: "Read Angular story",
     logo: "/logos/mofid.png",
     tags: ["Market Data", "Large Teams", "Platform Discipline"],
+    media: [
+      {
+        src: "/experiences/mofid/trading-dashboard.png",
+        alt: "Mofid online trading dashboard interface",
+        caption:
+          "This is the product context behind our engineering decisions: realtime data visibility, execution clarity, and reliability under market pressure.",
+      },
+      {
+        src: "/experiences/mofid/birthday-group.jpg",
+        alt: "Mofid engineering team group photo from an office celebration",
+        caption:
+          "A healthy engineering culture helped us keep quality high while delivering under market pressure.",
+      },
+    ],
   },
   {
     id: "amr-tech",
@@ -31,6 +65,20 @@ const timeline = [
     cta: "Read React story",
     logo: "/logos/amr.png",
     tags: ["Startup Pace", "OTA Workflows", "Overnight Releases"],
+    media: [
+      {
+        src: "/experiences/amr/react-next-sharing.jpg",
+        alt: "AMR knowledge sharing visual for React and Next.js",
+        caption:
+          "Knowledge-sharing sessions improved shared standards and helped the team ship with more consistency.",
+      },
+      {
+        src: "/experiences/amr/team-event.jpg",
+        alt: "AMR team event group photo",
+        caption:
+          "A strong team environment made high-pressure delivery cycles more sustainable and collaborative.",
+      },
+    ],
   },
   {
     id: "khanoumi",
@@ -44,6 +92,20 @@ const timeline = [
     cta: "Read Vue story",
     logo: "/logos/khanoumi.png",
     tags: ["Ecommerce", "Campaign Traffic", "Nuxt Migration"],
+    media: [
+      {
+        src: "/experiences/khanoumi/mall-campaign.jpg",
+        alt: "Khanoumi campaign activation in a crowded shopping mall",
+        caption:
+          "Campaign execution at scale gave us direct feedback on traffic behavior and conversion bottlenecks.",
+      },
+      {
+        src: "/experiences/khanoumi/lucky-wheel.jpg",
+        alt: "Khanoumi lucky wheel campaign interface",
+        caption:
+          "Interactive campaign mechanics increased engagement while helping the team test growth ideas quickly.",
+      },
+    ],
   },
 ];
 
@@ -187,6 +249,26 @@ export default function Home() {
                 <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
                   {item.summary}
                 </p>
+                {item.media && item.media.length > 0 && (
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                    {item.media.map((media) => (
+                      <figure key={media.src}>
+                        <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
+                          <Image
+                            src={media.src}
+                            alt={media.alt}
+                            fill
+                            sizes="(max-width: 640px) 100vw, 300px"
+                            className="object-cover"
+                          />
+                        </div>
+                        <figcaption className="mt-2 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+                          {media.caption}
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                )}
                 <div className="mt-3 flex flex-wrap gap-2">
                   {item.tags.map((tag) => (
                     <span

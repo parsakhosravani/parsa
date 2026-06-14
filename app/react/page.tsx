@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { StoryNav } from "../components/story-nav";
 import { frameworkStories, frameworks } from "../lib/story";
@@ -8,6 +9,33 @@ const fw = frameworks.find((f) => f.slug === "react")!;
 const accent = fw.accent;
 const accentText = fw.accentText;
 const story = frameworkStories.react;
+
+const amrMoments = [
+  {
+    src: "/experiences/amr/react-next-sharing.jpg",
+    alt: "AMR React and Next.js knowledge sharing poster",
+    caption:
+      "Technical sharing sessions aligned implementation patterns across the frontend team.",
+  },
+  {
+    src: "/experiences/amr/architecture-notes.jpg",
+    alt: "Architecture notes from an AMR planning session",
+    caption:
+      "Architecture planning made service boundaries and delivery priorities clearer before implementation.",
+  },
+  {
+    src: "/experiences/amr/meetup-audience.jpg",
+    alt: "AMR meetup audience engagement moment",
+    caption:
+      "Community and internal events strengthened engineering communication and team momentum.",
+  },
+  {
+    src: "/experiences/amr/team-event.jpg",
+    alt: "AMR team event group photo",
+    caption:
+      "Team culture supported faster collaboration and healthier execution during demanding sprints.",
+  },
+];
 
 export default function ReactStoryPage() {
   const [active, setActive] = useState(0);
@@ -66,6 +94,34 @@ export default function ReactStoryPage() {
           style={{ width: `${progress}%`, background: accent }}
         />
       </div>
+
+      <section className="mb-8 rounded-2xl border border-zinc-200 bg-white/70 p-5 dark:border-zinc-800 dark:bg-zinc-900/40">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">
+          AMR Moments
+        </h2>
+        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
+          These moments show the learning culture and collaboration behind the
+          startup delivery pace.
+        </p>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          {amrMoments.map((moment) => (
+            <figure key={moment.src}>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
+                <Image
+                  src={moment.src}
+                  alt={moment.alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 420px"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="mt-2 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+                {moment.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
 
       <article className="rounded-2xl border border-zinc-200 bg-white/70 p-7 dark:border-zinc-800 dark:bg-zinc-900/40">
         <p className="text-xs uppercase tracking-widest text-zinc-500">
