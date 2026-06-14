@@ -1,16 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { StoryNav } from "../components/story-nav";
 import { frameworkStories, frameworks } from "../lib/story";
+import VueStory from "./vue-story";
 
 const accentText = frameworks.find((f) => f.slug === "vue")!.accentText;
 const story = frameworkStories.vue;
-
-const VueStory = dynamic(() => import("./vue-story"), {
-  ssr: false,
-  loading: () => <p className="text-zinc-500">Mounting Vue app…</p>,
-});
 
 export default function VueStoryPage() {
   return (
