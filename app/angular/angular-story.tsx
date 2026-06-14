@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { chapters, frameworks } from "../lib/story";
+import { frameworkStories, frameworks } from "../lib/story";
 
 const accent = frameworks.find((f) => f.slug === "angular")!.accent;
+const story = frameworkStories.angular;
 
 const template = `
   <div>
@@ -82,7 +83,7 @@ export default function AngularStory() {
         template,
       })
       class StoryComponent {
-        chapters = chapters;
+        chapters = story.chapters;
         active = 0;
         accent = accent;
 

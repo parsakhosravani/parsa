@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { chapters, frameworks } from "../lib/story";
+import { frameworkStories, frameworks } from "../lib/story";
 
 const accent = frameworks.find((f) => f.slug === "vue")!.accent;
+const story = frameworkStories.vue;
 
 const template = `
   <div>
@@ -73,10 +74,10 @@ export default function VueStory() {
 
       app = createApp({
         data() {
-          return { chapters, active: 0, accent };
+          return { chapters: story.chapters, active: 0, accent };
         },
         computed: {
-          chapter(): (typeof chapters)[number] {
+          chapter(): (typeof story.chapters)[number] {
             // @ts-expect-error Vue runtime `this`
             return this.chapters[this.active];
           },
