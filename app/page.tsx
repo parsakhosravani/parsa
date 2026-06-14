@@ -15,7 +15,7 @@ const timeline = [
     accent:
       frameworks.find((fw) => fw.slug === "angular")?.accentText ?? "#dd0031",
     cta: "Read Angular story",
-    logo: "/logos/mofid.svg",
+    logo: "/logos/mofid.png",
     tags: ["Market Data", "Large Teams", "Platform Discipline"],
   },
   {
@@ -29,7 +29,7 @@ const timeline = [
     accent:
       frameworks.find((fw) => fw.slug === "react")?.accentText ?? "#0b9dc7",
     cta: "Read React story",
-    logo: "/logos/amr.svg",
+    logo: "/logos/amr.png",
     tags: ["Startup Pace", "OTA Workflows", "Overnight Releases"],
   },
   {
@@ -42,7 +42,7 @@ const timeline = [
     href: "/vue",
     accent: frameworks.find((fw) => fw.slug === "vue")?.accentText ?? "#2f9e6b",
     cta: "Read Vue story",
-    logo: "/logos/khanoumi.svg",
+    logo: "/logos/khanoumi.png",
     tags: ["Ecommerce", "Campaign Traffic", "Nuxt Migration"],
   },
 ];
@@ -134,13 +134,14 @@ export default function Home() {
                       {item.company}
                     </h3>
                   </div>
-                  <div className="relative h-12 w-12 overflow-hidden rounded-xl border border-zinc-200 bg-white/90 dark:border-zinc-700 dark:bg-zinc-800/80">
+                  <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-zinc-200 bg-white p-1 shadow-sm dark:border-zinc-700 dark:bg-zinc-100">
                     <Image
                       src={item.logo}
                       alt={`${item.company} logo mark`}
                       fill
-                      sizes="48px"
-                      className="object-cover"
+                      sizes="56px"
+                      quality={100}
+                      className="object-contain"
                     />
                   </div>
                 </div>
