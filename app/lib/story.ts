@@ -22,7 +22,7 @@ export const intro = {
   name: "Parsa Khosravani",
   role: "Software Engineer",
   tagline:
-    "This is the story version of my career: long releases, Black Friday pressure, startup deadlines, market-scale systems, and the habits that kept me sane somewhere between shipping code and playing Dota or Counter-Strike at night.",
+    "This is the story version of my career: translating business goals into technical plans, shaping architecture for scale, and shipping under pressure across ecommerce, travel, and market systems.",
 };
 
 export const chapters: Chapter[] = [
@@ -91,7 +91,7 @@ export const frameworks = [
     accent: "#61dafb",
     accentText: "#0b9dc7",
     blurb:
-      "The AMR Tech chapter: faster travel flows, AI-assisted forms, and React-driven performance work.",
+      "The AMR chapter: conversion-focused travel flows, operational automation, and architecture choices for startup speed.",
   },
   {
     slug: "vue",
@@ -99,7 +99,7 @@ export const frameworks = [
     accent: "#42b883",
     accentText: "#2f9e6b",
     blurb:
-      "The Khanoumi chapter: Nuxt migration, design systems, and conversion-focused ecommerce work.",
+      "The Khanoumi chapter: ecommerce modernization, campaign-scale reliability, and system-level conversion optimization.",
   },
   {
     slug: "angular",
@@ -107,18 +107,23 @@ export const frameworks = [
     accent: "#dd0031",
     accentText: "#dd0031",
     blurb:
-      "The Mofid Securities chapter: Angular-era migration, live market data, and platform quality at scale.",
+      "The Mofid chapter: platform migration strategy, live data architecture, and quality discipline in high-trust products.",
   },
 ] as const;
 
 export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
   react: {
     eyebrow: "React at AMR Tech",
-    title: "The startup chapter: React, deadlines, and late nights",
-    lede: "AMR Tech was one of those chapters that felt alive all the time. New company energy, OTA-style travel products, visa flows, fast deadlines, and the kind of teamwork where some of the best stories come from the nights that ran longer than anyone planned.",
+    title: "The startup chapter: velocity, ownership, and product architecture",
+    lede: "AMR Tech was where I practiced shipping fast without shipping random. We were building OTA-style travel and visa experiences, and every sprint forced us to align business urgency with clean technical direction.",
     company: "AMR Tech · Dubai",
     period: "Aug 2022 — Jul 2023",
-    highlights: ["Crunch Nights", "OTA Rush", "AI Assist", "Ship by Dawn"],
+    highlights: [
+      "Business-First Decisions",
+      "Product Architecture",
+      "Ops Automation",
+      "Fast but Structured",
+    ],
     chapters: [
       {
         id: "react-performance",
@@ -128,7 +133,7 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
         paragraphs: [
           "Travel products can become noisy very quickly. A few extra widgets here, a heavier screen there, and suddenly the whole thing feels more stressful than it should.",
           "A lot of my React work at AMR was about calming that down: optimizing libraries, improving asset loading, and dynamically importing heavy components like charts until the experience felt lighter in the hand.",
-          "We improved web performance by 20%, but what I remember more is the feeling that the product finally breathed better. It stopped fighting the user so much.",
+          "We improved web performance in meaningful ways, but what I remember more is the feeling that the product finally breathed better. It stopped fighting the user so much.",
         ],
       },
       {
@@ -139,7 +144,7 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
         paragraphs: [
           "One of the most satisfying things we built was an AI image-processing flow that helped populate visa forms automatically.",
           "I liked that project because it was not trying to impress anyone with buzzwords. It was trying to remove boring, error-prone work from people's days and give them back time.",
-          "That flow reduced processing time by 54%, and for me it was a good reminder that the best engineering wins often feel simple once they are working.",
+          "That flow noticeably reduced processing time, and for me it was a good reminder that the best engineering wins often feel simple once they are working.",
         ],
       },
       {
@@ -148,7 +153,7 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
         title: "Shipping Fast Without Letting Things Drift",
         subtitle: "Design sync, tests, and surviving startup velocity",
         paragraphs: [
-          "Fast teams can drift if nobody protects the system. I built a Figma variables script to keep design tokens aligned with the app, which cut implementation time by 30% and saved us from a lot of small inconsistencies.",
+          "Fast teams can drift if nobody protects the system. I built a Figma variables script to keep design tokens aligned with the app, which made implementation faster and saved us from a lot of small inconsistencies.",
           "I also kept leaning on Jest and Cypress because deadlines are exactly when a team needs guardrails, not guesswork.",
           "That is how I remember AMR now: ambitious, a little chaotic in the best startup way, and full of moments where the team had to stay sharp together.",
         ],
@@ -157,15 +162,15 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
   },
   vue: {
     eyebrow: "Vue at Khanoumi",
-    title: "The ecommerce chapter: traffic, campaigns, and trust",
-    lede: "Khanoumi taught me what ecommerce pressure really feels like. You do not just build pages there. You prepare for spikes, campaigns, late changes, and the quiet fear that the most important hour is the exact hour something could break.",
+    title: "The ecommerce chapter: architecture under real business pressure",
+    lede: "Khanoumi taught me that ecommerce success is mostly a systems story. Campaign outcomes depended on how well product, operations, and frontend architecture worked together under heavy traffic.",
     company: "Khanoumi · Tehran",
     period: "Mar 2021 — Aug 2022",
     highlights: [
-      "Black Friday Pulse",
-      "Corona Surge",
-      "50K Uptime",
-      "Conversion Gravity",
+      "Campaign-Ready Platform",
+      "Scalable UI System",
+      "Reliability at Peak",
+      "Conversion Engineering",
     ],
     chapters: [
       {
@@ -176,7 +181,7 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
         paragraphs: [
           "At Khanoumi, I worked on moving the frontend from C#.Net to Nuxt.js, and what I liked about that migration was that it happened in the middle of a living business, not in a quiet lab.",
           "The goal was simple to say but hard to do: make the stack more modern, improve developer experience, and still keep the product dependable while customers continue shopping.",
-          "We improved developer experience by 45%, but the bigger value was confidence. The team could move faster without feeling like every change might crack the foundation.",
+          "We significantly improved developer experience, but the bigger value was confidence. The team could move faster without feeling like every change might crack the foundation.",
         ],
       },
       {
@@ -187,7 +192,7 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
         paragraphs: [
           "Campaign periods change the mood of an ecommerce company. Everyone is watching traffic, everyone is watching conversion, and everyone wants changes yesterday.",
           "That is exactly when a design system becomes more than a nice engineering idea. Reusable, predictable UI helped us ship faster, stay consistent, and keep our heads during busy periods.",
-          "It improved development efficiency by 20%, but emotionally it did something even more useful: it reduced panic.",
+          "It improved development efficiency, but emotionally it did something even more useful: it reduced panic.",
         ],
       },
       {
@@ -198,22 +203,22 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
         paragraphs: [
           "The Khanoumi chapter is the one where I most remember the atmosphere around events. Coronavirus changed online behavior, big campaigns raised the stakes, and Black Friday-style traffic made uptime feel personal.",
           "When more than 50,000 customers are showing up, frontend stops being a layer and starts feeling like part of the storefront itself. Every slowdown, every bug, every confusing state has a real cost.",
-          "We built campaign mechanics like lucky wheel and event experiences that lifted conversion by 48%, but what stayed with me most was the responsibility of keeping the experience standing when the attention was at its highest.",
+          "We built campaign mechanics like lucky wheel and event experiences that clearly lifted conversion, but what stayed with me most was the responsibility of keeping the experience standing when the attention was at its highest.",
         ],
       },
     ],
   },
   angular: {
     eyebrow: "Angular at Mofid Securities",
-    title: "The scale chapter: structure, markets, and long-term thinking",
-    lede: "Mofid is where the story becomes bigger in every direction: more teams, more users, more structure, more responsibility, and honestly a healthier understanding of balance too. It taught me how serious engineering feels inside a large-scale product environment.",
+    title: "The scale chapter: systems thinking and platform evolution",
+    lede: "Mofid is where I grew into broader architecture thinking. At this scale, technical choices are product choices, because they directly shape trust, speed, and how multiple teams can deliver together.",
     company: "Mofid Securities · Tehran",
     period: "Aug 2023 — Present",
     highlights: [
-      "Market Scale",
-      "Team of Teams",
-      "Calm Under Ticks",
-      "Balance Mode",
+      "Platform Strategy",
+      "Cross-Team Architecture",
+      "Realtime Reliability",
+      "Long-Term Maintainability",
     ],
     chapters: [
       {
@@ -224,7 +229,7 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
         paragraphs: [
           "Joining Mofid meant joining a much larger machine. More teams, more dependencies, more users, and more reasons to be thoughtful before changing something important.",
           "Part of the work involved helping move the product away from AngularJS toward Next.js, and I learned quickly that migrations at this scale are as much about coordination and patience as they are about code.",
-          "We improved developer experience by 45%, but what mattered most was doing it without shaking user trust. In finance, that trust is the whole game.",
+          "We improved developer experience at scale, but what mattered most was doing it without shaking user trust. In finance, that trust is the whole game.",
         ],
       },
       {
@@ -234,7 +239,7 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
         subtitle: "Real-time data and why calm interfaces matter",
         paragraphs: [
           "Live market products have a very particular tension to them. The data is always moving, users are making decisions in motion, and your UI has to stay readable even when everything underneath it is changing.",
-          "I worked on integrating Lightstreamer with AG Grid and related components, which reduced latency by 40% and made the flow of information feel more immediate and reliable.",
+          "I worked on integrating Lightstreamer with AG Grid and related components, which reduced latency and made the flow of information feel more immediate and reliable.",
           "I love this kind of problem because it is technical in a deep way, but the result is still human. The user either feels confident or they do not.",
         ],
       },
@@ -246,7 +251,7 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
           "Design systems, testing, and work-life balance that actually exists",
         paragraphs: [
           "Mofid also changed how I think about sustainability. Strong teams need design systems, tests, monitoring, and conventions not because those things are glamorous, but because they let people work well over time.",
-          "I worked on Storybook, testing, component independence, and monitoring improvements, helping push test coverage 70% higher and making the platform less fragile under change.",
+          "I worked on Storybook, testing, component independence, and monitoring improvements, helping increase test coverage and making the platform less fragile under change.",
           "What I appreciated personally was that this chapter also showed me a better version of work-life balance. Serious work, big scale, many teams, a lot to learn, but still enough structure to grow without burning all the way out.",
         ],
       },
