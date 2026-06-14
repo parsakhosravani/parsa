@@ -118,11 +118,7 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
     lede: "AMR Tech was one of those chapters that felt alive all the time. New company energy, OTA-style travel products, visa flows, fast deadlines, and the kind of teamwork where some of the best stories come from the nights that ran longer than anyone planned.",
     company: "AMR Tech · Dubai",
     period: "Aug 2022 — Jul 2023",
-    highlights: [
-      "20% better web performance",
-      "54% faster visa processing",
-      "30% faster design implementation",
-    ],
+    highlights: ["Crunch Nights", "OTA Rush", "AI Assist", "Ship by Dawn"],
     chapters: [
       {
         id: "react-performance",
@@ -166,9 +162,10 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
     company: "Khanoumi · Tehran",
     period: "Mar 2021 — Aug 2022",
     highlights: [
-      "45% better developer experience",
-      "20% better development efficiency",
-      "48% higher conversion on key campaigns",
+      "Black Friday Pulse",
+      "Corona Surge",
+      "50K Uptime",
+      "Conversion Gravity",
     ],
     chapters: [
       {
@@ -213,9 +210,10 @@ export const frameworkStories: Record<FrameworkSlug, FrameworkStory> = {
     company: "Mofid Securities · Tehran",
     period: "Aug 2023 — Present",
     highlights: [
-      "45% better developer experience",
-      "40% lower live-data latency",
-      "70% more test coverage",
+      "Market Scale",
+      "Team of Teams",
+      "Calm Under Ticks",
+      "Balance Mode",
     ],
     chapters: [
       {
