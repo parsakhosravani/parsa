@@ -1,62 +1,66 @@
-# Parsa Portfolio
+# Parsa — Microfrontend Portfolio
 
-Story-driven personal portfolio built with Next.js and Tailwind CSS.
+A personal portfolio built as a **pnpm monorepo** with a microfrontend architecture.
 
-## What this portfolio includes
+## Packages
 
-- Career storytelling across three frontend frameworks:
-  - React route
-  - Vue route
-  - Angular route
-- Homepage with:
-  - Hero section and stylized portrait
-  - Featured wins
-  - How I work
-  - Career timeline with company logos
-  - Proof snapshots
-- Light and dark mode toggle
-- Shared story data source used across all pages
+| Package | Framework | Port | Description |
+|---|---|---|---|
+| `packages/shell` | Next.js 13 | 3000 | App shell — homepage, routing, page chrome |
+| `packages/mfe-react` | React + Vite | 3001 | React story chapter navigator |
+| `packages/mfe-vue` | Vue 3 + Vite | 3002 | Vue story chapter navigator |
+| `packages/mfe-angular` | Angular 16 + Webpack | 3003 | Angular story chapter navigator |
+| `packages/shared` | TypeScript | — | Shared story data and types |
 
-## Tech stack
+## Architecture
 
-- Next.js (App Router)
-- React
-- Tailwind CSS
-- TypeScript
-- Vue (client-mounted story route)
-- Angular (client-bootstrapped story route)
+Each story route (`/react`, `/vue`, `/angular`) is served by the **shell** (Next.js).
+The shell owns the page chrome — navigation, header, metadata, and photos.
 
-## Project routes
+The interactive **chapter navigator** in each story is an independent MFE, loaded at runtime via **Module Federation**:
 
-- `/` - Homepage
-- `/react` - React storytelling page
-- `/vue` - Vue storytelling page
-- `/angular` - Angular storytelling page
+- React MFE → exposed as a React component (`mfe_react/App`)
+- Vue MFE → exposed as a framework-agnostic `mount(el)` function (`mfe_vue/mount`)
+- Angular MFE → exposed as a framework-agnostic `mount(el)` function (`mfe_angular/bootstrap`)
 
-## Run locally
+```
+User hits /angular
+  → Shell's Next.js page renders (SSR: nav, header, photos)
+  → AngularMfeLoader mounts in the browser
+  → Shell fetches http://localhost:3003/remoteEntry.js
+  → Angular bootstraps inside the provided <div>
+```
 
-```sh
-git clone https://github.com/parsa/Parsa.git
-cd Parsa
+## Development
+
+```bash
+# Install all workspace dependencies
 pnpm install
+
+# Start all 4 apps concurrently
 pnpm dev
+
+# Or start individually
+pnpm dev:shell     # Next.js shell on :3000
+pnpm dev:react     # React MFE on :3001
+pnpm dev:vue       # Vue MFE on :3002
+pnpm dev:angular   # Angular MFE on :3003
 ```
 
-## Build for production
+## Environment Variables
 
-```sh
-pnpm build
-pnpm start
+Copy `.env.example` to `.env.local` inside `packages/shell/` to override MFE URLs for production:
+
+```env
+NEXT_PUBLIC_MFE_REACT_URL=https://mfe-react.example.com
+NEXT_PUBLIC_MFE_VUE_URL=https://mfe-vue.example.com
+NEXT_PUBLIC_MFE_ANGULAR_URL=https://mfe-angular.example.com
 ```
 
-## Content and assets
+## Production Deploy
 
-- Story content and framework metadata: `app/lib/story.ts`
-- Homepage layout and sections: `app/page.tsx`
-- Global styles and animations: `app/globals.css`
-- Portrait and company logos: `public/`
+Each package can be deployed independently:
+- **shell** → Vercel / Node.js host
+- **mfe-react**, **mfe-vue** → Any static host (Vercel, Netlify, Cloudflare Pages)
+- **mfe-angular** → Any static host (output: `dist/`)
 
-## Notes
-
-- If Google Fonts are blocked in your environment, the project uses system fonts as fallback.
-- Vue and Angular pages run client-side and are integrated intentionally to compare storytelling across frameworks in one repo.

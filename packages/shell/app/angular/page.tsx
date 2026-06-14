@@ -1,9 +1,7 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import { StoryNav } from "../components/story-nav";
 import { frameworkStories, frameworks } from "../lib/story";
+import { AngularMfeLoader } from "./angular-mfe-loader";
 
 const accentText = frameworks.find((f) => f.slug === "angular")!.accentText;
 const story = frameworkStories.angular;
@@ -35,11 +33,6 @@ const mofidMoments = [
       "Strong team relationships supported consistent execution and better ownership at scale.",
   },
 ];
-
-const AngularStory = dynamic(() => import("./angular-story"), {
-  ssr: false,
-  loading: () => <p className="text-zinc-500">Bootstrapping Angular app…</p>,
-});
 
 export default function AngularStoryPage() {
   return (
@@ -121,7 +114,9 @@ export default function AngularStoryPage() {
           ))}
         </div>
       </section>
-      <AngularStory />
+
+      {/* Angular MFE: chapter navigator loaded via Module Federation */}
+      <AngularMfeLoader />
     </main>
   );
 }

@@ -1,9 +1,7 @@
-"use client";
-
 import Image from "next/image";
 import { StoryNav } from "../components/story-nav";
 import { frameworkStories, frameworks } from "../lib/story";
-import VueStory from "./vue-story";
+import { VueMfeLoader } from "./vue-mfe-loader";
 
 const accentText = frameworks.find((f) => f.slug === "vue")!.accentText;
 const story = frameworkStories.vue;
@@ -116,7 +114,9 @@ export default function VueStoryPage() {
           ))}
         </div>
       </section>
-      <VueStory />
+
+      {/* Vue MFE: chapter navigator loaded via Module Federation */}
+      <VueMfeLoader />
     </main>
   );
 }
