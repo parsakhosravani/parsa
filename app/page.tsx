@@ -113,21 +113,6 @@ const timeline: TimelineItem[] = [
   },
 ];
 
-const architectureMindset = [
-  {
-    title: "Start from business mechanics",
-    body: "I map user journeys to revenue, risk, and operations first. That keeps engineering effort pointed at outcomes, not just output.",
-  },
-  {
-    title: "Design systems for change",
-    body: "I favor modular boundaries, reusable primitives, and observability so teams can ship quickly without destabilizing the product.",
-  },
-  {
-    title: "Use tools intentionally",
-    body: "React, Vue, or Angular are implementation choices. The core work is making tradeoffs that fit team structure, product stage, and scale.",
-  },
-];
-
 export default function Home() {
   return (
     <main className="mx-auto max-w-4xl px-6 py-20">
@@ -189,27 +174,6 @@ export default function Home() {
                 <span aria-hidden>→</span>
               </span>
             </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-12">
-        <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500">
-          How I Think About Product and Architecture
-        </h2>
-        <div className="mt-5 grid gap-4 sm:grid-cols-3">
-          {architectureMindset.map((item) => (
-            <article
-              key={item.title}
-              className="rounded-2xl border border-zinc-200 bg-white/70 p-5 dark:border-zinc-800 dark:bg-zinc-900/35"
-            >
-              <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                {item.body}
-              </p>
-            </article>
           ))}
         </div>
       </section>
