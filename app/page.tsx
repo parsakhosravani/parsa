@@ -113,21 +113,6 @@ const timeline: TimelineItem[] = [
   },
 ];
 
-const architectureMindset = [
-  {
-    title: "Start from business mechanics",
-    body: "I map user journeys to revenue, risk, and operations first. That keeps engineering effort pointed at outcomes, not just output.",
-  },
-  {
-    title: "Design systems for change",
-    body: "I favor modular boundaries, reusable primitives, and observability so teams can ship quickly without destabilizing the product.",
-  },
-  {
-    title: "Use tools intentionally",
-    body: "React, Vue, or Angular are implementation choices. The core work is making tradeoffs that fit team structure, product stage, and scale.",
-  },
-];
-
 export default function Home() {
   return (
     <main className="mx-auto max-w-4xl px-6 py-20">
@@ -189,27 +174,6 @@ export default function Home() {
                 <span aria-hidden>→</span>
               </span>
             </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-12">
-        <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500">
-          How I Think About Product and Architecture
-        </h2>
-        <div className="mt-5 grid gap-4 sm:grid-cols-3">
-          {architectureMindset.map((item) => (
-            <article
-              key={item.title}
-              className="rounded-2xl border border-zinc-200 bg-white/70 p-5 dark:border-zinc-800 dark:bg-zinc-900/35"
-            >
-              <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                {item.body}
-              </p>
-            </article>
           ))}
         </div>
       </section>
@@ -302,22 +266,60 @@ export default function Home() {
         </ol>
       </section>
 
-      <footer className="mt-16 flex flex-wrap items-center gap-4 text-sm text-zinc-500">
-        <a
-          href="https://github.com/parsakhosravani"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition hover:text-zinc-900 dark:hover:text-zinc-200"
-        >
-          GitHub
-        </a>
-        <span aria-hidden>·</span>
-        <a
-          href="mailto:parsakhosravani@gmail.com"
-          className="transition hover:text-zinc-900 dark:hover:text-zinc-200"
-        >
-          Email
-        </a>
+      <footer className="mt-20 border-t border-zinc-200 pt-12 dark:border-zinc-800">
+        <div className="mb-8 rounded-2xl border border-zinc-200 bg-gradient-to-br from-zinc-50 to-white/50 p-7 dark:border-zinc-800 dark:from-zinc-900/50 dark:to-zinc-900/20">
+          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+            Let's talk about your next challenge
+          </h2>
+          <p className="mt-3 max-w-2xl leading-relaxed text-zinc-700 dark:text-zinc-300">
+            Whether you're building at startup speed, scaling systems to millions of users, or modernizing legacy code, I bring experience in translating business needs into solid technical decisions.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href="mailto:parsakhosravani@gmail.com"
+              className="inline-block rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+            >
+              Get in touch
+            </a>
+            <a
+              href="https://www.linkedin.com/in/parsakhosravani"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-lg border border-zinc-300 px-5 py-2.5 text-sm font-medium text-zinc-700 transition hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-600"
+            >
+              LinkedIn profile
+            </a>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-4 text-sm text-zinc-600 dark:text-zinc-400">
+          <div className="flex items-center gap-4">
+            <a
+              href="https://github.com/parsakhosravani"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition hover:text-zinc-900 dark:hover:text-zinc-200"
+            >
+              GitHub
+            </a>
+            <span aria-hidden>·</span>
+            <a
+              href="https://www.linkedin.com/in/parsakhosravani"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition hover:text-zinc-900 dark:hover:text-zinc-200"
+            >
+              LinkedIn
+            </a>
+            <span aria-hidden>·</span>
+            <a
+              href="mailto:parsakhosravani@gmail.com"
+              className="transition hover:text-zinc-900 dark:hover:text-zinc-200"
+            >
+              Email
+            </a>
+          </div>
+        </div>
       </footer>
     </main>
   );

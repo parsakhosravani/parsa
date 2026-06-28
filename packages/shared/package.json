@@ -1,9 +1,0 @@
-{
-  "name": "@parsa/shared",
-  "version": "0.1.0",
-  "private": true,
-  "main": "./src/index.ts",
-  "exports": {
-    ".": "./src/index.ts"
-  }
-}
