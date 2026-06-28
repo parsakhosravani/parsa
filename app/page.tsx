@@ -302,22 +302,63 @@ export default function Home() {
         </ol>
       </section>
 
-      <footer className="mt-16 flex flex-wrap items-center gap-4 text-sm text-zinc-500">
-        <a
-          href="https://github.com/parsakhosravani"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition hover:text-zinc-900 dark:hover:text-zinc-200"
-        >
-          GitHub
-        </a>
-        <span aria-hidden>·</span>
-        <a
-          href="mailto:parsakhosravani@gmail.com"
-          className="transition hover:text-zinc-900 dark:hover:text-zinc-200"
-        >
-          Email
-        </a>
+      <footer className="mt-20 border-t border-zinc-200 pt-12 dark:border-zinc-800">
+        <div className="mb-8 rounded-2xl border border-zinc-200 bg-gradient-to-br from-zinc-50 to-white/50 p-7 dark:border-zinc-800 dark:from-zinc-900/50 dark:to-zinc-900/20">
+          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+            Let's talk about your next challenge
+          </h2>
+          <p className="mt-3 max-w-2xl leading-relaxed text-zinc-700 dark:text-zinc-300">
+            Whether you're building at startup speed, scaling systems to millions of users, or modernizing legacy code, I bring experience in translating business needs into solid technical decisions.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href="mailto:parsakhosravani@gmail.com"
+              className="inline-block rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+            >
+              Get in touch
+            </a>
+            <a
+              href="https://www.linkedin.com/in/parsakhosravani"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-lg border border-zinc-300 px-5 py-2.5 text-sm font-medium text-zinc-700 transition hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-600"
+            >
+              LinkedIn profile
+            </a>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-4 text-sm text-zinc-600 dark:text-zinc-400">
+          <div className="flex items-center gap-4">
+            <a
+              href="https://github.com/parsakhosravani"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition hover:text-zinc-900 dark:hover:text-zinc-200"
+            >
+              GitHub
+            </a>
+            <span aria-hidden>·</span>
+            <a
+              href="https://www.linkedin.com/in/parsakhosravani"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition hover:text-zinc-900 dark:hover:text-zinc-200"
+            >
+              LinkedIn
+            </a>
+            <span aria-hidden>·</span>
+            <a
+              href="mailto:parsakhosravani@gmail.com"
+              className="transition hover:text-zinc-900 dark:hover:text-zinc-200"
+            >
+              Email
+            </a>
+          </div>
+          <p className="text-zinc-500 dark:text-zinc-500">
+            Crafted with attention to detail · Built with Next.js + React
+          </p>
+        </div>
       </footer>
     </main>
   );
