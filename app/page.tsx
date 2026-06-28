@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { frameworkStories, intro, frameworks } from "./lib/story";
 import { githubUrl, projects } from "./lib/projects";
+import { sortedPosts, formatDate } from "./lib/blog";
 import { Reveal } from "./components/reveal";
 
 type TimelineMedia = {
@@ -392,6 +393,59 @@ export default function Home() {
                   </a>
                 )}
               </div>
+            </Reveal>
+          ))}
+        </div>
+      </Reveal>
+
+      {/* Writing */}
+      <Reveal as="section" className="mt-16">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500">
+              Latest writing
+            </h2>
+            <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+              Essays on frontend performance and framework architecture.
+            </p>
+          </div>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-1 text-sm font-medium text-zinc-700 transition hover:gap-2 hover:text-indigo-600 dark:text-zinc-300 dark:hover:text-cyan-300"
+          >
+            All posts
+            <span aria-hidden>→</span>
+          </Link>
+        </div>
+        <div className="mt-6 space-y-4">
+          {sortedPosts.slice(0, 3).map((post, i) => (
+            <Reveal as="div" key={post.slug} variant="left" delay={i * 80}>
+              <Link
+                href={`/blog/${post.slug}`}
+                className="group flex flex-col gap-2 rounded-2xl border border-zinc-200 bg-white/70 p-6 transition hover:-translate-y-1 hover:border-zinc-400 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-zinc-600 sm:flex-row sm:items-center sm:gap-6"
+              >
+                <div className="flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400 sm:w-40 sm:shrink-0 sm:flex-col sm:items-start sm:gap-1">
+                  <time dateTime={post.date}>{formatDate(post.date)}</time>
+                  <span aria-hidden className="sm:hidden">
+                    ·
+                  </span>
+                  <span>{post.readingMinutes} min read</span>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-display text-lg text-zinc-900 transition group-hover:text-indigo-600 dark:text-zinc-100 dark:group-hover:text-cyan-300">
+                    {post.title}
+                  </h3>
+                  <p className="mt-1 line-clamp-2 text-sm text-zinc-600 dark:text-zinc-400">
+                    {post.description}
+                  </p>
+                </div>
+                <span
+                  aria-hidden
+                  className="hidden text-zinc-400 transition group-hover:translate-x-1 group-hover:text-indigo-600 dark:group-hover:text-cyan-300 sm:block"
+                >
+                  →
+                </span>
+              </Link>
             </Reveal>
           ))}
         </div>

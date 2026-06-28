@@ -4,7 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
 
-const internalLinks = [{ href: "/recommendations", label: "Recommendations" }];
+const internalLinks = [
+  { href: "/blog", label: "Writing" },
+  { href: "/recommendations", label: "Recommendations" },
+];
 
 const storyLinks = [
   { href: "/react", label: "React · AMR" },
