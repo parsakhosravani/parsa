@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { frameworkStories, intro, frameworks } from "./lib/story";
-import { ThemeToggle } from "./components/theme-toggle";
 
 type TimelineMedia = {
   src: string;
@@ -115,10 +114,7 @@ const timeline: TimelineItem[] = [
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-4xl px-6 py-20">
-      <div className="mb-6 flex justify-end">
-        <ThemeToggle />
-      </div>
+    <main className="mx-auto max-w-4xl px-6 py-16">
       <section className="rounded-3xl border border-zinc-200 bg-white/70 p-8 backdrop-blur-sm dark:border-zinc-800/70 dark:bg-zinc-900/40 sm:p-12">
         <div className="flex flex-col-reverse items-start gap-8 md:flex-row md:items-center md:justify-between">
           <div>

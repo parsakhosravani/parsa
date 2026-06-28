@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Metadata } from "next";
+import { Header } from "./components/header";
 
 export const metadata: Metadata = {
   title: "Parsa Khosravani | Portfolio",
@@ -19,7 +20,10 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
-      <body>{children}</body>
+      <body className="flex flex-col min-h-screen">
+        <Header />
+        <div className="flex-1">{children}</div>
+      </body>
     </html>
   );
 }

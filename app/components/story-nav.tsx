@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { frameworks } from "../lib/story";
-import { ThemeToggle } from "./theme-toggle";
 
 export function StoryNav({ active }: { active: string }) {
   return (
@@ -38,9 +37,6 @@ export function StoryNav({ active }: { active: string }) {
           </Link>
         );
       })}
-      <span className="ml-auto">
-        <ThemeToggle />
-      </span>
     </nav>
   );
 }
