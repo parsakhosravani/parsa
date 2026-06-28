@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { frameworkStories, intro, frameworks } from "./lib/story";
+import { githubUrl, projects } from "./lib/projects";
+import { Reveal } from "./components/reveal";
 
 type TimelineMedia = {
   src: string;
@@ -252,9 +254,11 @@ export default function Home() {
 
       {/* Stats */}
       <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {stats.map((stat) => (
-          <div
+        {stats.map((stat, i) => (
+          <Reveal
             key={stat.label}
+            variant="scale"
+            delay={i * 80}
             className="rounded-2xl border border-zinc-200 bg-white/60 p-5 text-center backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-900/40"
           >
             <p className="font-display text-3xl text-zinc-900 dark:text-zinc-100">
@@ -263,19 +267,21 @@ export default function Home() {
             <p className="mt-1 text-xs leading-snug text-zinc-600 dark:text-zinc-400">
               {stat.label}
             </p>
-          </div>
+          </Reveal>
         ))}
       </section>
 
       {/* Expertise */}
-      <section className="mt-16">
+      <Reveal as="section" className="mt-16">
         <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500">
           What I bring
         </h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          {expertise.map((item) => (
-            <article
+          {expertise.map((item, i) => (
+            <Reveal
+              as="article"
               key={item.title}
+              delay={i * 90}
               className="group rounded-2xl border border-zinc-200 bg-white/60 p-6 transition hover:-translate-y-1 hover:border-zinc-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-zinc-700"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/15 to-cyan-500/15 text-lg text-indigo-600 dark:text-cyan-300">
@@ -287,13 +293,13 @@ export default function Home() {
               <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
                 {item.body}
               </p>
-            </article>
+            </Reveal>
           ))}
         </div>
-      </section>
+      </Reveal>
 
       {/* Tech stack */}
-      <section className="mt-16">
+      <Reveal as="section" className="mt-16">
         <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500">
           Tools of the trade
         </h2>
@@ -307,49 +313,132 @@ export default function Home() {
             </span>
           ))}
         </div>
-      </section>
+      </Reveal>
+
+      {/* GitHub projects */}
+      <Reveal as="section" className="mt-16">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500">
+              Selected projects
+            </h2>
+            <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+              A few public repositories from my GitHub.
+            </p>
+          </div>
+          <a
+            href={githubUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-sm font-medium text-zinc-700 transition hover:gap-2 hover:text-indigo-600 dark:text-zinc-300 dark:hover:text-cyan-300"
+          >
+            View all on GitHub
+            <span aria-hidden>→</span>
+          </a>
+        </div>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project, i) => (
+            <Reveal
+              as="div"
+              key={project.name}
+              delay={(i % 3) * 90}
+              className="group flex flex-col rounded-2xl border border-zinc-200 bg-white/70 p-6 transition hover:-translate-y-1 hover:border-zinc-400 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-zinc-600"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="font-display text-lg text-zinc-900 dark:text-zinc-100">
+                  {project.name}
+                </h3>
+                {project.stars > 0 && (
+                  <span className="inline-flex items-center gap-1 text-xs text-zinc-500">
+                    <span aria-hidden className="text-amber-500">
+                      ★
+                    </span>
+                    {project.stars}
+                  </span>
+                )}
+              </div>
+              <p className="mt-3 flex-1 text-sm text-zinc-600 dark:text-zinc-400">
+                {project.description}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-zinc-200 px-2.5 py-0.5 text-xs text-zinc-500 dark:border-zinc-800 dark:text-zinc-400"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-5 flex items-center gap-4 text-sm font-medium">
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-zinc-700 transition hover:gap-2 hover:text-indigo-600 dark:text-zinc-300 dark:hover:text-cyan-300"
+                >
+                  Code
+                  <span aria-hidden>↗</span>
+                </a>
+                {project.demo && (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-zinc-700 transition hover:gap-2 hover:text-indigo-600 dark:text-zinc-300 dark:hover:text-cyan-300"
+                  >
+                    Live demo
+                    <span aria-hidden>↗</span>
+                  </a>
+                )}
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Reveal>
 
       {/* Story chapters */}
-      <section className="mt-16">
+      <Reveal as="section" className="mt-16">
         <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500">
           Read my journey in
         </h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
-          {frameworks.map((fw) => {
+          {frameworks.map((fw, i) => {
             const story = frameworkStories[fw.slug];
             return (
-              <Link
-                key={fw.slug}
-                href={`/${fw.slug}`}
-                className="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-white/70 p-6 transition hover:-translate-y-1 hover:border-zinc-400 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-zinc-600"
-              >
-                <span
-                  className="absolute inset-x-0 top-0 h-1 origin-left scale-x-100 transition-transform"
-                  style={{ background: fw.accent }}
-                />
-                <h3
-                  className="font-display text-2xl"
-                  style={{ color: fw.accentText }}
+              <Reveal as="div" key={fw.slug} delay={i * 90} variant="scale">
+                <Link
+                  href={`/${fw.slug}`}
+                  className="group relative block overflow-hidden rounded-2xl border border-zinc-200 bg-white/70 p-6 transition hover:-translate-y-1 hover:border-zinc-400 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-zinc-600"
                 >
-                  {fw.name}
-                </h3>
-                <p className="mt-1 text-xs uppercase tracking-widest text-zinc-500">
-                  {story.company}
-                </p>
-                <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-                  {fw.blurb}
-                </p>
-                <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-zinc-700 transition group-hover:gap-2 dark:text-zinc-300">
-                  Enter the story
-                  <span aria-hidden>→</span>
-                </span>
-              </Link>
+                  <span
+                    className="absolute inset-x-0 top-0 h-1 origin-left scale-x-100 transition-transform"
+                    style={{ background: fw.accent }}
+                  />
+                  <h3
+                    className="font-display text-2xl"
+                    style={{ color: fw.accentText }}
+                  >
+                    {fw.name}
+                  </h3>
+                  <p className="mt-1 text-xs uppercase tracking-widest text-zinc-500">
+                    {story.company}
+                  </p>
+                  <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
+                    {fw.blurb}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-zinc-700 transition group-hover:gap-2 dark:text-zinc-300">
+                    Enter the story
+                    <span aria-hidden>→</span>
+                  </span>
+                </Link>
+              </Reveal>
             );
           })}
         </div>
-      </section>
+      </Reveal>
 
-      <section className="mt-16">
+      <Reveal as="section" className="mt-16">
         <div className="flex items-center justify-between">
           <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500">
             Career Timeline
@@ -362,8 +451,14 @@ export default function Home() {
           </Link>
         </div>
         <ol className="mt-6 space-y-7">
-          {timeline.map((item) => (
-            <li key={item.id} className="relative pl-12">
+          {timeline.map((item, i) => (
+            <Reveal
+              as="li"
+              key={item.id}
+              variant="left"
+              delay={i * 70}
+              className="relative pl-12"
+            >
               <span className="absolute left-3 top-0 h-full w-px bg-zinc-200 dark:bg-zinc-800" />
               <span
                 className="absolute left-0 top-1.5 h-6 w-6 rounded-full border-2 border-white shadow-sm dark:border-zinc-900"
@@ -440,10 +535,10 @@ export default function Home() {
                   <span aria-hidden>→</span>
                 </Link>
               </article>
-            </li>
+            </Reveal>
           ))}
         </ol>
-      </section>
+      </Reveal>
 
       <footer className="mt-20 border-t border-zinc-200 pt-12 dark:border-zinc-800">
         <div className="mb-8 overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-indigo-50 via-white to-cyan-50 p-8 dark:border-zinc-800 dark:from-indigo-950/40 dark:via-zinc-900 dark:to-cyan-950/30 sm:p-10">
