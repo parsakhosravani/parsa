@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPost, posts, formatDate } from "../../lib/blog";
 import { BlogContent } from "../../components/blog-content";
+import { ReadingProgress } from "../../components/reading-progress";
+import { site, siteUrl } from "../../lib/site";
 
 type Params = { params: { slug: string } };
 
@@ -13,9 +15,25 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: Params): Metadata {
   const post = getPost(params.slug);
   if (!post) return { title: "Not found | Parsa Khosravani" };
+  const url = `${siteUrl}/blog/${post.slug}`;
   return {
     title: `${post.title} | Parsa Khosravani`,
     description: post.description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      url,
+      title: post.title,
+      description: post.description,
+      publishedTime: post.date,
+      authors: [site.author],
+      tags: post.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+    },
   };
 }
 
@@ -23,8 +41,29 @@ export default function BlogPostPage({ params }: Params) {
   const post = getPost(params.slug);
   if (!post) notFound();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.date,
+    keywords: post.tags.join(", "),
+    author: {
+      "@type": "Person",
+      name: site.author,
+      url: siteUrl,
+    },
+    mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
+  };
+
   return (
     <main className="mx-auto max-w-3xl px-6 py-12 sm:py-16">
+      <ReadingProgress />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link
         href="/blog"
         className="inline-flex items-center gap-1 text-sm font-medium text-zinc-600 transition hover:gap-2 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"

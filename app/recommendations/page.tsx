@@ -28,8 +28,6 @@ const avatarStyles = [
 export default function RecommendationsPage() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-12 sm:py-16">
-
-
       {/* Real reviews */}
       <section className="mb-16">
         <div className="mb-7 flex items-center justify-between gap-4">

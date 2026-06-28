@@ -7,15 +7,37 @@ export const metadata: Metadata = {
   title: "Writing | Parsa Khosravani",
   description:
     "Essays on frontend engineering, performance, and framework architecture across React, Vue, and Angular by Parsa Khosravani.",
+  alternates: {
+    canonical: "/blog",
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
+  },
 };
 
 export default function BlogPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-12 sm:py-16">
       <header className="mb-12">
-        <h1 className="font-display text-4xl text-zinc-900 dark:text-zinc-100 sm:text-5xl">
-          {blogIntro.heading}
-        </h1>
+        <div className="flex items-start justify-between gap-4">
+          <h1 className="font-display text-4xl text-zinc-900 dark:text-zinc-100 sm:text-5xl">
+            {blogIntro.heading}
+          </h1>
+          <a
+            href="/feed.xml"
+            className="mt-2 inline-flex shrink-0 items-center gap-1.5 rounded-full border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-600 transition hover:border-amber-300 hover:text-amber-600 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-amber-700 dark:hover:text-amber-400"
+          >
+            <svg
+              className="h-3.5 w-3.5"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M6.18 15.64a2.18 2.18 0 1 0 0 4.36 2.18 2.18 0 0 0 0-4.36zM4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 11.4 12.6 4.44 4 4.44zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z" />
+            </svg>
+            RSS
+          </a>
+        </div>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
           {blogIntro.subtitle}
         </p>

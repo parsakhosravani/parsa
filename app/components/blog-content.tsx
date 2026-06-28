@@ -1,4 +1,5 @@
 import type { ContentBlock } from "../lib/blog";
+import { CodeBlock } from "./code-block";
 
 /** Render a string, turning `backtick` spans into inline code. */
 function renderInline(text: string, keyBase: string) {
@@ -16,26 +17,6 @@ function renderInline(text: string, keyBase: string) {
     }
     return <span key={`${keyBase}-${i}`}>{part}</span>;
   });
-}
-
-function CodeBlock({ lang, code }: { lang: string; code: string }) {
-  return (
-    <div className="my-6 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-950 shadow-sm dark:border-zinc-800">
-      <div className="flex items-center justify-between border-b border-white/10 px-4 py-2">
-        <div className="flex gap-1.5">
-          <span className="h-3 w-3 rounded-full bg-red-400/80" />
-          <span className="h-3 w-3 rounded-full bg-amber-400/80" />
-          <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
-        </div>
-        <span className="font-mono text-xs uppercase tracking-widest text-zinc-500">
-          {lang}
-        </span>
-      </div>
-      <pre className="overflow-x-auto px-4 py-4 text-sm leading-relaxed">
-        <code className="font-mono text-zinc-100">{code}</code>
-      </pre>
-    </div>
-  );
 }
 
 export function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
