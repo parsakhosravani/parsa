@@ -51,6 +51,7 @@ export function Header() {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -120,12 +121,16 @@ export function Header() {
           <div className="flex items-center gap-3 sm:gap-4">
             <ThemeToggle />
             <details className="relative sm:hidden">
-              <summary className="list-none cursor-pointer">
+              <summary
+                className="list-none cursor-pointer"
+                aria-label="Open navigation menu"
+              >
                 <svg
                   className="h-5 w-5 text-zinc-600 dark:text-zinc-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"

@@ -57,13 +57,18 @@ export default function RecommendationsPage() {
               key={review.id}
               className="rounded-2xl border border-zinc-200 bg-white/85 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/70"
             >
-              <div className="mb-3 flex items-center gap-1 text-amber-400">
+              <div
+                className="mb-3 flex items-center gap-1 text-amber-400"
+                role="img"
+                aria-label="Rated 5 out of 5 stars"
+              >
                 {Array.from({ length: 5 }).map((_, i) => (
                   <svg
                     key={i}
                     className="h-4 w-4"
                     fill="currentColor"
                     viewBox="0 0 20 20"
+                    aria-hidden="true"
                   >
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.447a1 1 0 00-.364 1.118l1.287 3.957c.3.922-.755 1.688-1.539 1.118l-3.366-2.447a1 1 0 00-1.176 0l-3.366 2.447c-.784.57-1.838-.196-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.27 9.391c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" />
                   </svg>
@@ -118,6 +123,7 @@ export default function RecommendationsPage() {
               className="h-6 w-6 text-cyan-700 dark:text-cyan-300"
               fill="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
             </svg>
@@ -144,6 +150,7 @@ export default function RecommendationsPage() {
                   className="mb-3 h-7 w-7 text-cyan-300 dark:text-cyan-700"
                   fill="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path d="M7.17 6A5.17 5.17 0 002 11.17V18h6.83v-6.83H5.5A2.67 2.67 0 018.17 8.5V6h-1zm10 0A5.17 5.17 0 0012 11.17V18h6.83v-6.83H15.5a2.67 2.67 0 012.67-2.67V6h-1z" />
                 </svg>

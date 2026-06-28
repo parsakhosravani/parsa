@@ -116,6 +116,7 @@ export default function ReactStoryPage() {
 
       <div className="mb-12 flex items-center justify-between">
         <button
+          type="button"
           onClick={() => setActive((i) => Math.max(0, i - 1))}
           disabled={active === 0}
           className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:border-zinc-400 disabled:opacity-30 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500"
@@ -127,8 +128,10 @@ export default function ReactStoryPage() {
           {story.chapters.map((c, i) => (
             <button
               key={c.id}
+              type="button"
               onClick={() => setActive(i)}
               aria-label={`Go to ${c.title}`}
+              aria-current={i === active ? "true" : undefined}
               className={
                 i === active
                   ? "h-2.5 w-2.5 rounded-full transition"
@@ -144,6 +147,7 @@ export default function ReactStoryPage() {
         </div>
 
         <button
+          type="button"
           onClick={() =>
             setActive((i) => Math.min(story.chapters.length - 1, i + 1))
           }
