@@ -3,8 +3,9 @@ import { Metadata } from "next";
 import { Header } from "./components/header";
 
 export const metadata: Metadata = {
-  title: "Parsa Khosravani | Portfolio",
-  description: "Software engineer portfolio.",
+  title: "Parsa Khosravani | Senior Frontend Engineer",
+  description:
+    "Portfolio of Parsa Khosravani — a product-minded frontend engineer building fast, reliable interfaces across ecommerce, travel, and market systems with React, Vue, and Angular.",
 };
 
 // Applies the saved theme before paint to avoid a flash. Defaults to dark.

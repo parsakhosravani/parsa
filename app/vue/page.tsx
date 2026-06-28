@@ -1,8 +1,12 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { StoryNav } from "../components/story-nav";
+import {
+  KeyThemes,
+  MomentsGallery,
+  StoryFooterNav,
+  StoryHero,
+} from "../components/story-sections";
 import { frameworkStories, frameworks } from "../lib/story";
 import VueStory from "./vue-story";
 
@@ -64,130 +68,30 @@ const keyThemes = [
 
 export default function VueStoryPage() {
   return (
-    <main className="mx-auto max-w-4xl px-6 py-16">
+    <main className="mx-auto max-w-5xl px-6 py-12 sm:py-16">
       <StoryNav active="vue" />
-      <header className="mb-12">
-        <p
-          className="text-sm font-semibold uppercase tracking-[0.3em]"
-          style={{ color: accentText }}
-        >
-          {story.eyebrow}
-        </p>
-        <h1 className="mt-3 text-4xl font-bold text-zinc-900 dark:text-zinc-100 sm:text-5xl">
-          {story.title}
-        </h1>
-        <p className="mt-4 max-w-3xl text-lg leading-relaxed text-zinc-700 dark:text-zinc-300">
-          {story.lede}
-        </p>
-      </header>
-      <div className="mb-12 grid gap-3 sm:grid-cols-3">
-        <a
-          href={companyLinkedIn}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group rounded-2xl border border-zinc-200 bg-white/70 px-5 py-4 transition hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-zinc-700"
-        >
-          <p className="text-xs uppercase tracking-widest text-zinc-500">
-            Company
-          </p>
-          <p className="mt-1 font-semibold text-zinc-900 group-hover:underline dark:text-zinc-100">
-            {story.company}
-          </p>
-          <p className="mt-1 text-xs text-zinc-500 transition group-hover:text-zinc-600 dark:group-hover:text-zinc-400">
-            View on LinkedIn →
-          </p>
-        </a>
-        <div className="rounded-2xl border border-zinc-200 bg-white/70 px-5 py-4 dark:border-zinc-800 dark:bg-zinc-900/40">
-          <p className="text-xs uppercase tracking-widest text-zinc-500">
-            Period
-          </p>
-          <p className="mt-1 font-semibold text-zinc-900 dark:text-zinc-100">
-            {story.period}
-          </p>
-        </div>
-        <div className="rounded-2xl border border-zinc-200 bg-white/70 px-5 py-4 dark:border-zinc-800 dark:bg-zinc-900/40">
-          <p className="text-xs uppercase tracking-widest text-zinc-500">
-            Focus
-          </p>
-          <div className="mt-2 flex flex-wrap gap-1">
-            {story.highlights.slice(0, 2).map((h) => (
-              <span
-                key={h}
-                className="inline-block rounded text-xs font-medium text-zinc-700 dark:text-zinc-300"
-              >
-                {h}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
+      <StoryHero
+        story={story}
+        accent={accent}
+        accentText={accentText}
+        companyLinkedIn={companyLinkedIn}
+      />
 
-      <section className="mb-12 rounded-3xl border border-zinc-200 bg-white/70 p-7 dark:border-zinc-800 dark:bg-zinc-900/40 sm:p-9">
-        <h2 className="mb-8 text-sm font-semibold uppercase tracking-[0.3em] text-zinc-500">
-          Khanoumi Moments
-        </h2>
-        <p className="mb-6 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-          These campaign moments show how product, growth, and real-world
-          customer interaction came together in the ecommerce chapter.
-        </p>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {khanoumiMoments.map((moment) => (
-            <figure key={moment.src} className="overflow-hidden rounded-xl">
-              <div className="relative aspect-[4/3] bg-zinc-100 dark:bg-zinc-800">
-                <Image
-                  src={moment.src}
-                  alt={moment.alt}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 420px"
-                  className="object-cover transition hover:scale-105"
-                />
-              </div>
-              <figcaption className="mt-3 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
-                {moment.caption}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
+      <MomentsGallery
+        title="Khanoumi Moments"
+        intro="These campaign moments show how product, growth, and real-world customer interaction came together in the ecommerce chapter."
+        moments={khanoumiMoments}
+      />
 
-      <section className="mb-12">
-        <h2 className="mb-6 text-sm font-semibold uppercase tracking-[0.3em] text-zinc-500">
-          What Made This Chapter Matter
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {keyThemes.map((theme) => (
-            <div
-              key={theme.title}
-              className="rounded-2xl border border-zinc-200 bg-white/70 p-5 dark:border-zinc-800 dark:bg-zinc-900/40"
-            >
-              <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">
-                {theme.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                {theme.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <KeyThemes themes={keyThemes} accent={accent} />
 
       <VueStory />
 
-      <div className="mt-12 flex gap-4">
-        <Link
-          href="/"
-          className="flex-1 rounded-lg border border-zinc-300 px-4 py-2 text-center text-sm font-medium text-zinc-700 transition hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500"
-        >
-          ← Back to Home
-        </Link>
-        <Link
-          href="/angular"
-          className="flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium text-white transition hover:opacity-90"
-          style={{ background: accentText }}
-        >
-          Next Story →
-        </Link>
-      </div>
+      <StoryFooterNav
+        nextHref="/angular"
+        nextLabel="Next Story"
+        accentText={accentText}
+      />
     </main>
   );
 }
