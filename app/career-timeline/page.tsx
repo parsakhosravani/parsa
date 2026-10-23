@@ -116,7 +116,7 @@ export default function CareerTimelinePage() {
             <li key={item.id} className="relative pl-12">
               <span className="absolute left-3 top-0 h-full w-px bg-zinc-200 dark:bg-zinc-800" />
               <span
-                className="absolute left-0 top-1.5 h-6 w-6 rounded-full border-2 border-white shadow-sm dark:border-zinc-900"
+                className="absolute left-0 top-1.5 h-6 w-6 rounded-full border-2 border-white shadow-xs dark:border-zinc-900"
                 style={{ background: item.accent }}
               />
 
@@ -139,7 +139,7 @@ export default function CareerTimelinePage() {
                     </p>
                   </div>
 
-                  <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-zinc-200 bg-white p-1 shadow-sm dark:border-zinc-700 dark:bg-zinc-100">
+                  <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-zinc-200 bg-white p-1 shadow-xs dark:border-zinc-700 dark:bg-zinc-100">
                     <Image
                       src={item.logo}
                       alt={`${item.company} logo`}
@@ -158,7 +158,7 @@ export default function CareerTimelinePage() {
                   <div className="mt-4 grid gap-3 sm:grid-cols-1">
                     {item.media.map((media) => (
                       <figure key={media.src}>
-                        <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
+                        <div className="relative aspect-16/9 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
                           <Image
                             src={media.src}
                             alt={media.alt}

@@ -16,7 +16,7 @@ export function CodeBlock({ lang, code }: { lang: string; code: string }) {
   }
 
   return (
-    <div className="my-6 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-950 shadow-sm dark:border-zinc-800">
+    <div className="my-6 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-950 shadow-xs dark:border-zinc-800">
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-2">
         <div className="flex gap-1.5" aria-hidden="true">
           <span className="h-3 w-3 rounded-full bg-red-400/80" />

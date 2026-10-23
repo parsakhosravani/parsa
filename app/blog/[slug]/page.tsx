@@ -6,14 +6,17 @@ import { BlogContent } from "../../components/blog-content";
 import { ReadingProgress } from "../../components/reading-progress";
 import { site, siteUrl } from "../../lib/site";
 
-type Params = { params: { slug: string } };
+type Params = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-export function generateMetadata({ params }: Params): Metadata {
-  const post = getPost(params.slug);
+export async function generateMetadata({
+  params,
+}: Params): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPost(slug);
   if (!post) return { title: "Not found | Parsa Khosravani" };
   const url = `${siteUrl}/blog/${post.slug}`;
   return {
@@ -37,8 +40,9 @@ export function generateMetadata({ params }: Params): Metadata {
   };
 }
 
-export default function BlogPostPage({ params }: Params) {
-  const post = getPost(params.slug);
+export default async function BlogPostPage({ params }: Params) {
+  const { slug } = await params;
+  const post = getPost(slug);
   if (!post) notFound();
 
   const jsonLd = {

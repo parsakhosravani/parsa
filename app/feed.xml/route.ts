@@ -10,6 +10,9 @@ function escapeXml(value: string): string {
     .replace(/'/g, "&apos;");
 }
 
+// Posts are compiled in, so the feed can be generated once at build time.
+export const dynamic = "force-static";
+
 export function GET() {
   const items = sortedPosts
     .map((post) => {

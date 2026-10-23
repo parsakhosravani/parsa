@@ -66,10 +66,13 @@ export default function AngularStory() {
     let cancelled = false;
 
     (async () => {
-      // Order matters: zone first, then the JIT compiler, then Angular itself.
-      await import("zone.js");
+      // The JIT compiler must load before Angular itself. The app runs
+      // zoneless (no zone.js): template event handlers schedule change
+      // detection on their own, which is all this component needs.
       await import("@angular/compiler");
-      const { Component } = await import("@angular/core");
+      const { Component, provideZonelessChangeDetection } = await import(
+        "@angular/core"
+      );
       const { CommonModule } = await import("@angular/common");
       const { bootstrapApplication } =
         await import("@angular/platform-browser");
@@ -108,7 +111,9 @@ export default function AngularStory() {
       hostEl = document.createElement("angular-story");
       hostRef.current.appendChild(hostEl);
 
-      appRef = (await bootstrapApplication(StoryComponent)) as unknown as {
+      appRef = (await bootstrapApplication(StoryComponent, {
+        providers: [provideZonelessChangeDetection()],
+      })) as unknown as {
         destroy: () => void;
       };
     })();
