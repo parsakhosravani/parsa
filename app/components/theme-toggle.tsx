@@ -25,9 +25,18 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
-      className="inline-flex items-center gap-1.5 rounded-full border border-zinc-300 px-3 py-1 text-zinc-600 transition hover:border-zinc-400 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-white"
+      className="inline-flex items-center gap-2 text-[0.9375rem] text-ink-soft transition hover:text-ink"
     >
-      <span aria-hidden>{dark ? "☀" : "☾"}</span>
+      {/* A half-filled circle: the ink side shows which mode you're in. */}
+      <svg
+        viewBox="0 0 16 16"
+        className="h-3.5 w-3.5"
+        aria-hidden="true"
+        fill="none"
+      >
+        <circle cx="8" cy="8" r="6.5" stroke="currentColor" />
+        <path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor" />
+      </svg>
       {dark ? "Light" : "Dark"}
     </button>
   );

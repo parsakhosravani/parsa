@@ -16,30 +16,21 @@ export function CodeBlock({ lang, code }: { lang: string; code: string }) {
   }
 
   return (
-    <div className="my-6 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-950 shadow-xs dark:border-zinc-800">
-      <div className="flex items-center justify-between border-b border-white/10 px-4 py-2">
-        <div className="flex gap-1.5" aria-hidden="true">
-          <span className="h-3 w-3 rounded-full bg-red-400/80" />
-          <span className="h-3 w-3 rounded-full bg-amber-400/80" />
-          <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="font-mono text-xs uppercase tracking-widest text-zinc-500">
-            {lang}
-          </span>
-          <button
-            type="button"
-            onClick={copy}
-            className="rounded-md px-2 py-1 font-mono text-xs text-zinc-400 transition hover:bg-white/10 hover:text-zinc-100"
-            aria-label={copied ? "Code copied" : "Copy code to clipboard"}
-          >
-            {copied ? "Copied ✓" : "Copy"}
-          </button>
-        </div>
-      </div>
-      <pre className="overflow-x-auto px-4 py-4 text-sm leading-relaxed">
-        <code className="font-mono text-zinc-100">{code}</code>
+    <figure className="my-8 bg-zinc-900 font-sans text-zinc-100 dark:bg-zinc-950 dark:ring-1 dark:ring-zinc-800">
+      <figcaption className="flex items-center justify-between px-4 pt-3 text-xs text-zinc-400">
+        <span>{lang}</span>
+        <button
+          type="button"
+          onClick={copy}
+          className="text-zinc-300 transition hover:text-white"
+          aria-label={copied ? "Code copied" : "Copy code to clipboard"}
+        >
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </figcaption>
+      <pre className="overflow-x-auto px-4 pb-4 pt-3 text-[0.8125rem] leading-relaxed">
+        <code className="font-mono">{code}</code>
       </pre>
-    </div>
+    </figure>
   );
 }

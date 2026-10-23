@@ -1,20 +1,10 @@
-"use client";
-
-import { StoryNav } from "../components/story-nav";
-import {
-  KeyThemes,
-  MomentsGallery,
-  StoryFooterNav,
-  StoryHero,
-} from "../components/story-sections";
-import { frameworkStories, frameworks } from "../lib/story";
+import type { Metadata } from "next";
+import { ChapterPage } from "../components/story-sections";
 import VueStory from "./vue-story";
 
-const fw = frameworks.find((f) => f.slug === "vue")!;
-const accentText = fw.accentText;
-const accent = fw.accent;
-const story = frameworkStories.vue;
-const companyLinkedIn = "https://www.linkedin.com/company/khanoumi";
+export const metadata: Metadata = {
+  title: "Vue chapter",
+};
 
 const khanoumiMoments = [
   {
@@ -66,32 +56,14 @@ const keyThemes = [
   },
 ];
 
-export default function VueStoryPage() {
+export default function VueChapterPage() {
   return (
-    <main className="mx-auto max-w-5xl px-6 py-12 sm:py-16">
-      <StoryNav active="vue" />
-      <StoryHero
-        story={story}
-        accent={accent}
-        accentText={accentText}
-        companyLinkedIn={companyLinkedIn}
-      />
-
-      <MomentsGallery
-        title="Khanoumi Moments"
-        intro="These campaign moments show how product, growth, and real-world customer interaction came together in the ecommerce chapter."
-        moments={khanoumiMoments}
-      />
-
-      <KeyThemes themes={keyThemes} accent={accent} />
-
-      <VueStory />
-
-      <StoryFooterNav
-        nextHref="/angular"
-        nextLabel="Next Story"
-        accentText={accentText}
-      />
-    </main>
+    <ChapterPage
+      slug="vue"
+      moments={khanoumiMoments}
+      momentsIntro="These campaign moments show how product, growth, and real-world customer interaction came together in the ecommerce chapter."
+      themes={keyThemes}
+      reader={<VueStory />}
+    />
   );
 }

@@ -17,10 +17,10 @@ export async function generateMetadata({
 }: Params): Promise<Metadata> {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post) return { title: "Not found | Parsa Khosravani" };
+  if (!post) return { title: "Not found" };
   const url = `${siteUrl}/blog/${post.slug}`;
   return {
-    title: `${post.title} | Parsa Khosravani`,
+    title: post.title,
     description: post.description,
     alternates: { canonical: url },
     openGraph: {
@@ -62,82 +62,63 @@ export default async function BlogPostPage({ params }: Params) {
   };
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-12 sm:py-16">
+    <main className="mx-auto max-w-6xl px-5 pb-8 pt-12 sm:px-8 sm:pt-16">
       <ReadingProgress />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Link
-        href="/blog"
-        className="inline-flex items-center gap-1 text-sm font-medium text-zinc-600 transition hover:gap-2 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-      >
-        <span aria-hidden>←</span>
-        All writing
-      </Link>
 
-      <article className="mt-8">
-        <div className="flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
-          <time dateTime={post.date}>{formatDate(post.date)}</time>
-          <span aria-hidden>·</span>
-          <span>{post.readingMinutes} min read</span>
-        </div>
-
-        <h1 className="font-display mt-4 text-3xl leading-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl">
-          {post.title}
-        </h1>
-        <p className="mt-4 text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
-          {post.description}
-        </p>
-
-        <div className="mt-5 flex flex-wrap gap-2">
-          {post.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full border border-zinc-200 px-2.5 py-0.5 text-xs text-zinc-500 dark:border-zinc-800 dark:text-zinc-400"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div
-          className="mt-8 h-px w-full"
-          style={{
-            background: `linear-gradient(to right, ${post.accent}, transparent)`,
-          }}
-        />
-
-        <BlogContent blocks={post.content} />
-      </article>
-
-      <footer className="mt-16 border-t border-zinc-200 pt-8 dark:border-zinc-800">
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          Written by{" "}
-          <span className="font-medium text-zinc-900 dark:text-zinc-100">
-            Parsa Khosravani
-          </span>{" "}
-          — Senior Frontend Engineer.
-        </p>
-        <div className="mt-4 flex flex-wrap gap-4 text-sm font-medium">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-1 text-zinc-700 transition hover:gap-2 hover:text-indigo-600 dark:text-zinc-300 dark:hover:text-cyan-300"
-          >
-            <span aria-hidden>←</span>
-            More posts
+      <article className="grid gap-x-10 gap-y-6 md:grid-cols-[11rem_1fr]">
+        <aside className="text-sm text-ink-faint md:pt-4">
+          <Link href="/blog" className="link text-ink-soft">
+            All essays
           </Link>
-          <a
-            href="https://www.linkedin.com/in/parsakhosravani"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-zinc-700 transition hover:gap-2 hover:text-indigo-600 dark:text-zinc-300 dark:hover:text-cyan-300"
-          >
-            Discuss on LinkedIn
-            <span aria-hidden>↗</span>
-          </a>
+          <p className="mt-6">
+            <time dateTime={post.date} className="block tabular-nums text-ink">
+              {formatDate(post.date)}
+            </time>
+            {post.readingMinutes} min read
+          </p>
+          <p className="mt-4 hidden md:block">{post.tags.join(", ")}</p>
+        </aside>
+
+        <div className="min-w-0">
+          <header>
+            <h1 className="font-display set-in max-w-[22ch] text-[clamp(2.4rem,5.5vw,4.25rem)] leading-[1.02] tracking-[-0.025em] text-ink">
+              {post.title}
+            </h1>
+            <p className="prose-serif set-in-late mt-6 max-w-[52ch] text-[clamp(1.2rem,2vw,1.4rem)] leading-[1.5] text-ink-soft">
+              {post.description}
+            </p>
+          </header>
+
+          <div className="mt-12 max-w-[68ch] border-t border-rule">
+            <BlogContent blocks={post.content} />
+          </div>
+
+          <footer className="mt-16 max-w-[68ch] border-t border-rule pt-8">
+            <p className="text-ink-soft">
+              Written by <span className="text-ink">{site.author}</span>,
+              senior frontend engineer. If this was useful or you disagree,
+              I’d like to hear why.
+            </p>
+            <p className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+              <Link href="/blog" className="link text-ink">
+                More essays
+              </Link>
+              <a
+                href="https://www.linkedin.com/in/parsakhosravani"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link text-ink"
+              >
+                Discuss on LinkedIn
+              </a>
+            </p>
+          </footer>
         </div>
-      </footer>
+      </article>
     </main>
   );
 }
