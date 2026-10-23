@@ -36,8 +36,8 @@ Story-driven personal portfolio built with Next.js and Tailwind CSS.
 ## Run locally
 
 ```sh
-git clone https://github.com/parsa/Parsa.git
-cd Parsa
+git clone https://github.com/parsakhosravani/parsa.git
+cd parsa
 pnpm install
 pnpm dev
 ```
