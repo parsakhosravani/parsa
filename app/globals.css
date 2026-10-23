@@ -4,8 +4,74 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
-  Tailwind v4 compatibility: v3 gave borders a light gray default color and
-  buttons a pointer cursor. Keep that look so the upgrade is visually neutral.
+  Design tokens — "porcelain and ink".
+  Light: cool porcelain paper, navy ink, fountain-pen cobalt.
+  Dark: deep ink paper, porcelain text, a softer cobalt.
+  The zinc scale is remapped onto the same cool ink so every existing
+  zinc utility lands on-palette; indigo/cyan collapse into cobalt.
+*/
+@theme {
+  --font-sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Newsreader Variable", ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --color-zinc-50: #f8f9fb;
+  --color-zinc-100: #eef1f5;
+  --color-zinc-200: #dde1e9;
+  --color-zinc-300: #c3c9d5;
+  --color-zinc-400: #8e96a8;
+  --color-zinc-500: #687086;
+  --color-zinc-600: #4a5268;
+  --color-zinc-700: #343b50;
+  --color-zinc-800: #232938;
+  --color-zinc-900: #161b2e;
+  --color-zinc-950: #0d101a;
+
+  --color-paper: var(--paper);
+  --color-raised: var(--raised);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-cobalt: var(--cobalt);
+  --color-cobalt-ink: var(--cobalt-ink);
+}
+
+:root {
+  color-scheme: light;
+  --paper: #eef1f5;
+  --raised: #f8f9fb;
+  --ink: #161b2e;
+  --ink-soft: #4a5268;
+  --ink-faint: #5d6579;
+  --rule: #cdd3de;
+  /* Chapter colors, tuned to read as text on porcelain (≥4.5:1). */
+  --ch-vue: #1f7a54;
+  --ch-react: #0a6f91;
+  --ch-angular: #c4002b;
+  --cobalt: #2b3fd1;
+  /* Text that sits on a cobalt fill. */
+  --cobalt-ink: #ffffff;
+}
+
+html.dark {
+  color-scheme: dark;
+  --paper: #10131c;
+  --raised: #171b27;
+  --ink: #e7e9f0;
+  --ink-soft: #a3aabb;
+  --ink-faint: #828a9e;
+  --rule: #2a3042;
+  --ch-vue: #42b883;
+  --ch-react: #61dafb;
+  --ch-angular: #ff5a75;
+  --cobalt: #8c9bff;
+  --cobalt-ink: #10131c;
+}
+
+/*
+  Tailwind v4 compatibility: v3 gave borders a light default color and
+  buttons a pointer cursor.
 */
 @layer base {
   *,
@@ -13,7 +79,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-zinc-200, currentColor);
+    border-color: var(--rule, currentColor);
   }
 
   button:not(:disabled),
@@ -22,27 +88,9 @@
   }
 }
 
-@font-face {
-  font-family: "Cal Sans";
-  src: url("/fonts/CalSans-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-:root {
-  color-scheme: light;
-  --accent: #6366f1;
-  --accent-2: #06b6d4;
-  --accent-3: #f59e0b;
-}
-
-html.dark {
-  color-scheme: dark;
-}
-
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 html,
@@ -52,66 +100,44 @@ body {
 
 body {
   margin: 0;
-  font-family:
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    sans-serif;
-  color: #18181b;
-  background-color: #fafafa;
-  background-image:
-    radial-gradient(
-      circle at 15% -10%,
-      rgba(99, 102, 241, 0.12),
-      transparent 45%
-    ),
-    radial-gradient(circle at 85% 0%, rgba(6, 182, 212, 0.12), transparent 40%),
-    radial-gradient(
-      circle at 50% 120%,
-      rgba(245, 158, 11, 0.08),
-      transparent 45%
-    );
-  background-attachment: fixed;
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background-color: var(--paper);
+  font-feature-settings: "ss01", "kern";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   transition:
-    background 0.4s ease,
-    color 0.4s ease;
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
-html.dark body {
-  color: #e4e4e7;
-  background-color: #09090b;
-  background-image:
-    radial-gradient(
-      circle at 15% -10%,
-      rgba(99, 102, 241, 0.18),
-      transparent 45%
-    ),
-    radial-gradient(circle at 85% 0%, rgba(6, 182, 212, 0.15), transparent 40%),
-    radial-gradient(
-      circle at 50% 120%,
-      rgba(245, 158, 11, 0.1),
-      transparent 45%
-    );
-}
-
+/* Display type: Newsreader at its large optical size. */
 .font-display {
-  font-family: "Cal Sans", system-ui, sans-serif;
-  letter-spacing: -0.02em;
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+/* Long-form reading: serif with a little more air than the sans. */
+.prose-serif {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  font-size: 1.1875rem;
+  line-height: 1.7;
 }
 
 ::selection {
-  background: rgba(99, 102, 241, 0.25);
+  background: color-mix(in srgb, var(--cobalt) 22%, transparent);
 }
 
 /* Keyboard focus visibility */
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 6px;
-}
-
-html.dark :focus-visible {
-  outline-color: var(--accent-2);
+  outline: 2px solid var(--cobalt);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 /* Skip-to-content link: visible only when focused */
@@ -120,13 +146,11 @@ html.dark :focus-visible {
   left: 1rem;
   top: -4rem;
   z-index: 100;
-  border-radius: 0.5rem;
-  background: #18181b;
-  color: #ffffff;
+  background: var(--ink);
+  color: var(--paper);
   padding: 0.625rem 1rem;
   font-size: 0.875rem;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: top 0.2s ease;
 }
 
@@ -134,9 +158,98 @@ html.dark :focus-visible {
   top: 1rem;
 }
 
-html.dark .skip-link {
-  background: #fafafa;
-  color: #18181b;
+/* Underlined text links in the ink color, cobalt on hover. */
+.link {
+  text-decoration-line: underline;
+  text-decoration-color: var(--rule);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition:
+    color 0.15s ease,
+    text-decoration-color 0.15s ease;
+}
+
+.link:hover {
+  color: var(--cobalt);
+  text-decoration-color: currentColor;
+}
+
+/*
+  Contents page — the one signature interaction.
+  The dotted leader between a chapter's title and its years fills with the
+  chapter's framework color when the row is hovered or focused.
+*/
+.toc-row {
+  --chapter: var(--cobalt);
+}
+
+.toc-leader {
+  position: relative;
+  height: 0.6em;
+  min-width: 2rem;
+  align-self: baseline;
+  background-image: radial-gradient(
+    circle,
+    var(--ink-faint) 1px,
+    transparent 1.4px
+  );
+  background-size: 8px 4px;
+  background-repeat: repeat-x;
+  background-position: left bottom;
+}
+
+.toc-leader::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 2px;
+  background: var(--chapter);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toc-row:hover .toc-leader::after,
+.toc-row:focus-visible .toc-leader::after {
+  transform: scaleX(1);
+}
+
+.toc-row:hover .toc-title,
+.toc-row:focus-visible .toc-title {
+  color: var(--chapter);
+}
+
+/* Page-load: the name sets first, then the contents settle in beneath it. */
+@keyframes set-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.set-in {
+  animation: set-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.set-in-late {
+  animation: set-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+}
+
+/* Duotone portrait: grayscale photo tinted with ink. */
+.duotone {
+  filter: grayscale(1) contrast(1.05);
+  mix-blend-mode: multiply;
+}
+
+html.dark .duotone {
+  mix-blend-mode: normal;
+  filter: grayscale(1) contrast(1.05) brightness(0.9);
 }
 
 /* Keep gradient-clipped text visible in forced-colors / high-contrast mode */
@@ -147,116 +260,9 @@ html.dark .skip-link {
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(113, 113, 122, 0.4);
-  border-radius: 9999px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(113, 113, 122, 0.6);
-  background-clip: content-box;
-}
-
-/* Animations */
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
-@keyframes pulse-ring {
-  0% {
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
-  }
-  70% {
-    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
-  }
-}
-
-.animate-fade-up {
-  animation: fade-up 0.7s ease both;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-pulse-ring {
-  animation: pulse-ring 2s infinite;
-}
-
-.text-shimmer {
-  background-size: 200% auto;
-  animation: shimmer 6s linear infinite;
-}
-
-/* Scroll reveal */
+/* Scroll reveal (kept for compatibility; not used by the editorial pages). */
 [data-reveal] {
-  opacity: 0;
-  transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-}
-
-[data-reveal="up"] {
-  transform: translateY(28px);
-}
-
-[data-reveal="left"] {
-  transform: translateX(-32px);
-}
-
-[data-reveal="right"] {
-  transform: translateX(32px);
-}
-
-[data-reveal="scale"] {
-  transform: scale(0.94);
-}
-
-[data-reveal][data-visible="true"] {
   opacity: 1;
-  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -264,16 +270,16 @@ html.dark .skip-link {
     scroll-behavior: auto;
   }
 
-  .animate-fade-up,
-  .animate-float,
-  .animate-pulse-ring,
-  .text-shimmer {
+  .set-in,
+  .set-in-late {
     animation: none;
   }
 
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
+  .toc-leader::after {
+    transition: none;
+  }
+
+  body {
     transition: none;
   }
 }

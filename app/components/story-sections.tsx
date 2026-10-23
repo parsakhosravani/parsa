@@ -1,196 +1,230 @@
 import Image from "next/image";
-import type { FrameworkStory } from "../lib/story";
+import Link from "next/link";
+import type { CSSProperties, ReactNode } from "react";
+import { getChapter } from "../lib/chapters";
+import { frameworkStories, type FrameworkSlug } from "../lib/story";
 
-interface Moment {
+export interface Moment {
   src: string;
   alt: string;
   caption: string;
 }
 
-interface Theme {
+export interface Theme {
   title: string;
   description: string;
 }
 
-export function StoryHero({
-  story,
-  accent,
-  accentText,
-  companyLinkedIn,
+/**
+ * Class strings shared by the three chapter readers. The React reader uses
+ * them directly; the Vue and Angular templates repeat the same classes so
+ * all three render identically.
+ */
+export const readerClasses = {
+  tabs: "flex flex-wrap gap-x-7 gap-y-2 border-b border-rule pb-3",
+  tab: "inline-flex items-baseline gap-2 text-[0.9375rem] text-ink-soft transition hover:text-ink",
+  tabActive:
+    "text-ink underline decoration-[var(--chapter)] decoration-2 underline-offset-[0.55em]",
+  tabNumber: "font-display tabular-nums",
+  article: "pt-9",
+  title:
+    "font-display text-[clamp(1.75rem,3.2vw,2.5rem)] leading-[1.1] text-ink",
+  subtitle: "prose-serif mt-2 italic text-ink-soft",
+  body: "prose-serif mt-7 max-w-[62ch] space-y-5 text-ink",
+  footer:
+    "mt-10 flex items-center justify-between gap-4 border-t border-rule pt-5 text-[0.9375rem]",
+  button:
+    "text-ink transition hover:text-[var(--chapter)] disabled:cursor-default disabled:opacity-30 disabled:hover:text-ink",
+  count: "text-sm tabular-nums text-ink-faint",
+} as const;
+
+function Spread({
+  label,
+  children,
+  className = "",
 }: {
-  story: FrameworkStory;
-  accent: string;
-  accentText: string;
-  companyLinkedIn: string;
+  label: ReactNode;
+  children: ReactNode;
+  className?: string;
 }) {
   return (
-    <>
-      <header className="animate-fade-up relative mb-10 overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/70 p-8 backdrop-blur-xs dark:border-zinc-800/70 dark:bg-zinc-900/40 sm:p-10">
-        <div
-          className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full blur-3xl opacity-30"
-          style={{ background: accent }}
-        />
-        <span
-          className="absolute inset-x-0 top-0 h-1"
-          style={{ background: accent }}
-        />
-        <p
-          className="relative text-sm font-semibold uppercase tracking-[0.3em]"
-          style={{ color: accentText }}
-        >
-          {story.eyebrow}
-        </p>
-        <h1 className="font-display relative mt-3 text-4xl text-zinc-900 dark:text-zinc-100 sm:text-5xl">
-          {story.title}
-        </h1>
-        <p className="relative mt-4 max-w-3xl text-lg leading-relaxed text-zinc-700 dark:text-zinc-300">
-          {story.lede}
-        </p>
+    <section className={`grid gap-x-10 gap-y-5 md:grid-cols-[11rem_1fr] ${className}`}>
+      <div className="font-display text-xl leading-tight text-ink-soft md:pt-1">
+        {label}
+      </div>
+      <div className="min-w-0">{children}</div>
+    </section>
+  );
+}
+
+export function ChapterPage({
+  slug,
+  moments,
+  momentsIntro,
+  themes,
+  reader,
+}: {
+  slug: FrameworkSlug;
+  moments: Moment[];
+  momentsIntro: string;
+  themes: Theme[];
+  reader: ReactNode;
+}) {
+  const { chapter, prev, next } = getChapter(slug);
+  const story = frameworkStories[slug];
+
+  return (
+    <main
+      className="mx-auto max-w-6xl px-5 pb-8 pt-12 sm:px-8 sm:pt-16"
+      style={{ "--chapter": chapter.accentText } as CSSProperties}
+    >
+      {/* Chapter opener */}
+      <header className="grid gap-x-10 gap-y-6 md:grid-cols-[11rem_1fr]">
+        <div className="md:pt-3">
+          <Link href="/#contents" className="link text-sm text-ink-soft">
+            Contents
+          </Link>
+          <p
+            className="font-display mt-6 text-[4.5rem] leading-none"
+            style={{ color: chapter.accentText }}
+            aria-hidden="true"
+          >
+            {chapter.numeral}
+          </p>
+        </div>
+        <div>
+          <p className="text-ink-soft">
+            <span className="sr-only">Chapter {chapter.numeral}: </span>
+            {chapter.framework} at{" "}
+            <a
+              href={chapter.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link text-ink"
+            >
+              {chapter.company}
+            </a>
+            , {chapter.city}
+          </p>
+          <h1 className="font-display set-in mt-4 max-w-[18ch] text-[clamp(2.6rem,6.5vw,5.25rem)] leading-[0.98] tracking-[-0.025em] text-ink">
+            {story.title}
+          </h1>
+          <p className="prose-serif set-in-late mt-8 max-w-[52ch] text-[clamp(1.2rem,2vw,1.4rem)] leading-[1.5] text-ink-soft">
+            {story.lede}
+          </p>
+          <dl className="mt-10 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-5 border-t border-rule pt-5 text-[0.9375rem] sm:grid-cols-[auto_1fr]">
+            <div>
+              <dt className="text-ink-faint">When</dt>
+              <dd className="mt-0.5 text-ink">{story.period}</dd>
+            </div>
+            <div>
+              <dt className="text-ink-faint">Focus</dt>
+              <dd className="mt-0.5 text-ink">
+                {story.highlights.join(", ")}
+              </dd>
+            </div>
+          </dl>
+        </div>
       </header>
 
-      <div className="mb-10 grid gap-3 sm:grid-cols-3">
-        <a
-          href={companyLinkedIn}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group rounded-2xl border border-zinc-200 bg-white/70 px-5 py-4 transition hover:-translate-y-0.5 hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-zinc-700"
-        >
-          <p className="text-xs uppercase tracking-widest text-zinc-500">
-            Company
-          </p>
-          <p className="mt-1 font-semibold text-zinc-900 group-hover:underline dark:text-zinc-100">
-            {story.company}
-          </p>
-          <p className="mt-1 text-xs text-zinc-500 transition group-hover:text-zinc-600 dark:group-hover:text-zinc-400">
-            View on LinkedIn →
-          </p>
-        </a>
-        <div className="rounded-2xl border border-zinc-200 bg-white/70 px-5 py-4 dark:border-zinc-800 dark:bg-zinc-900/40">
-          <p className="text-xs uppercase tracking-widest text-zinc-500">
-            Period
-          </p>
-          <p className="mt-1 font-semibold text-zinc-900 dark:text-zinc-100">
-            {story.period}
-          </p>
-        </div>
-        <div className="rounded-2xl border border-zinc-200 bg-white/70 px-5 py-4 dark:border-zinc-800 dark:bg-zinc-900/40">
-          <p className="text-xs uppercase tracking-widest text-zinc-500">
-            Focus
-          </p>
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {story.highlights.slice(0, 2).map((h) => (
-              <span
-                key={h}
-                className="inline-block rounded-sm text-xs font-medium text-zinc-700 dark:text-zinc-300"
+      {/* The story itself, rendered by the chapter's own framework */}
+      <Spread
+        className="mt-24"
+        label={
+          <>
+            The story
+            <span className="mt-2 block font-sans text-sm leading-snug text-ink-faint">
+              This part of the page is a live {chapter.framework} app.
+            </span>
+          </>
+        }
+      >
+        {reader}
+      </Spread>
+
+      {/* Photos */}
+      <Spread className="mt-24" label="From the archive">
+        <p className="max-w-[60ch] text-ink-soft">{momentsIntro}</p>
+        <div className="mt-8 grid gap-x-6 gap-y-8 sm:grid-cols-3">
+          {moments.map((moment, i) => (
+            <figure key={moment.src} className={i === 0 ? "sm:col-span-3" : ""}>
+              <div
+                className={`relative overflow-hidden bg-zinc-200 dark:bg-zinc-800 ${
+                  i === 0 ? "aspect-[16/9]" : "aspect-[4/3]"
+                }`}
               >
-                {h}
-              </span>
-            ))}
-          </div>
+                <Image
+                  src={moment.src}
+                  alt={moment.alt}
+                  fill
+                  sizes={
+                    i === 0
+                      ? "(max-width: 768px) 100vw, 900px"
+                      : "(max-width: 640px) 100vw, 300px"
+                  }
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="mt-3 max-w-[56ch] text-sm leading-relaxed text-ink-soft">
+                {moment.caption}
+              </figcaption>
+            </figure>
+          ))}
         </div>
-      </div>
-    </>
-  );
-}
+      </Spread>
 
-export function MomentsGallery({
-  title,
-  intro,
-  moments,
-}: {
-  title: string;
-  intro: string;
-  moments: Moment[];
-}) {
-  return (
-    <section className="mb-12 rounded-3xl border border-zinc-200 bg-white/70 p-7 dark:border-zinc-800 dark:bg-zinc-900/40 sm:p-9">
-      <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-zinc-500">
-        {title}
-      </h2>
-      <p className="mb-6 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-        {intro}
-      </p>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {moments.map((moment) => (
-          <figure key={moment.src} className="group overflow-hidden rounded-xl">
-            <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
-              <Image
-                src={moment.src}
-                alt={moment.alt}
-                fill
-                sizes="(max-width: 640px) 100vw, 420px"
-                className="object-cover transition duration-500 group-hover:scale-105"
-              />
+      {/* Lessons */}
+      <Spread className="mt-24" label="What it taught me">
+        <dl className="grid gap-x-12 sm:grid-cols-2">
+          {themes.map((theme) => (
+            <div key={theme.title} className="border-t border-rule py-6">
+              <dt className="font-display text-2xl leading-tight text-ink">
+                {theme.title}
+              </dt>
+              <dd className="mt-2 max-w-[50ch] text-[0.9375rem] text-ink-soft">
+                {theme.description}
+              </dd>
             </div>
-            <figcaption className="mt-3 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
-              {moment.caption}
-            </figcaption>
-          </figure>
-        ))}
-      </div>
-    </section>
-  );
-}
+          ))}
+        </dl>
+      </Spread>
 
-export function KeyThemes({
-  themes,
-  accent,
-}: {
-  themes: Theme[];
-  accent: string;
-}) {
-  return (
-    <section className="mb-12">
-      <h2 className="mb-6 text-sm font-semibold uppercase tracking-[0.3em] text-zinc-500">
-        What Made This Chapter Matter
-      </h2>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {themes.map((theme) => (
-          <div
-            key={theme.title}
-            className="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-white/70 p-5 transition hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/40"
-          >
-            <span
-              className="absolute left-0 top-0 h-full w-1 origin-top scale-y-0 transition-transform duration-300 group-hover:scale-y-100"
-              style={{ background: accent }}
-            />
-            <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">
-              {theme.title}
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-              {theme.description}
-            </p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-export function StoryFooterNav({
-  nextHref,
-  nextLabel,
-  accentText,
-}: {
-  nextHref: string;
-  nextLabel: string;
-  accentText: string;
-}) {
-  return (
-    <div className="mt-12 flex gap-4">
-      <a
-        href="/"
-        className="flex-1 rounded-lg border border-zinc-300 px-4 py-2 text-center text-sm font-medium text-zinc-700 transition hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500"
+      {/* Turn the page */}
+      <nav
+        aria-label="Chapters"
+        className="mt-24 grid gap-px border-y border-rule bg-rule sm:grid-cols-2"
       >
-        ← Back to Home
-      </a>
-      <a
-        href={nextHref}
-        className="flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium text-white transition hover:opacity-90"
-        style={{ background: accentText }}
-      >
-        {nextLabel} →
-      </a>
-    </div>
+        {[prev, next].map((target, i) =>
+          target ? (
+            <Link
+              key={target.slug}
+              href={`/${target.slug}`}
+              className={`group bg-paper py-8 ${i === 1 ? "sm:pl-10 sm:text-right" : "sm:pr-10"}`}
+              style={{ "--target": target.accentText } as CSSProperties}
+            >
+              <span className="text-sm text-ink-faint">
+                {i === 0 ? "Previous chapter" : "Next chapter"}
+              </span>
+              <span className="font-display mt-2 block text-[clamp(1.6rem,3vw,2.25rem)] leading-tight text-ink transition-colors group-hover:text-[var(--target)]">
+                {target.numeral}. {target.framework} at {target.company}
+              </span>
+            </Link>
+          ) : (
+            <Link
+              key={i === 0 ? "start" : "end"}
+              href={i === 0 ? "/#contents" : "/career-timeline"}
+              className={`group bg-paper py-8 ${i === 1 ? "sm:pl-10 sm:text-right" : "sm:pr-10"}`}
+            >
+              <span className="text-sm text-ink-faint">
+                {i === 0 ? "Back to" : "After the last chapter"}
+              </span>
+              <span className="font-display mt-2 block text-[clamp(1.6rem,3vw,2.25rem)] leading-tight text-ink transition-colors group-hover:text-cobalt">
+                {i === 0 ? "Contents" : "The full timeline"}
+              </span>
+            </Link>
+          ),
+        )}
+      </nav>
+    </main>
   );
 }

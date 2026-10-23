@@ -1,20 +1,10 @@
-"use client";
+import type { Metadata } from "next";
+import { ChapterPage } from "../components/story-sections";
+import AngularStory from "./angular-story";
 
-import dynamic from "next/dynamic";
-import { StoryNav } from "../components/story-nav";
-import {
-  KeyThemes,
-  MomentsGallery,
-  StoryFooterNav,
-  StoryHero,
-} from "../components/story-sections";
-import { frameworkStories, frameworks } from "../lib/story";
-
-const fw = frameworks.find((f) => f.slug === "angular")!;
-const accentText = fw.accentText;
-const accent = fw.accent;
-const story = frameworkStories.angular;
-const companyLinkedIn = "https://www.linkedin.com/company/mofidsecurities";
+export const metadata: Metadata = {
+  title: "Angular chapter",
+};
 
 const mofidMoments = [
   {
@@ -66,37 +56,14 @@ const keyThemes = [
   },
 ];
 
-const AngularStory = dynamic(() => import("./angular-story"), {
-  ssr: false,
-  loading: () => <p className="text-zinc-500">Bootstrapping Angular app…</p>,
-});
-
-export default function AngularStoryPage() {
+export default function AngularChapterPage() {
   return (
-    <main className="mx-auto max-w-5xl px-6 py-12 sm:py-16">
-      <StoryNav active="angular" />
-      <StoryHero
-        story={story}
-        accent={accent}
-        accentText={accentText}
-        companyLinkedIn={companyLinkedIn}
-      />
-
-      <MomentsGallery
-        title="Mofid Moments"
-        intro="Culture and collaboration are part of the architecture story too. These moments show the team environment behind the platform work."
-        moments={mofidMoments}
-      />
-
-      <KeyThemes themes={keyThemes} accent={accent} />
-
-      <AngularStory />
-
-      <StoryFooterNav
-        nextHref="/react"
-        nextLabel="Explore React"
-        accentText={accentText}
-      />
-    </main>
+    <ChapterPage
+      slug="angular"
+      moments={mofidMoments}
+      momentsIntro="Culture and collaboration are part of the architecture story too. These moments show the team environment behind the platform work."
+      themes={keyThemes}
+      reader={<AngularStory />}
+    />
   );
 }
