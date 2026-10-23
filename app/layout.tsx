@@ -1,6 +1,10 @@
+import "@fontsource-variable/newsreader/opsz.css";
+import "@fontsource-variable/newsreader/opsz-italic.css";
+import "@fontsource-variable/hanken-grotesk";
 import "./globals.css";
 import { Metadata } from "next";
 import { Header } from "./components/header";
+import { Footer } from "./components/footer";
 import { site, siteUrl } from "./lib/site";
 
 export const metadata: Metadata = {
@@ -64,6 +68,7 @@ export default function RootLayout({
         <div id="main-content" className="flex-1">
           {children}
         </div>
+        <Footer />
       </body>
     </html>
   );

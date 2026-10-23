@@ -3,195 +3,126 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
+import { chapterIndex } from "../lib/chapters";
+import { site } from "../lib/site";
 
-const internalLinks = [
+const pages = [
+  { href: "/career-timeline", label: "Timeline" },
   { href: "/blog", label: "Writing" },
   { href: "/recommendations", label: "Recommendations" },
 ];
 
-const storyLinks = [
-  { href: "/react", label: "React · AMR" },
-  { href: "/vue", label: "Vue · Khanoumi" },
-  { href: "/angular", label: "Angular · Mofid" },
-];
-
-const externalLinks = [
-  { href: "https://www.linkedin.com/in/parsakhosravani", label: "LinkedIn" },
-  { href: "https://adplist.org/mentors/parsa-khosravani", label: "AdpList" },
-  { href: "https://github.com/parsakhosravani", label: "GitHub" },
-];
-
 export function Header() {
   const pathname = usePathname();
-  const isStory = storyLinks.some((s) => s.href === pathname);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/70 backdrop-blur-md dark:border-zinc-800/70 dark:bg-zinc-950/60">
-      <nav className="mx-auto max-w-5xl px-6 py-4">
-        <div className="flex items-center justify-between gap-6">
-          <Link
-            href="/"
-            className="font-display text-lg text-zinc-900 transition hover:opacity-70 dark:text-zinc-100"
-          >
-            Parsa<span className="text-indigo-500">.</span>
-          </Link>
+    <header className="sticky top-0 z-50 border-b border-rule bg-paper/90 backdrop-blur-md">
+      <nav
+        aria-label="Main"
+        className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-3.5 sm:px-8"
+      >
+        <Link
+          href="/"
+          className="font-display text-[1.35rem] leading-none text-ink transition hover:text-cobalt"
+        >
+          Parsa Khosravani
+        </Link>
 
-          <div className="hidden items-center gap-6 sm:flex">
-            <details className="group relative">
-              <summary
-                className={`flex cursor-pointer list-none items-center gap-1 text-sm transition ${
-                  isStory
-                    ? "text-zinc-900 dark:text-zinc-100"
-                    : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-                }`}
-              >
-                Stories
-                <svg
-                  className="h-3.5 w-3.5 transition group-open:rotate-180"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </summary>
-              <div className="absolute left-0 top-full mt-2 w-52 rounded-xl border border-zinc-200 bg-white p-2 shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
-                {storyLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`block rounded-lg px-3 py-2 text-sm transition ${
-                      pathname === link.href
-                        ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
-                        : "text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </details>
-
-            {internalLinks.map((link) => {
-              const active = pathname === link.href;
+        <div className="hidden items-center gap-7 text-[0.9375rem] md:flex">
+          <div className="flex items-center gap-3" aria-label="Chapters">
+            <span className="text-ink-faint">Chapters</span>
+            {chapterIndex.map((c) => {
+              const active = pathname === `/${c.slug}`;
               return (
                 <Link
-                  key={link.href}
-                  href={link.href}
+                  key={c.slug}
+                  href={`/${c.slug}`}
+                  aria-label={`Chapter ${c.numeral}: ${c.framework} at ${c.company}`}
                   aria-current={active ? "page" : undefined}
-                  className={`text-sm transition ${
-                    active
-                      ? "text-zinc-900 dark:text-zinc-100"
-                      : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-                  }`}
+                  title={`${c.framework} at ${c.company}`}
+                  className="font-display text-lg leading-none text-ink-soft transition hover:text-ink"
+                  style={active ? { color: c.accentText } : undefined}
                 >
-                  {link.label}
+                  {c.numeral}
                 </Link>
               );
             })}
+          </div>
 
-            <span className="h-4 w-px bg-zinc-300 dark:bg-zinc-700" />
-
-            {externalLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+          {pages.map((page) => {
+            const active =
+              pathname === page.href || pathname.startsWith(`${page.href}/`);
+            return (
+              <Link
+                key={page.href}
+                href={page.href}
+                aria-current={active ? "page" : undefined}
+                className={`transition hover:text-ink ${
+                  active
+                    ? "text-ink underline decoration-cobalt decoration-2 underline-offset-[0.4em]"
+                    : "text-ink-soft"
+                }`}
               >
-                {link.label}
-              </a>
-            ))}
+                {page.label}
+              </Link>
+            );
+          })}
 
-            <a
-              href="mailto:parsakhosravani@gmail.com"
-              className="rounded-lg bg-zinc-900 px-3.5 py-1.5 text-sm font-medium text-white transition hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
+          <a
+            href={`mailto:${site.email}`}
+            className="text-ink-soft transition hover:text-ink"
+          >
+            Email
+          </a>
+
+          <ThemeToggle />
+        </div>
+
+        <div className="flex items-center gap-4 md:hidden">
+          <ThemeToggle />
+          <details className="group relative">
+            <summary
+              className="flex cursor-pointer list-none items-center gap-1.5 text-[0.9375rem] text-ink-soft [&::-webkit-details-marker]:hidden"
+              aria-label="Open navigation menu"
             >
-              Contact
-            </a>
-          </div>
-
-          <div className="flex items-center gap-3 sm:gap-4">
-            <ThemeToggle />
-            <details className="relative sm:hidden">
-              <summary
-                className="list-none cursor-pointer"
-                aria-label="Open navigation menu"
-              >
-                <svg
-                  className="h-5 w-5 text-zinc-600 dark:text-zinc-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              </summary>
-              <div className="absolute right-0 top-full mt-2 w-56 rounded-xl border border-zinc-200 bg-white p-3 shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
-                <div className="space-y-1">
-                  <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-widest text-zinc-400">
-                    Stories
-                  </p>
-                  {storyLinks.map((link) => (
+              Menu
+            </summary>
+            <div className="absolute right-0 top-full mt-3 w-64 border border-rule bg-raised p-5 shadow-[0_18px_40px_-20px_rgba(22,27,46,0.35)]">
+              <p className="text-sm text-ink-faint">Chapters</p>
+              <ul className="mt-2 space-y-2">
+                {chapterIndex.map((c) => (
+                  <li key={c.slug}>
                     <Link
-                      key={link.href}
-                      href={link.href}
-                      className="block rounded-sm px-3 py-2 text-sm text-zinc-600 transition hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                      href={`/${c.slug}`}
+                      className="flex items-baseline gap-3 text-ink"
                     >
-                      {link.label}
+                      <span
+                        className="font-display w-6 text-lg"
+                        style={{ color: c.accentText }}
+                      >
+                        {c.numeral}
+                      </span>
+                      {c.framework} at {c.company}
                     </Link>
-                  ))}
-
-                  <p className="px-3 pb-1 pt-3 text-xs font-semibold uppercase tracking-widest text-zinc-400">
-                    Explore
-                  </p>
-                  {internalLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="block rounded-sm px-3 py-2 text-sm text-zinc-600 transition hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
-                    >
-                      {link.label}
+                  </li>
+                ))}
+              </ul>
+              <ul className="mt-5 space-y-2 border-t border-rule pt-4">
+                {pages.map((page) => (
+                  <li key={page.href}>
+                    <Link href={page.href} className="text-ink">
+                      {page.label}
                     </Link>
-                  ))}
-
-                  <p className="px-3 pb-1 pt-3 text-xs font-semibold uppercase tracking-widest text-zinc-400">
-                    Elsewhere
-                  </p>
-                  {externalLinks.map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block rounded-sm px-3 py-2 text-sm text-zinc-600 transition hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-                  <a
-                    href="mailto:parsakhosravani@gmail.com"
-                    className="block rounded-sm px-3 py-2 text-sm text-zinc-600 transition hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
-                  >
-                    Contact
+                  </li>
+                ))}
+                <li>
+                  <a href={`mailto:${site.email}`} className="text-ink">
+                    Email
                   </a>
-                </div>
-              </div>
-            </details>
-          </div>
+                </li>
+              </ul>
+            </div>
+          </details>
         </div>
       </nav>
     </header>

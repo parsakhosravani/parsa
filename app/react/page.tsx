@@ -1,20 +1,11 @@
-"use client";
+import type { Metadata } from "next";
+import { ChapterPage } from "../components/story-sections";
+import { ChapterReader } from "../components/chapter-reader";
+import { frameworkStories } from "../lib/story";
 
-import Link from "next/link";
-import { useState } from "react";
-import { StoryNav } from "../components/story-nav";
-import {
-  KeyThemes,
-  MomentsGallery,
-  StoryHero,
-} from "../components/story-sections";
-import { frameworkStories, frameworks } from "../lib/story";
-
-const fw = frameworks.find((f) => f.slug === "react")!;
-const accent = fw.accent;
-const accentText = fw.accentText;
-const story = frameworkStories.react;
-const companyLinkedIn = "https://www.linkedin.com/company/amr-tech-co";
+export const metadata: Metadata = {
+  title: "React chapter",
+};
 
 const amrMoments = [
   {
@@ -66,113 +57,14 @@ const keyThemes = [
   },
 ];
 
-export default function ReactStoryPage() {
-  const [active, setActive] = useState(0);
-  const chapter = story.chapters[active];
-  const progress = ((active + 1) / story.chapters.length) * 100;
-
+export default function ReactChapterPage() {
   return (
-    <main className="mx-auto max-w-5xl px-6 py-12 sm:py-16">
-      <StoryNav active="react" />
-
-      <StoryHero
-        story={story}
-        accent={accent}
-        accentText={accentText}
-        companyLinkedIn={companyLinkedIn}
-      />
-
-      <div className="mb-12 h-1.5 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
-        <div
-          className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${progress}%`, background: accent }}
-        />
-      </div>
-
-      <MomentsGallery
-        title="AMR Moments"
-        intro="These moments show the learning culture, collaboration, and intensity behind the startup delivery pace that defined this chapter."
-        moments={amrMoments}
-      />
-
-      <KeyThemes themes={keyThemes} accent={accent} />
-
-      <article className="mb-12 rounded-3xl border border-zinc-200 bg-white/70 p-7 dark:border-zinc-800 dark:bg-zinc-900/40 sm:p-9">
-        <p className="text-xs uppercase tracking-widest text-zinc-500">
-          {chapter.era}
-        </p>
-        <h2 className="font-display mt-2 text-3xl text-zinc-900 dark:text-zinc-100">
-          {chapter.title}
-        </h2>
-        <p className="mt-2 text-zinc-600 dark:text-zinc-400">
-          {chapter.subtitle}
-        </p>
-        <div className="mt-7 space-y-5 text-base leading-relaxed text-zinc-700 dark:text-zinc-300">
-          {chapter.paragraphs.map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
-        </div>
-      </article>
-
-      <div className="mb-12 flex items-center justify-between">
-        <button
-          type="button"
-          onClick={() => setActive((i) => Math.max(0, i - 1))}
-          disabled={active === 0}
-          className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:border-zinc-400 disabled:opacity-30 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500"
-        >
-          ← Previous
-        </button>
-
-        <div className="flex gap-2">
-          {story.chapters.map((c, i) => (
-            <button
-              key={c.id}
-              type="button"
-              onClick={() => setActive(i)}
-              aria-label={`Go to ${c.title}`}
-              aria-current={i === active ? "true" : undefined}
-              className={
-                i === active
-                  ? "h-2.5 w-2.5 rounded-full transition"
-                  : "h-2.5 w-2.5 rounded-full bg-zinc-300 transition dark:bg-zinc-700"
-              }
-              style={
-                i === active
-                  ? { background: accent, transform: "scale(1.3)" }
-                  : undefined
-              }
-            />
-          ))}
-        </div>
-
-        <button
-          type="button"
-          onClick={() =>
-            setActive((i) => Math.min(story.chapters.length - 1, i + 1))
-          }
-          disabled={active === story.chapters.length - 1}
-          className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:border-zinc-400 disabled:opacity-30 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500"
-        >
-          Next →
-        </button>
-      </div>
-
-      <div className="flex gap-4">
-        <Link
-          href="/"
-          className="flex-1 rounded-lg border border-zinc-300 px-4 py-2 text-center text-sm font-medium text-zinc-700 transition hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500"
-        >
-          ← Back to Home
-        </Link>
-        <Link
-          href="/vue"
-          className="flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium text-white transition hover:opacity-90"
-          style={{ background: accentText }}
-        >
-          Next Story →
-        </Link>
-      </div>
-    </main>
+    <ChapterPage
+      slug="react"
+      moments={amrMoments}
+      momentsIntro="These moments show the learning culture, collaboration, and intensity behind the startup delivery pace that defined this chapter."
+      themes={keyThemes}
+      reader={<ChapterReader chapters={frameworkStories.react.chapters} />}
+    />
   );
 }

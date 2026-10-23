@@ -1,57 +1,43 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { frameworkStories, frameworks } from "../lib/story";
+import { frameworkStories } from "../lib/story";
+import { readerClasses as c } from "../components/story-sections";
 
-const accent = frameworks.find((f) => f.slug === "angular")!.accent;
 const story = frameworkStories.angular;
 
 const template = `
   <div>
-    <div class="mb-8 h-1.5 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
-      <div
-        class="h-full rounded-full transition-all duration-500"
-        [style.width.%]="progress"
-        [style.background]="accent"
-      ></div>
-    </div>
+    <ol class="${c.tabs}">
+      <li *ngFor="let ch of chapters; let i = index">
+        <button
+          type="button"
+          (click)="go(i)"
+          [attr.aria-current]="i === active ? 'true' : null"
+          class="${c.tab}"
+          [ngClass]="i === active ? '${c.tabActive}' : ''"
+        >
+          <span class="${c.tabNumber}">{{ i + 1 }}</span>
+          {{ ch.era }}
+        </button>
+      </li>
+    </ol>
 
-    <article class="rounded-2xl border border-zinc-200 bg-white/70 p-7 dark:border-zinc-800 dark:bg-zinc-900/40">
-      <p class="text-xs uppercase tracking-widest text-zinc-500">{{ chapter.era }}</p>
-      <h2 class="mt-1 text-2xl font-semibold text-zinc-900 dark:text-zinc-100">{{ chapter.title }}</h2>
-      <p class="mt-1 text-zinc-500 dark:text-zinc-400">{{ chapter.subtitle }}</p>
-      <div class="mt-5 space-y-4 leading-relaxed text-zinc-700 dark:text-zinc-300">
+    <article class="${c.article}" aria-live="polite">
+      <h3 class="${c.title}">{{ chapter.title }}</h3>
+      <p class="${c.subtitle}">{{ chapter.subtitle }}</p>
+      <div class="${c.body}">
         <p *ngFor="let p of chapter.paragraphs">{{ p }}</p>
       </div>
     </article>
 
-    <div class="mt-6 flex items-center justify-between">
-      <button
-        (click)="prev()"
-        [disabled]="active === 0"
-        class="rounded-lg border border-zinc-300 px-4 py-2 text-sm text-zinc-700 transition hover:border-zinc-400 disabled:opacity-30 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500"
-      >
-        ← Previous
+    <div class="${c.footer}">
+      <button type="button" (click)="prev()" [disabled]="active === 0" class="${c.button}">
+        Previous section
       </button>
-
-      <div class="flex gap-2">
-        <button
-          *ngFor="let c of chapters; let i = index"
-          (click)="go(i)"
-          [attr.aria-label]="'Go to ' + c.title"
-          class="h-2.5 w-2.5 rounded-full transition"
-          [ngClass]="i === active ? '' : 'bg-zinc-300 dark:bg-zinc-700'"
-          [style.background]="i === active ? accent : ''"
-          [style.transform]="i === active ? 'scale(1.3)' : 'scale(1)'"
-        ></button>
-      </div>
-
-      <button
-        (click)="next()"
-        [disabled]="active === chapters.length - 1"
-        class="rounded-lg border border-zinc-300 px-4 py-2 text-sm text-zinc-700 transition hover:border-zinc-400 disabled:opacity-30 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500"
-      >
-        Next →
+      <span class="${c.count}">{{ active + 1 }} of {{ chapters.length }}</span>
+      <button type="button" (click)="next()" [disabled]="active === chapters.length - 1" class="${c.button}">
+        Next section
       </button>
     </div>
   </div>
@@ -88,13 +74,9 @@ export default function AngularStory() {
       class StoryComponent {
         chapters = story.chapters;
         active = 0;
-        accent = accent;
 
         get chapter() {
           return this.chapters[this.active];
-        }
-        get progress() {
-          return ((this.active + 1) / this.chapters.length) * 100;
         }
         go(i: number) {
           this.active = i;
@@ -108,6 +90,7 @@ export default function AngularStory() {
       }
 
       // Angular bootstraps into the first matching selector in the document.
+      hostRef.current.querySelector("[data-placeholder]")?.remove();
       hostEl = document.createElement("angular-story");
       hostRef.current.appendChild(hostEl);
 
@@ -125,5 +108,11 @@ export default function AngularStory() {
     };
   }, []);
 
-  return <div ref={hostRef} />;
+  return (
+    <div ref={hostRef}>
+      <p className="text-ink-faint" data-placeholder>
+        Starting the Angular app…
+      </p>
+    </div>
+  );
 }

@@ -9,7 +9,7 @@ function renderInline(text: string, keyBase: string) {
       return (
         <code
           key={`${keyBase}-${i}`}
-          className="rounded-md border border-zinc-200 bg-zinc-100 px-1.5 py-0.5 font-mono text-[0.85em] text-indigo-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-cyan-300"
+          className="bg-zinc-200/70 px-1.5 py-0.5 font-mono text-[0.82em] text-ink dark:bg-zinc-800"
         >
           {part.slice(1, -1)}
         </code>
@@ -21,7 +21,7 @@ function renderInline(text: string, keyBase: string) {
 
 export function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
   return (
-    <div className="mt-10 space-y-1">
+    <div className="prose-serif text-ink">
       {blocks.map((block, i) => {
         const key = `block-${i}`;
         switch (block.type) {
@@ -29,7 +29,7 @@ export function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
             return (
               <h2
                 key={key}
-                className="font-display pt-8 text-2xl text-zinc-900 dark:text-zinc-100"
+                className="font-display mt-14 text-[1.9rem] leading-tight text-ink"
               >
                 {block.text}
               </h2>
@@ -38,17 +38,14 @@ export function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
             return (
               <h3
                 key={key}
-                className="pt-6 text-lg font-semibold text-zinc-900 dark:text-zinc-100"
+                className="mt-10 font-sans text-[1.0625rem] font-semibold text-ink"
               >
                 {block.text}
               </h3>
             );
           case "p":
             return (
-              <p
-                key={key}
-                className="pt-4 text-[15px] leading-7 text-zinc-700 dark:text-zinc-300"
-              >
+              <p key={key} className="mt-5">
                 {renderInline(block.text, key)}
               </p>
             );
@@ -56,12 +53,10 @@ export function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
             return (
               <ul
                 key={key}
-                className="mt-4 space-y-2 pl-5 text-[15px] leading-7 text-zinc-700 marker:text-indigo-500 dark:text-zinc-300 dark:marker:text-cyan-400"
+                className="mt-5 list-disc space-y-2 pl-6 marker:text-ink-faint"
               >
                 {block.items.map((item, j) => (
-                  <li key={`${key}-${j}`} className="list-disc">
-                    {renderInline(item, `${key}-${j}`)}
-                  </li>
+                  <li key={`${key}-${j}`}>{renderInline(item, `${key}-${j}`)}</li>
                 ))}
               </ul>
             );
@@ -69,12 +64,10 @@ export function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
             return (
               <ol
                 key={key}
-                className="mt-4 space-y-2 pl-5 text-[15px] leading-7 text-zinc-700 marker:font-semibold marker:text-indigo-500 dark:text-zinc-300 dark:marker:text-cyan-400"
+                className="mt-5 list-decimal space-y-2 pl-6 marker:text-ink-faint"
               >
                 {block.items.map((item, j) => (
-                  <li key={`${key}-${j}`} className="list-decimal">
-                    {renderInline(item, `${key}-${j}`)}
-                  </li>
+                  <li key={`${key}-${j}`}>{renderInline(item, `${key}-${j}`)}</li>
                 ))}
               </ol>
             );
@@ -82,7 +75,7 @@ export function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
             return (
               <blockquote
                 key={key}
-                className="my-6 border-l-2 border-indigo-400 pl-5 text-[15px] italic leading-7 text-zinc-600 dark:border-cyan-500 dark:text-zinc-300"
+                className="font-display my-10 text-[1.6rem] leading-snug text-ink"
               >
                 {renderInline(block.text, key)}
               </blockquote>

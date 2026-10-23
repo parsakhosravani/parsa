@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { frameworkStories, frameworks } from "../lib/story";
+import { chapterIndex } from "../lib/chapters";
+
+export const metadata: Metadata = {
+  title: "Timeline",
+  description:
+    "Every frontend role Parsa Khosravani has held, in order: ecommerce at Khanoumi, startup travel at AMR Tech, and market systems at Mofid Securities.",
+};
 
 type TimelineMedia = {
   src: string;
@@ -96,125 +105,90 @@ const timeline: TimelineItem[] = [
 
 export default function CareerTimelinePage() {
   return (
-    <main className="mx-auto max-w-5xl px-6 py-14 sm:py-16">
-      <section className="rounded-3xl border border-zinc-200 bg-white/75 p-8 dark:border-zinc-800 dark:bg-zinc-900/40 sm:p-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
-          Career Timeline
-        </p>
-        <h1 className="font-display mt-3 text-4xl text-zinc-900 dark:text-zinc-100 sm:text-5xl">
-          The Road So Far
-        </h1>
-        <p className="mt-4 max-w-3xl text-lg leading-relaxed text-zinc-700 dark:text-zinc-300">
-          A chronological look at my product and frontend journey across
-          ecommerce, startup environments, and fintech systems.
-        </p>
-      </section>
+    <main className="mx-auto max-w-6xl px-5 pb-8 pt-12 sm:px-8 sm:pt-16">
+      <header className="grid gap-x-10 gap-y-4 md:grid-cols-[11rem_1fr]">
+        <Link href="/#contents" className="link self-start text-sm text-ink-soft md:pt-4">
+          Contents
+        </Link>
+        <div>
+          <h1 className="font-display set-in text-[clamp(3rem,8vw,6.5rem)] leading-[0.95] tracking-[-0.03em] text-ink">
+            Timeline
+          </h1>
+          <p className="prose-serif set-in-late mt-6 max-w-[48ch] text-[clamp(1.2rem,2vw,1.4rem)] leading-[1.5] text-ink-soft">
+            Every role so far, in order: from ecommerce on sales days, to a
+            travel startup, to systems that move with the stock market.
+          </p>
+        </div>
+      </header>
 
-      <section className="mt-10">
-        <ol className="space-y-8">
-          {timeline.map((item) => (
-            <li key={item.id} className="relative pl-12">
-              <span className="absolute left-3 top-0 h-full w-px bg-zinc-200 dark:bg-zinc-800" />
-              <span
-                className="absolute left-0 top-1.5 h-6 w-6 rounded-full border-2 border-white shadow-xs dark:border-zinc-900"
-                style={{ background: item.accent }}
-              />
-
-              <article className="rounded-2xl border border-zinc-200 bg-white/80 p-6 dark:border-zinc-800 dark:bg-zinc-900/45">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-xs uppercase tracking-widest text-zinc-500">
-                      {item.period}
-                    </p>
-                    <a
-                      href={item.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-1 inline-block text-xl font-semibold text-zinc-900 transition hover:underline dark:text-zinc-100"
-                    >
-                      {item.company}
-                    </a>
-                    <p className="mt-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">
-                      {item.role}
-                    </p>
-                  </div>
-
-                  <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-zinc-200 bg-white p-1 shadow-xs dark:border-zinc-700 dark:bg-zinc-100">
-                    <Image
-                      src={item.logo}
-                      alt={`${item.company} logo`}
-                      fill
-                      sizes="56px"
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-
-                <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                  {item.summary}
+      <ol className="mt-20 border-t border-rule">
+        {timeline.map((item, i) => {
+          const chapter = chapterIndex.find((c) => c.slug === item.storyHref.slice(1));
+          return (
+            <li
+              key={item.id}
+              className="grid gap-x-10 gap-y-5 border-b border-rule py-12 md:grid-cols-[11rem_1fr]"
+              style={{ "--chapter": chapter?.accentText ?? item.accent } as CSSProperties}
+            >
+              <div>
+                <p className="font-display text-2xl tabular-nums text-ink">
+                  {chapter?.years ?? item.period}
                 </p>
-
-                {item.media && item.media.length > 0 && (
-                  <div className="mt-4 grid gap-3 sm:grid-cols-1">
-                    {item.media.map((media) => (
-                      <figure key={media.src}>
-                        <div className="relative aspect-16/9 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
-                          <Image
-                            src={media.src}
-                            alt={media.alt}
-                            fill
-                            sizes="(max-width: 640px) 100vw, 700px"
-                            className="object-cover"
-                          />
-                        </div>
-                        <figcaption className="mt-2 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
-                          {media.caption}
-                        </figcaption>
-                      </figure>
-                    ))}
-                  </div>
-                )}
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {item.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-xs text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800/70 dark:text-zinc-300"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                <p className="mt-1 text-sm text-ink-faint">{item.period}</p>
+                <div className="relative mt-5 hidden h-14 w-14 overflow-hidden bg-white p-1.5 md:block">
+                  <Image
+                    src={item.logo}
+                    alt=""
+                    fill
+                    sizes="56px"
+                    className="object-contain p-1.5"
+                  />
                 </div>
+              </div>
+
+              <div className="min-w-0">
+                <h2 className="font-display text-[clamp(1.9rem,4vw,2.9rem)] leading-[1.05] text-ink">
+                  <a
+                    href={item.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-[var(--chapter)]"
+                  >
+                    {item.company}
+                  </a>
+                </h2>
+                <p className="mt-2 text-ink">{item.role}</p>
+                <p className="mt-4 max-w-[60ch] text-ink-soft">{item.summary}</p>
+                <p className="mt-3 text-sm text-ink-faint">{item.tags.join(", ")}</p>
+
+                {item.media?.map((media) => (
+                  <figure key={media.src} className="mt-8 max-w-3xl">
+                    <div className="relative aspect-[16/9] overflow-hidden bg-zinc-200 dark:bg-zinc-800">
+                      <Image
+                        src={media.src}
+                        alt={media.alt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 760px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <figcaption className="mt-3 max-w-[56ch] text-sm text-ink-soft">
+                      {media.caption}
+                    </figcaption>
+                  </figure>
+                ))}
 
                 <Link
                   href={item.storyHref}
-                  className="mt-4 inline-flex items-center gap-1 text-sm font-medium transition hover:gap-2"
-                  style={{ color: item.accent }}
+                  className="font-display mt-8 inline-block text-xl text-ink underline decoration-[var(--chapter)] decoration-2 underline-offset-[0.3em] transition-colors hover:text-[var(--chapter)]"
                 >
-                  {item.storyLabel}
-                  <span aria-hidden>→</span>
+                  Read chapter {chapter?.numeral ?? i + 1}
                 </Link>
-              </article>
+              </div>
             </li>
-          ))}
-        </ol>
-      </section>
-
-      <nav className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-zinc-200 pt-6 dark:border-zinc-800">
-        <Link
-          href="/"
-          className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-600"
-        >
-          ← Back to Home
-        </Link>
-
-        <Link
-          href="/recommendations"
-          className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-600"
-        >
-          View Recommendations →
-        </Link>
-      </nav>
+          );
+        })}
+      </ol>
     </main>
   );
 }
