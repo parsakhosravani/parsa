@@ -166,7 +166,7 @@ export default function Home() {
   return (
     <main className="mx-auto max-w-5xl px-6 py-12 sm:py-16">
       {/* Hero */}
-      <section className="animate-fade-up relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/70 p-8 backdrop-blur-sm dark:border-zinc-800/70 dark:bg-zinc-900/40 sm:p-12">
+      <section className="animate-fade-up relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/70 p-8 backdrop-blur-xs dark:border-zinc-800/70 dark:bg-zinc-900/40 sm:p-12">
         <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-indigo-400/20 blur-3xl dark:bg-indigo-600/20" />
         <div className="pointer-events-none absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-cyan-400/20 blur-3xl dark:bg-cyan-600/20" />
 
@@ -180,7 +180,7 @@ export default function Home() {
             <p className="mt-6 text-sm uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
               {intro.role}
             </p>
-            <h1 className="font-display mt-3 bg-gradient-to-r from-indigo-600 via-zinc-900 to-cyan-600 bg-clip-text text-5xl font-bold text-transparent dark:from-indigo-300 dark:via-zinc-100 dark:to-cyan-300 sm:text-7xl">
+            <h1 className="font-display mt-3 bg-linear-to-r from-indigo-600 via-zinc-900 to-cyan-600 bg-clip-text text-5xl font-bold text-transparent dark:from-indigo-300 dark:via-zinc-100 dark:to-cyan-300 sm:text-7xl">
               {intro.name}
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-zinc-700 dark:text-zinc-300">
@@ -190,7 +190,7 @@ export default function Home() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="mailto:parsakhosravani@gmail.com"
-                className="inline-flex items-center gap-2 rounded-xl bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
+                className="inline-flex items-center gap-2 rounded-xl bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white shadow-xs transition hover:-translate-y-0.5 hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
               >
                 Get in touch
                 <span aria-hidden>→</span>
@@ -238,7 +238,7 @@ export default function Home() {
           </div>
 
           <div className="animate-float relative h-40 w-40 shrink-0 sm:h-52 sm:w-52">
-            <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-indigo-500 to-cyan-500 blur-xl opacity-40" />
+            <div className="absolute inset-0 -z-10 rounded-3xl bg-linear-to-br from-indigo-500 to-cyan-500 blur-xl opacity-40" />
             <div className="relative h-full w-full overflow-hidden rounded-3xl border border-white/60 bg-zinc-100 shadow-xl ring-1 ring-zinc-900/5 dark:border-zinc-700 dark:bg-zinc-800">
               <Image
                 src="/profile.jpg"
@@ -260,7 +260,7 @@ export default function Home() {
             key={stat.label}
             variant="scale"
             delay={i * 80}
-            className="rounded-2xl border border-zinc-200 bg-white/60 p-5 text-center backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-900/40"
+            className="rounded-2xl border border-zinc-200 bg-white/60 p-5 text-center backdrop-blur-xs dark:border-zinc-800 dark:bg-zinc-900/40"
           >
             <p className="font-display text-3xl text-zinc-900 dark:text-zinc-100">
               {stat.value}
@@ -285,7 +285,7 @@ export default function Home() {
               delay={i * 90}
               className="group rounded-2xl border border-zinc-200 bg-white/60 p-6 transition hover:-translate-y-1 hover:border-zinc-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-zinc-700"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/15 to-cyan-500/15 text-lg text-indigo-600 dark:text-cyan-300">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-br from-indigo-500/15 to-cyan-500/15 text-lg text-indigo-600 dark:text-cyan-300">
                 {item.icon}
               </div>
               <h3 className="mt-4 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
@@ -515,7 +515,7 @@ export default function Home() {
             >
               <span className="absolute left-3 top-0 h-full w-px bg-zinc-200 dark:bg-zinc-800" />
               <span
-                className="absolute left-0 top-1.5 h-6 w-6 rounded-full border-2 border-white shadow-sm dark:border-zinc-900"
+                className="absolute left-0 top-1.5 h-6 w-6 rounded-full border-2 border-white shadow-xs dark:border-zinc-900"
                 style={{ background: item.accent }}
               />
               <article className="rounded-2xl border border-zinc-200 bg-white/70 px-5 py-4 dark:border-zinc-800 dark:bg-zinc-900/35">
@@ -533,7 +533,7 @@ export default function Home() {
                       {item.company}
                     </a>
                   </div>
-                  <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-zinc-200 bg-white p-1 shadow-sm dark:border-zinc-700 dark:bg-zinc-100">
+                  <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-zinc-200 bg-white p-1 shadow-xs dark:border-zinc-700 dark:bg-zinc-100">
                     <Image
                       src={item.logo}
                       alt={`${item.company} logo mark`}
@@ -554,7 +554,7 @@ export default function Home() {
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
                     {item.media.map((media) => (
                       <figure key={media.src}>
-                        <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
+                        <div className="relative aspect-4/3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
                           <Image
                             src={media.src}
                             alt={media.alt}
@@ -595,7 +595,7 @@ export default function Home() {
       </Reveal>
 
       <footer className="mt-20 border-t border-zinc-200 pt-12 dark:border-zinc-800">
-        <div className="mb-8 overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-indigo-50 via-white to-cyan-50 p-8 dark:border-zinc-800 dark:from-indigo-950/40 dark:via-zinc-900 dark:to-cyan-950/30 sm:p-10">
+        <div className="mb-8 overflow-hidden rounded-3xl border border-zinc-200 bg-linear-to-br from-indigo-50 via-white to-cyan-50 p-8 dark:border-zinc-800 dark:from-indigo-950/40 dark:via-zinc-900 dark:to-cyan-950/30 sm:p-10">
           <h2 className="font-display text-2xl text-zinc-900 dark:text-zinc-100 sm:text-3xl">
             Let's talk about your next challenge
           </h2>

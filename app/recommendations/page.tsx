@@ -49,11 +49,11 @@ export default function RecommendationsPage() {
           </a>
         </div>
 
-        <div className="columns-1 gap-5 md:columns-2 lg:columns-3 [&>*]:mb-5 [&>*]:break-inside-avoid">
+        <div className="columns-1 gap-5 md:columns-2 lg:columns-3 [&>*]:mb-5 *:break-inside-avoid">
           {reviews.map((review, index) => (
             <article
               key={review.id}
-              className="rounded-2xl border border-zinc-200 bg-white/85 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/70"
+              className="rounded-2xl border border-zinc-200 bg-white/85 p-6 shadow-xs transition hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/70"
             >
               <div
                 className="mb-3 flex items-center gap-1 text-amber-400"
@@ -138,11 +138,11 @@ export default function RecommendationsPage() {
         </div>
 
         {linkedinRecommendations.length > 0 && (
-          <div className="mt-5 columns-1 gap-5 md:columns-2 [&>*]:mb-5 [&>*]:break-inside-avoid">
+          <div className="mt-5 columns-1 gap-5 md:columns-2 [&>*]:mb-5 *:break-inside-avoid">
             {linkedinRecommendations.map((rec, index) => (
               <article
                 key={rec.id}
-                className="rounded-2xl border border-cyan-200/70 bg-gradient-to-br from-cyan-50/60 to-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-cyan-900/40 dark:from-cyan-950/30 dark:to-zinc-900/70"
+                className="rounded-2xl border border-cyan-200/70 bg-linear-to-br from-cyan-50/60 to-white p-6 shadow-xs transition hover:-translate-y-1 hover:shadow-lg dark:border-cyan-900/40 dark:from-cyan-950/30 dark:to-zinc-900/70"
               >
                 <svg
                   className="mb-3 h-7 w-7 text-cyan-300 dark:text-cyan-700"

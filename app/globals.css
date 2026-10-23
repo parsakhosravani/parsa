@@ -1,6 +1,26 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Dark mode is toggled with the `dark` class on <html> (see layout.tsx). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Tailwind v4 compatibility: v3 gave borders a light gray default color and
+  buttons a pointer cursor. Keep that look so the upgrade is visually neutral.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-zinc-200, currentColor);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
 
 @font-face {
   font-family: "Cal Sans";

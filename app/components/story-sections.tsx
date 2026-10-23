@@ -25,7 +25,7 @@ export function StoryHero({
 }) {
   return (
     <>
-      <header className="animate-fade-up relative mb-10 overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/70 p-8 backdrop-blur-sm dark:border-zinc-800/70 dark:bg-zinc-900/40 sm:p-10">
+      <header className="animate-fade-up relative mb-10 overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/70 p-8 backdrop-blur-xs dark:border-zinc-800/70 dark:bg-zinc-900/40 sm:p-10">
         <div
           className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full blur-3xl opacity-30"
           style={{ background: accent }}
@@ -81,7 +81,7 @@ export function StoryHero({
             {story.highlights.slice(0, 2).map((h) => (
               <span
                 key={h}
-                className="inline-block rounded text-xs font-medium text-zinc-700 dark:text-zinc-300"
+                className="inline-block rounded-sm text-xs font-medium text-zinc-700 dark:text-zinc-300"
               >
                 {h}
               </span>
@@ -113,7 +113,7 @@ export function MomentsGallery({
       <div className="grid gap-4 sm:grid-cols-2">
         {moments.map((moment) => (
           <figure key={moment.src} className="group overflow-hidden rounded-xl">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
+            <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
               <Image
                 src={moment.src}
                 alt={moment.alt}
