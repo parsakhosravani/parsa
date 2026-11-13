@@ -13,30 +13,19 @@
 <meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@parsakhosravani">
-<meta name="theme-color" content="#0f120f">
+<meta name="theme-color" content="#f3ede2">
 <link rel="icon" type="image/png" href="../../img/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<nav class="nav" aria-label="Main"><div class="wrap">
-  <a class="brand" href="../../"><img src="../../img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
-  <ul>
-    <li><a href="../../#production">Production</a></li>
-    <li><a href="../../#story">Story</a></li>
-    <li><a href="../../#voices">References</a></li>
-    <li><a href="../../#work">Projects</a></li>
-    <li><a href="../../#writing">Writing</a></li>
-  </ul>
-  <a class="hire" href="../../#contact">Hire me</a>
-</div></nav>
+<nav class="nav" aria-label="Main"><div class="wrap"><a class="me" href="../../">Parsa Khosravani</a><a class="back" href="../../#margins">All notes</a></div></nav>
 <main id="main" class="art"><div class="wrap">
-  <a class="back" href="../../#writing">← All writing</a>
+  <a class="back" href="../../#margins">← Notes in the margins</a>
   <h1>Going Standalone: Modernizing Angular Without NgModules</h1>
-  <div class="meta"><time datetime="2025-07-22">22 Jul 2025</time><span>10 min read</span><span>Angular · Standalone · Migration</span></div>
+  <div class="meta"><time datetime="2025-07-22">22 July 2025</time><span>10 min read</span><span>Angular · Standalone · Migration</span></div>
   <div class="prose"><p>At Mofid I inherited a large Angular application built the classic way: a forest of NgModules, a shared module that imported everything, and a dependency graph nobody fully understood. Standalone components offered a way out — but you cannot stop the world to rewrite an app in production. Here is how we migrated incrementally.</p>
 <h2>What standalone actually removes</h2>
 <p>An NgModule did three jobs: it declared components, it imported dependencies, and it provided services. Standalone components fold the first two into the component itself. Instead of declaring a component in a module and importing that module elsewhere, the component states its own dependencies:</p>
@@ -95,15 +84,15 @@ export const routes: Routes = [
 <ul><li>Do not big-bang it. Incremental migration is fully supported and far less risky.</li><li>Delete the god <code>SharedModule</code> last, and replace it with a barrel file of standalone imports rather than another module.</li><li>Adopt the new <code>inject()</code> function while you are in there — it pairs naturally with standalone and cleans up constructor injection.</li><li>Lean on the schematic, but review every diff. It is good, not infallible, especially around providers.</li></ul>
 <blockquote>Standalone did not just remove boilerplate — it made the dependency graph legible. New engineers could finally read a component and know exactly what it needed.</blockquote>
 <p>Angular gets unfairly maligned for ceremony, and NgModules were a big part of that reputation. Standalone components are the framework shedding weight it no longer needs — and an app that migrates to them is genuinely easier to reason about.</p></div>
-  <nav class="next" aria-label="More posts">
+  <nav class="next" aria-label="More notes">
     <span></span>
     <a href="../../blog/composables-that-scale-vue-3/" style="text-align:right"><span>Newer →</span><b>Composables That Scale: Reusable Logic in Vue 3</b></a>
   </nav>
 </div></main>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Going Standalone: Modernizing Angular Without NgModules","description":"Standalone components changed how I structure Angular apps. A field guide to migrating incrementally without freezing feature work.","datePublished":"2025-07-22","author":{"@type":"Person","name":"Parsa Khosravani","url":"https://parsakhosravani.github.io/parsa/"},"url":"https://parsakhosravani.github.io/parsa/blog/going-standalone-modernizing-angular/"}</script>
-<footer><div class="wrap mono">
+<footer>
   <span>© 2026 Hadi (Parsa) Khosravani</span>
   <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
-</div></footer>
+</footer>
 <script src="../../app.js" defer></script>
 </body></html>

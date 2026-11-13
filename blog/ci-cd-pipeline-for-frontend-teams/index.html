@@ -13,28 +13,17 @@
 <meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@parsakhosravani">
-<meta name="theme-color" content="#0f120f">
+<meta name="theme-color" content="#f3ede2">
 <link rel="icon" type="image/png" href="../../img/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<nav class="nav" aria-label="Main"><div class="wrap">
-  <a class="brand" href="../../"><img src="../../img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
-  <ul>
-    <li><a href="../../#production">Production</a></li>
-    <li><a href="../../#story">Story</a></li>
-    <li><a href="../../#voices">References</a></li>
-    <li><a href="../../#work">Projects</a></li>
-    <li><a href="../../#writing">Writing</a></li>
-  </ul>
-  <a class="hire" href="../../#contact">Hire me</a>
-</div></nav>
+<nav class="nav" aria-label="Main"><div class="wrap"><a class="me" href="../../">Parsa Khosravani</a><a class="back" href="../../#margins">All notes</a></div></nav>
 <main id="main" class="art"><div class="wrap">
-  <a class="back" href="../../#writing">← All writing</a>
+  <a class="back" href="../../#margins">← Notes in the margins</a>
   <h1>Designing a CI/CD Pipeline for Frontend Teams</h1>
   <div class="meta"><time datetime="2026-05-05">5 May 2026</time><span>10 min read</span><span>Infrastructure · CI/CD · DevEx</span></div>
   <div class="prose"><p>A pipeline is the one piece of infrastructure every engineer on the team touches, every day. When it is slow or flaky, it taxes the whole team's momentum and quietly erodes trust in green checkmarks. I treat the pipeline as a product with real users — my teammates — and optimize it accordingly.</p>
@@ -88,15 +77,15 @@ jobs:
 <p>A pipeline is only valuable if people trust it. The moment a red build might be 'just flaky', engineers start re-running jobs reflexively and real failures slip through. Quarantine flaky tests immediately, file them as bugs, and fix or delete them. A small, reliable suite beats a large, untrustworthy one every time.</p>
 <blockquote>The goal is not a pipeline that is merely correct, but one the team believes. A green check should mean 'ship it' without a second thought.</blockquote>
 <p>Treat your pipeline like the product it is: measure its runtime, watch its failure rate, and invest in it deliberately. Minutes saved per run multiply across every engineer and every push — it is some of the highest-ROI infrastructure work you can do.</p></div>
-  <nav class="next" aria-label="More posts">
+  <nav class="next" aria-label="More notes">
     <a href="../../blog/module-federation-micro-frontends-in-practice/"><span>← Older</span><b>Module Federation in Practice: Micro-Frontends Without the Hype</b></a>
     <a href="../../blog/frontend-caching-playbook-browser-to-edge/" style="text-align:right"><span>Newer →</span><b>A Frontend Caching Playbook: From the Browser to the Edge</b></a>
   </nav>
 </div></main>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Designing a CI/CD Pipeline for Frontend Teams","description":"A fast, trustworthy pipeline is infrastructure that pays for itself daily. How I structure CI stages, cache aggressively, and ship with preview deploys.","datePublished":"2026-05-05","author":{"@type":"Person","name":"Parsa Khosravani","url":"https://parsakhosravani.github.io/parsa/"},"url":"https://parsakhosravani.github.io/parsa/blog/ci-cd-pipeline-for-frontend-teams/"}</script>
-<footer><div class="wrap mono">
+<footer>
   <span>© 2026 Hadi (Parsa) Khosravani</span>
   <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
-</div></footer>
+</footer>
 <script src="../../app.js" defer></script>
 </body></html>

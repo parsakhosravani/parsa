@@ -13,30 +13,19 @@
 <meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@parsakhosravani">
-<meta name="theme-color" content="#0f120f">
+<meta name="theme-color" content="#f3ede2">
 <link rel="icon" type="image/png" href="../../img/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<nav class="nav" aria-label="Main"><div class="wrap">
-  <a class="brand" href="../../"><img src="../../img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
-  <ul>
-    <li><a href="../../#production">Production</a></li>
-    <li><a href="../../#story">Story</a></li>
-    <li><a href="../../#voices">References</a></li>
-    <li><a href="../../#work">Projects</a></li>
-    <li><a href="../../#writing">Writing</a></li>
-  </ul>
-  <a class="hire" href="../../#contact">Hire me</a>
-</div></nav>
+<nav class="nav" aria-label="Main"><div class="wrap"><a class="me" href="../../">Parsa Khosravani</a><a class="back" href="../../#margins">All notes</a></div></nav>
 <main id="main" class="art"><div class="wrap">
-  <a class="back" href="../../#writing">← All writing</a>
+  <a class="back" href="../../#margins">← Notes in the margins</a>
   <h1>Module Federation in Practice: Micro-Frontends Without the Hype</h1>
-  <div class="meta"><time datetime="2026-03-18">18 Mar 2026</time><span>12 min read</span><span>Architecture · Micro-Frontends · Module Federation</span></div>
+  <div class="meta"><time datetime="2026-03-18">18 March 2026</time><span>12 min read</span><span>Architecture · Micro-Frontends · Module Federation</span></div>
   <div class="prose"><p>Micro-frontends get pitched as a frontend silver bullet and adopted by teams who would be better served by a well-structured monolith. So let me start with the uncomfortable part: most apps do not need them. They are an answer to an organizational problem — multiple teams needing to deploy parts of one app independently — not a technical upgrade. If you have one team, you almost certainly do not want them.</p>
 <h2>The problem they actually solve</h2>
 <p>At a certain scale, a single deployable frontend becomes a coordination bottleneck. Team A cannot ship until Team B's half-finished work is feature-flagged off; a shared release train means everyone moves at the speed of the slowest reviewer. Micro-frontends let each team own, build, and deploy a slice of the application on its own cadence. That independence is the entire value proposition — and the entire source of the complexity.</p>
@@ -101,15 +90,15 @@ export function Header() {
 <h2>So should you use it?</h2>
 <ol><li>Do you have multiple teams that are genuinely blocked by a shared release cycle? If no, stop — use a monorepo with good module boundaries instead.</li><li>Can you commit to governing shared dependencies and a versioned contract across teams? If no, the version skew will hurt.</li><li>Do you have the observability and error-handling maturity to operate several independently-deployed surfaces? If no, build that first.</li></ol>
 <p>Module Federation is a genuinely impressive piece of engineering, and when the organizational problem is real it is the right tool. Just adopt it for the autonomy it buys your teams — not because the architecture diagram looks modern. The runtime complexity is real, and you pay it every day you run the system.</p></div>
-  <nav class="next" aria-label="More posts">
+  <nav class="next" aria-label="More notes">
     <a href="../../blog/feature-sliced-design-taming-a-growing-codebase/"><span>← Older</span><b>Feature-Sliced Design: Taming a Growing React Codebase</b></a>
     <a href="../../blog/ci-cd-pipeline-for-frontend-teams/" style="text-align:right"><span>Newer →</span><b>Designing a CI/CD Pipeline for Frontend Teams</b></a>
   </nav>
 </div></main>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Module Federation in Practice: Micro-Frontends Without the Hype","description":"Micro-frontends are an organizational tool, not a default architecture. When Module Federation genuinely helps, how it works, and the failure modes to plan for.","datePublished":"2026-03-18","author":{"@type":"Person","name":"Parsa Khosravani","url":"https://parsakhosravani.github.io/parsa/"},"url":"https://parsakhosravani.github.io/parsa/blog/module-federation-micro-frontends-in-practice/"}</script>
-<footer><div class="wrap mono">
+<footer>
   <span>© 2026 Hadi (Parsa) Khosravani</span>
   <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
-</div></footer>
+</footer>
 <script src="../../app.js" defer></script>
 </body></html>

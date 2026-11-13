@@ -13,30 +13,19 @@
 <meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@parsakhosravani">
-<meta name="theme-color" content="#0f120f">
+<meta name="theme-color" content="#f3ede2">
 <link rel="icon" type="image/png" href="../../img/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<nav class="nav" aria-label="Main"><div class="wrap">
-  <a class="brand" href="../../"><img src="../../img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
-  <ul>
-    <li><a href="../../#production">Production</a></li>
-    <li><a href="../../#story">Story</a></li>
-    <li><a href="../../#voices">References</a></li>
-    <li><a href="../../#work">Projects</a></li>
-    <li><a href="../../#writing">Writing</a></li>
-  </ul>
-  <a class="hire" href="../../#contact">Hire me</a>
-</div></nav>
+<nav class="nav" aria-label="Main"><div class="wrap"><a class="me" href="../../">Parsa Khosravani</a><a class="back" href="../../#margins">All notes</a></div></nav>
 <main id="main" class="art"><div class="wrap">
-  <a class="back" href="../../#writing">← All writing</a>
+  <a class="back" href="../../#margins">← Notes in the margins</a>
   <h1>Stop Fighting Re-renders: A Pragmatic Guide to React Performance</h1>
-  <div class="meta"><time datetime="2025-11-18">18 Nov 2025</time><span>9 min read</span><span>React · Performance · Hooks</span></div>
+  <div class="meta"><time datetime="2025-11-18">18 November 2025</time><span>9 min read</span><span>React · Performance · Hooks</span></div>
   <div class="prose"><p>Every React codebase I have joined eventually accumulates a layer of <code>useMemo</code> and <code>useCallback</code> calls that nobody can explain. They were added during a performance scare, they never got removed, and now they are just ambient anxiety in the diff. Let me share the model I use to keep this under control.</p>
 <h2>First, understand what a re-render actually costs</h2>
 <p>A re-render is React calling your component function again and diffing the result against the previous tree. For most components this is cheap — a few microseconds. The expensive part is almost never the render itself; it is one of three things: a genuinely heavy computation in the render path, a large subtree re-rendering when it did not need to, or an effect firing more often than it should.</p>
@@ -91,15 +80,15 @@ return &lt;VirtualizedTable onSelect={onSelect} /&gt;;</code></pre>
 }</code></pre>
 <blockquote>Memoization is a tool for preserving identity, not a substitute for good component boundaries. Get the structure right and you will reach for it far less often.</blockquote>
 <p>The React 19 compiler is starting to automate a lot of this, and that is genuinely exciting — but the mental model still matters. Understanding why a re-render happens will always beat sprinkling hooks until the profiler turns green.</p></div>
-  <nav class="next" aria-label="More posts">
+  <nav class="next" aria-label="More notes">
     <a href="../../blog/composables-that-scale-vue-3/"><span>← Older</span><b>Composables That Scale: Reusable Logic in Vue 3</b></a>
     <a href="../../blog/feature-sliced-design-taming-a-growing-codebase/" style="text-align:right"><span>Newer →</span><b>Feature-Sliced Design: Taming a Growing React Codebase</b></a>
   </nav>
 </div></main>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Stop Fighting Re-renders: A Pragmatic Guide to React Performance","description":"memo, useMemo, and useCallback are not magic. Here is the mental model I use to decide when they actually help — and when they just add noise.","datePublished":"2025-11-18","author":{"@type":"Person","name":"Parsa Khosravani","url":"https://parsakhosravani.github.io/parsa/"},"url":"https://parsakhosravani.github.io/parsa/blog/stop-fighting-react-rerenders/"}</script>
-<footer><div class="wrap mono">
+<footer>
   <span>© 2026 Hadi (Parsa) Khosravani</span>
   <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
-</div></footer>
+</footer>
 <script src="../../app.js" defer></script>
 </body></html>

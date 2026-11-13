@@ -13,30 +13,19 @@
 <meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@parsakhosravani">
-<meta name="theme-color" content="#0f120f">
+<meta name="theme-color" content="#f3ede2">
 <link rel="icon" type="image/png" href="../../img/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<nav class="nav" aria-label="Main"><div class="wrap">
-  <a class="brand" href="../../"><img src="../../img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
-  <ul>
-    <li><a href="../../#production">Production</a></li>
-    <li><a href="../../#story">Story</a></li>
-    <li><a href="../../#voices">References</a></li>
-    <li><a href="../../#work">Projects</a></li>
-    <li><a href="../../#writing">Writing</a></li>
-  </ul>
-  <a class="hire" href="../../#contact">Hire me</a>
-</div></nav>
+<nav class="nav" aria-label="Main"><div class="wrap"><a class="me" href="../../">Parsa Khosravani</a><a class="back" href="../../#margins">All notes</a></div></nav>
 <main id="main" class="art"><div class="wrap">
-  <a class="back" href="../../#writing">← All writing</a>
+  <a class="back" href="../../#margins">← Notes in the margins</a>
   <h1>Composables That Scale: Reusable Logic in Vue 3</h1>
-  <div class="meta"><time datetime="2025-09-30">30 Sept 2025</time><span>8 min read</span><span>Vue · Composition API · Architecture</span></div>
+  <div class="meta"><time datetime="2025-09-30">30 September 2025</time><span>8 min read</span><span>Vue · Composition API · Architecture</span></div>
   <div class="prose"><p>When I led the move to Vue 3 at Khanoumi, the Composition API was the feature everyone was excited about and nobody had conventions for. Six months in, we had composables that returned refs, composables that mutated shared state, and composables that quietly started intervals you could never clean up. Here is what we standardized on.</p>
 <h2>A composable is a function, not a mixin</h2>
 <p>The whole point of moving off mixins is explicitness. A composable should take inputs as arguments and return everything it exposes. No implicit <code>this</code>, no merged option soup. The shape I insist on:</p>
@@ -105,15 +94,15 @@ export function useSession() {
 <ul><li>Prefix with <code>use</code> — it signals reactivity rules to readers and tooling.</li><li>One responsibility per composable. <code>useUser</code> fetches a user; it does not also manage a modal.</li><li>Return readonly refs when consumers should not mutate state directly — <code>readonly(state)</code> makes intent enforceable.</li><li>Keep composables framework-pure: no direct DOM queries that assume a single mount, no global event listeners without cleanup.</li></ul>
 <blockquote>A good composable reads like a small, honest contract: here is what I need, here is what I give you, and I clean up when you are done with me.</blockquote>
 <p>Get these conventions in place early and the Composition API delivers on its promise — logic you can actually extract, test, and reuse, instead of the mixin tangle it was meant to replace.</p></div>
-  <nav class="next" aria-label="More posts">
+  <nav class="next" aria-label="More notes">
     <a href="../../blog/going-standalone-modernizing-angular/"><span>← Older</span><b>Going Standalone: Modernizing Angular Without NgModules</b></a>
     <a href="../../blog/stop-fighting-react-rerenders/" style="text-align:right"><span>Newer →</span><b>Stop Fighting Re-renders: A Pragmatic Guide to React Performance</b></a>
   </nav>
 </div></main>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Composables That Scale: Reusable Logic in Vue 3","description":"The Composition API gives you freedom — and the freedom to make a mess. Here are the conventions I use to keep composables predictable as a codebase grows.","datePublished":"2025-09-30","author":{"@type":"Person","name":"Parsa Khosravani","url":"https://parsakhosravani.github.io/parsa/"},"url":"https://parsakhosravani.github.io/parsa/blog/composables-that-scale-vue-3/"}</script>
-<footer><div class="wrap mono">
+<footer>
   <span>© 2026 Hadi (Parsa) Khosravani</span>
   <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
-</div></footer>
+</footer>
 <script src="../../app.js" defer></script>
 </body></html>

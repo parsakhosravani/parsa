@@ -13,30 +13,19 @@
 <meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@parsakhosravani">
-<meta name="theme-color" content="#0f120f">
+<meta name="theme-color" content="#f3ede2">
 <link rel="icon" type="image/png" href="../../img/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<nav class="nav" aria-label="Main"><div class="wrap">
-  <a class="brand" href="../../"><img src="../../img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
-  <ul>
-    <li><a href="../../#production">Production</a></li>
-    <li><a href="../../#story">Story</a></li>
-    <li><a href="../../#voices">References</a></li>
-    <li><a href="../../#work">Projects</a></li>
-    <li><a href="../../#writing">Writing</a></li>
-  </ul>
-  <a class="hire" href="../../#contact">Hire me</a>
-</div></nav>
+<nav class="nav" aria-label="Main"><div class="wrap"><a class="me" href="../../">Parsa Khosravani</a><a class="back" href="../../#margins">All notes</a></div></nav>
 <main id="main" class="art"><div class="wrap">
-  <a class="back" href="../../#writing">← All writing</a>
+  <a class="back" href="../../#margins">← Notes in the margins</a>
   <h1>A Frontend Caching Playbook: From the Browser to the Edge</h1>
-  <div class="meta"><time datetime="2026-06-10">10 Jun 2026</time><span>11 min read</span><span>Infrastructure · Performance · Caching</span></div>
+  <div class="meta"><time datetime="2026-06-10">10 June 2026</time><span>11 min read</span><span>Infrastructure · Performance · Caching</span></div>
   <div class="prose"><p>Most frontend performance advice fixates on bundle size. Important, but caching is where the real wins hide — a correctly cached asset costs zero bytes and zero milliseconds on repeat visits. The catch is that 'caching' is not one thing; it is at least four layers, each with its own rules. Get them confused and you ship stale data to users or, worse, cache something you never meant to.</p>
 <h2>Layer 1: HTTP caching and the two-bucket model</h2>
 <p>Browser HTTP caching comes down to one decision: can the browser reuse a response without asking the server (a fresh response), or must it revalidate first? <code>Cache-Control</code> controls both. The single most useful pattern is to split your assets into two buckets.</p>
@@ -106,15 +95,15 @@ Vary: Accept-Encoding
 <h2>A practical checklist</h2>
 <ol><li>Fingerprint static assets and serve them <code>immutable</code> with a one-year max-age.</li><li>Serve HTML with <code>no-cache</code> plus an <code>ETag</code> so users always get the current shell cheaply.</li><li>Use stale-while-revalidate on the client for data that can be briefly stale.</li><li>Reach for a service worker only when you need offline or fine-grained control — it is real complexity.</li><li>Audit <code>Vary</code> and cache keys at the CDN; never cache personalized responses under a shared key.</li></ol>
 <p>Caching is unglamorous and it is where the largest, cheapest performance gains live. Spend a day mapping these four layers for your app and you will usually find a header that is either too aggressive or not aggressive enough — and fixing it is often a one-line, high-impact change.</p></div>
-  <nav class="next" aria-label="More posts">
+  <nav class="next" aria-label="More notes">
     <a href="../../blog/ci-cd-pipeline-for-frontend-teams/"><span>← Older</span><b>Designing a CI/CD Pipeline for Frontend Teams</b></a>
     
   </nav>
 </div></main>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"A Frontend Caching Playbook: From the Browser to the Edge","description":"Caching is the highest-leverage performance work most teams never do properly. A layered model — HTTP, service worker, data, and CDN — with the headers that actually matter.","datePublished":"2026-06-10","author":{"@type":"Person","name":"Parsa Khosravani","url":"https://parsakhosravani.github.io/parsa/"},"url":"https://parsakhosravani.github.io/parsa/blog/frontend-caching-playbook-browser-to-edge/"}</script>
-<footer><div class="wrap mono">
+<footer>
   <span>© 2026 Hadi (Parsa) Khosravani</span>
   <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
-</div></footer>
+</footer>
 <script src="../../app.js" defer></script>
 </body></html>
