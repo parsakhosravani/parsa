@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hadi (Parsa) Khosravani · Senior Frontend Engineer</title>
+<meta name="description" content="Senior Frontend Engineer with 6+ years in React, Next.js and TypeScript. Leading the frontend of a trading platform used by 11M+ people.">
+<meta property="og:title" content="Hadi (Parsa) Khosravani · Senior Frontend Engineer">
+<meta property="og:description" content="Real-time trading interfaces, design systems, testing and performance. React, Next.js, TypeScript.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111410'/%3E%3Cpath d='M6 22l6-7 5 4 9-11' fill='none' stroke='%2337d67a' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#111410; --panel:#181c17; --line:#2a3028; --ink:#ecebe4; --mute:#9aa093;
+  --up:#37d67a; --down:#ff6b57; --gold:#e6c36a;
+  --serif:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+.mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+
+/* ticker */
+.tape{border-bottom:1px solid var(--line);overflow:hidden;background:#0c0f0b;position:sticky;top:0;z-index:5}
+.tape-track{display:flex;width:max-content;animation:roll 38s linear infinite}
+.tape:hover .tape-track{animation-play-state:paused}
+.tick{font-family:var(--mono);font-size:.8rem;padding:9px 22px;white-space:nowrap;border-right:1px solid var(--line);color:var(--mute)}
+.tick b{color:var(--ink);font-weight:500;margin-right:8px}
+.up{color:var(--up)} .down{color:var(--down)}
+@keyframes roll{to{transform:translateX(-50%)}}
+
+/* hero */
+header.hero{padding:64px 0 56px;border-bottom:1px solid var(--line);position:relative}
+.status{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:99px;padding:6px 14px;margin-bottom:34px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--up);box-shadow:0 0 0 0 rgba(55,214,122,.6);animation:pulse 2.2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(55,214,122,0)}100%{box-shadow:0 0 0 0 rgba(55,214,122,0)}}
+h1{font:600 clamp(2.7rem,9vw,6rem)/.98 var(--serif);letter-spacing:-.025em}
+h1 em{font-weight:400;font-style:italic;color:var(--gold)}
+.lede{max-width:620px;margin-top:26px;font-size:1.12rem;color:#cfd2c6}
+.lede strong{color:var(--ink);font-weight:600}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{font-family:var(--mono);font-size:.84rem;text-decoration:none;padding:13px 20px;border:1px solid var(--line);border-radius:4px;transition:.18s}
+.btn.primary{background:var(--up);color:#07130b;border-color:var(--up);font-weight:500}
+.btn:hover{border-color:var(--ink);transform:translateY(-2px)}
+.btn.primary:hover{background:#5be897}
+.spark{width:100%;height:90px;margin-top:48px;display:block}
+.spark path.l{fill:none;stroke:var(--up);stroke-width:2;stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.4s .3s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* numbers */
+.nums{display:grid;grid-template-columns:repeat(2,1fr);border-bottom:1px solid var(--line)}
+.num{padding:26px 22px;border-right:1px solid var(--line);border-top:1px solid var(--line)}
+.num:nth-child(-n+2){border-top:0}
+.num:nth-child(2n){border-right:0}
+.num .v{font:600 clamp(2rem,6vw,3rem)/1 var(--serif)}
+.num .k{margin-top:10px;font-size:.92rem;color:var(--mute)}
+@media(min-width:780px){.nums{grid-template-columns:repeat(4,1fr)}.num{border-top:0}.num:nth-child(2n){border-right:1px solid var(--line)}.num:last-child{border-right:0}}
+
+section{padding:68px 0;border-bottom:1px solid var(--line)}
+.sec-h{display:flex;align-items:baseline;gap:16px;margin-bottom:38px}
+.sec-h h2{font:600 clamp(1.8rem,5vw,2.6rem)/1.1 var(--serif);letter-spacing:-.015em}
+
+/* chapters */
+.ch{display:grid;gap:8px 34px;padding:30px 0;border-top:1px solid var(--line)}
+.ch:first-of-type{border-top:0;padding-top:0}
+.ch-meta .n{font:italic 400 1.05rem var(--serif);color:var(--gold)}
+.ch-meta .d{font-family:var(--mono);font-size:.8rem;color:var(--mute);margin-top:4px}
+.ch h3{font:600 1.5rem/1.2 var(--serif)}
+.ch .role{color:var(--mute);margin:4px 0 14px;font-size:.98rem}
+.ch ul{list-style:none}
+.ch li{position:relative;padding-left:20px;margin-bottom:9px;color:#d5d8cc}
+.ch li::before{content:"▸";position:absolute;left:0;color:var(--up);font-size:.8rem;top:.2em}
+.ch li b{color:var(--ink);font-weight:600}
+@media(min-width:780px){.ch{grid-template-columns:190px 1fr}}
+
+/* work */
+.grid{display:grid;gap:16px}
+@media(min-width:780px){.grid{grid-template-columns:1fr 1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:26px;text-decoration:none;display:flex;flex-direction:column;gap:10px;transition:.2s}
+.card:hover{border-color:var(--up);transform:translateY(-3px)}
+.card h3{font:600 1.35rem var(--serif)}
+.card p{color:#c6c9bd;font-size:.97rem;flex:1}
+.card .go{font-family:var(--mono);font-size:.8rem;color:var(--up)}
+.oss{margin-top:16px;border:1px solid var(--line);border-radius:6px}
+.oss a{display:flex;justify-content:space-between;gap:14px;padding:16px 22px;text-decoration:none;border-top:1px solid var(--line);font-family:var(--mono);font-size:.88rem}
+.oss a:first-child{border-top:0}
+.oss a:hover{background:var(--panel)}
+.oss span{color:var(--mute)}
+
+/* stack */
+.stack{display:grid;gap:26px}
+@media(min-width:780px){.stack{grid-template-columns:repeat(3,1fr)}}
+.stack h4{margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:var(--mono);font-size:.8rem;border:1px solid var(--line);padding:6px 11px;border-radius:3px}
+.edu{margin-top:40px;padding-top:26px;border-top:1px solid var(--line);color:#c6c9bd}
+.edu b{color:var(--ink)}
+
+/* contact */
+.contact{border-bottom:0;text-align:left}
+.contact h2{font:600 clamp(2.2rem,8vw,4.6rem)/1.02 var(--serif);letter-spacing:-.02em;margin-bottom:26px}
+.contact h2 em{font-style:italic;font-weight:400;color:var(--gold)}
+footer{padding:26px 0 40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+.rv.in{opacity:1;transform:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.spark path.l{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+
+<div class="tape" aria-hidden="true"><div class="tape-track" id="tape"></div></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="status mono"><span class="dot"></span>Open to roles in the EU · relocation</div>
+    <h1>Hadi <em>(Parsa)</em><br>Khosravani</h1>
+    <p class="lede"><strong>Senior Frontend Engineer.</strong> I build interfaces where a slow second costs someone money: real-time trading screens, design systems, and the tests and monitoring that keep them honest. Six years of React, Next.js and TypeScript.</p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:hadikhosravani98@gmail.com">Get in touch →</a>
+      <a class="btn" href="https://github.com/parsakhosravani" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://linkedin.com/in/parsakhosravani" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <svg class="spark" viewBox="0 0 1000 90" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#37d67a" stop-opacity=".25"/><stop offset="1" stop-color="#37d67a" stop-opacity="0"/></linearGradient></defs>
+      <path d="M0 78 L70 70 L130 74 L200 58 L260 63 L330 49 L400 55 L470 38 L540 44 L610 30 L680 35 L760 20 L830 26 L910 10 L1000 6 L1000 90 L0 90Z" fill="url(#g)"/>
+      <path class="l" d="M0 78 L70 70 L130 74 L200 58 L260 63 L330 49 L400 55 L470 38 L540 44 L610 30 L680 35 L760 20 L830 26 L910 10 L1000 6"/>
+    </svg>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="nums">
+    <div class="num rv"><div class="v">11M+</div><div class="k">people on the platform I lead the frontend for</div></div>
+    <div class="num rv"><div class="v down">−40%</div><div class="k">real-time data latency</div></div>
+    <div class="num rv"><div class="v up">+70%</div><div class="k">automated test coverage</div></div>
+    <div class="num rv"><div class="v up">+48%</div><div class="k">conversion, A/B tested</div></div>
+  </div>
+</div>
+
+<section id="story">
+  <div class="wrap">
+    <div class="sec-h"><span class="mono">01</span><h2>The story so far</h2></div>
+
+    <article class="ch rv">
+      <div class="ch-meta"><div class="n">Chapter four</div><div class="d">Aug 2023 – now</div></div>
+      <div>
+        <h3>Mofid Securities</h3>
+        <p class="role">Senior Frontend Engineer · Tehran · Iran's largest retail brokerage</p>
+        <ul>
+          <li>Lead the frontend of a trading platform used by <b>11M+ people</b>.</li>
+          <li>Brought real-time streaming into dense data grids and live-price components, cutting latency by <b>40%</b> with sub-second updates.</li>
+          <li>Leading the incremental migration from AngularJS to <b>Next.js and TypeScript</b>, without interrupting live trading.</li>
+          <li>Built the company design system and Storybook library, now the shared reference for design and engineering.</li>
+          <li>Raised automated coverage by <b>70%</b> with Vitest and Cypress; added Sentry error tracking and profiling.</li>
+          <li>Shipped the mobile experience as a Progressive Web App with native-like performance.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="ch rv">
+      <div class="ch-meta"><div class="n">Chapter three</div><div class="d">2022 – 2023</div></div>
+      <div>
+        <h3>AMR Tech</h3>
+        <p class="role">Frontend Engineer · booking, payments and visa flows</p>
+        <ul>
+          <li>Cut page load time by <b>20%</b> with dependency audits, a new asset-loading strategy and dynamic imports for heavy components.</li>
+          <li>Built an AI image-processing pipeline that auto-filled visa application forms from uploaded documents: <b>54%</b> less processing time.</li>
+          <li>Wrote a Figma variables script that synced design tokens straight into the codebase.</li>
+          <li>Set up the testing baseline with Jest and Cypress across booking and payment flows.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="ch rv">
+      <div class="ch-meta"><div class="n">Chapter two</div><div class="d">Mar 2021 – Aug 2022</div></div>
+      <div>
+        <h3>Khanoumi</h3>
+        <p class="role">Frontend Engineer · Tehran · e-commerce, 80+ brands, 10,000+ products</p>
+        <ul>
+          <li>Migrated the storefront from ASP.NET to <b>Nuxt.js</b>, moving the team to a component-based frontend.</li>
+          <li>Designed a shared API layer on React Query that standardised data fetching and caching.</li>
+          <li>Lifted conversion by <b>48%</b> with gamification features (lucky wheel, campaign events), validated by A/B tests.</li>
+          <li>Created a unified design system of reusable components.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="ch rv">
+      <div class="ch-meta"><div class="n">Chapter one</div><div class="d">Aug 2020 – Feb 2021</div></div>
+      <div>
+        <h3>YecomSoft</h3>
+        <p class="role">Frontend Developer · Tehran · digital publishing</p>
+        <ul>
+          <li>Built a bilingual Persian/English audiobook store with full RTL support.</li>
+          <li>Automated EPUB conversion with JSX scripting in InDesign, halving production time.</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-h"><span class="mono">02</span><h2>Things I build after hours</h2></div>
+    <div class="grid">
+      <a class="card rv" href="https://checkrealm.vercel.app" target="_blank" rel="noopener">
+        <span class="mono">Game · Browser</span>
+        <h3>CheckRealm</h3>
+        <p>A chess-themed strategy game that runs in the browser. Familiar pieces, a different kind of board to conquer.</p>
+        <span class="go">Play it ↗</span>
+      </a>
+      <a class="card rv" href="https://t.me/valorians_bot" target="_blank" rel="noopener">
+        <span class="mono">Game · Telegram Mini App · Next.js</span>
+        <h3>Valorians Legend</h3>
+        <p>A Norse-saga strategy game inside Telegram: raids, camps and a leaderboard, with painted art and strategy-first play.</p>
+        <span class="go">Open in Telegram ↗</span>
+      </a>
+    </div>
+    <div class="oss rv">
+      <a href="https://github.com/Apolloic/loadzilla" target="_blank" rel="noopener">Apolloic/loadzilla <span>TypeScript · open source ↗</span></a>
+      <a href="https://github.com/Apolloic/react-courier" target="_blank" rel="noopener">Apolloic/react-courier <span>TypeScript · open source ↗</span></a>
+      <a href="https://github.com/reactx/reactx" target="_blank" rel="noopener">reactx/reactx <span>React components for web and native ↗</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="sec-h"><span class="mono">03</span><h2>Toolbox</h2></div>
+    <div class="stack">
+      <div class="rv"><h4 class="mono">Core</h4><div class="chips"><span>TypeScript</span><span>React</span><span>Next.js</span><span>Nuxt.js</span><span>Redux</span><span>Zustand</span><span>React Query</span></div></div>
+      <div class="rv"><h4 class="mono">Quality &amp; performance</h4><div class="chips"><span>Vitest</span><span>Jest</span><span>Cypress</span><span>Sentry</span><span>Profiling</span><span>PWA</span><span>Real-time streaming</span></div></div>
+      <div class="rv"><h4 class="mono">Systems &amp; delivery</h4><div class="chips"><span>Design systems</span><span>Storybook</span><span>Figma tokens</span><span>Docker</span><span>GitHub Actions</span><span>CI/CD</span></div></div>
+    </div>
+    <p class="edu rv"><b>BSc Computer Engineering</b>, Islamic Azad University, Karaj (2016 – 2020). Persian native, English professional.</p>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <span class="mono">04 · Next chapter</span>
+    <h2 class="rv" style="margin-top:14px">Let's write<br>the <em>next one</em> together.</h2>
+    <p class="lede rv">I'm looking for a senior frontend role in the Netherlands or Germany and I'm ready to relocate. If your product has hard real-time, performance or design-system problems, I'd like to hear about it.</p>
+    <div class="cta rv">
+      <a class="btn primary" href="mailto:hadikhosravani98@gmail.com">hadikhosravani98@gmail.com</a>
+      <a class="btn" href="https://linkedin.com/in/parsakhosravani" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/parsakhosravani" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><footer class="mono"><span>© <span id="y"></span> Hadi Khosravani</span><span>Tehran → Europe</span></footer></div>
+
+<script>
+const T=[["USERS","11M+","up","▲"],["LATENCY","−40%","down","▼"],["COVERAGE","+70%","up","▲"],["CONVERSION","+48%","up","▲"],["LOAD TIME","−20%","down","▼"],["FORM PROCESSING","−54%","down","▼"],["YEARS","6+","up","▲"],["STACK","REACT · NEXT · TS","up","●"]];
+const h=T.map(t=>`<span class="tick"><b>${t[0]}</b><span class="${t[2]}">${t[1]} ${t[3]}</span></span>`).join("");
+document.getElementById("tape").innerHTML=h+h+h+h;
+document.getElementById("y").textContent=new Date().getFullYear();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
