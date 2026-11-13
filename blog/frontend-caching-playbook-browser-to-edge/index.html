@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Frontend Caching Playbook: From the Browser to the Edge · Parsa Khosravani</title>
+<meta name="description" content="Caching is the highest-leverage performance work most teams never do properly. A layered model — HTTP, service worker, data, and CDN — with the headers that actually matter.">
+<link rel="canonical" href="https://parsakhosravani.github.io/parsa/blog/frontend-caching-playbook-browser-to-edge/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Frontend Caching Playbook: From the Browser to the Edge · Parsa Khosravani">
+<meta property="og:description" content="Caching is the highest-leverage performance work most teams never do properly. A layered model — HTTP, service worker, data, and CDN — with the headers that actually matter.">
+<meta property="og:url" content="https://parsakhosravani.github.io/parsa/blog/frontend-caching-playbook-browser-to-edge/">
+<meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@parsakhosravani">
+<meta name="theme-color" content="#0f120f">
+<link rel="icon" type="image/png" href="../../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main"><div class="wrap">
+  <a class="brand" href="../../"><img src="../../img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
+  <ul>
+    <li><a href="../../#production">Production</a></li>
+    <li><a href="../../#story">Story</a></li>
+    <li><a href="../../#voices">References</a></li>
+    <li><a href="../../#work">Projects</a></li>
+    <li><a href="../../#writing">Writing</a></li>
+  </ul>
+  <a class="hire" href="../../#contact">Hire me</a>
+</div></nav>
+<main id="main" class="art"><div class="wrap">
+  <a class="back" href="../../#writing">← All writing</a>
+  <h1>A Frontend Caching Playbook: From the Browser to the Edge</h1>
+  <div class="meta"><time datetime="2026-06-10">10 Jun 2026</time><span>11 min read</span><span>Infrastructure · Performance · Caching</span></div>
+  <div class="prose"><p>Most frontend performance advice fixates on bundle size. Important, but caching is where the real wins hide — a correctly cached asset costs zero bytes and zero milliseconds on repeat visits. The catch is that 'caching' is not one thing; it is at least four layers, each with its own rules. Get them confused and you ship stale data to users or, worse, cache something you never meant to.</p>
+<h2>Layer 1: HTTP caching and the two-bucket model</h2>
+<p>Browser HTTP caching comes down to one decision: can the browser reuse a response without asking the server (a fresh response), or must it revalidate first? <code>Cache-Control</code> controls both. The single most useful pattern is to split your assets into two buckets.</p>
+<p>Immutable, fingerprinted assets — anything with a content hash in the filename, like <code>app.4f3a9c.js</code> — can be cached effectively forever, because a new build produces a new filename:</p>
+<pre data-lang="http"><code># Hashed build artifacts: cache for a year, never revalidate.
+Cache-Control: public, max-age=31536000, immutable</code></pre>
+<p>HTML and anything whose URL is stable but whose content changes must always be revalidated, so users never get a stale shell pointing at deleted assets:</p>
+<pre data-lang="http"><code># HTML entry points: always check freshness before reuse.
+Cache-Control: no-cache
+# (no-cache means &quot;revalidate every time&quot;, NOT &quot;do not store&quot;)</code></pre>
+<blockquote>The most common caching bug I have debugged is someone setting <code>no-cache</code> thinking it disables caching. It does not — it forces revalidation. The directive that prevents storage entirely is <code>no-store</code>.</blockquote>
+<h2>ETags and conditional requests</h2>
+<p>Revalidation does not have to mean re-downloading. With an <code>ETag</code>, the browser sends the token it has and the server answers <code>304 Not Modified</code> with an empty body when nothing changed — a tiny round trip instead of a full payload:</p>
+<pre data-lang="http"><code># First response
+HTTP/1.1 200 OK
+ETag: &quot;a1b2c3&quot;
+Cache-Control: no-cache
+
+# Browser revalidates
+GET /index.html
+If-None-Match: &quot;a1b2c3&quot;
+
+# Unchanged — no body sent
+HTTP/1.1 304 Not Modified</code></pre>
+<h2>Layer 2: stale-while-revalidate for data</h2>
+<p>For API data, the user-facing win is showing something instantly while you refresh in the background. This is the stale-while-revalidate pattern, and it exists both as an HTTP directive and as a client strategy. On the client, libraries like SWR and TanStack Query implement it directly — serve the cached value, fire a revalidation, swap in the fresh result:</p>
+<pre data-lang="ts"><code>import useSWR from &quot;swr&quot;;
+
+const fetcher = (url: string) =&gt; fetch(url).then((r) =&gt; r.json());
+
+function Profile({ id }: { id: string }) {
+  // Returns cached data immediately, revalidates in the background.
+  const { data, isLoading } = useSWR(`/api/users/${id}`, fetcher, {
+    revalidateOnFocus: true,
+    dedupingInterval: 2000, // collapse duplicate requests
+  });
+
+  if (isLoading) return &lt;Skeleton /&gt;;
+  return &lt;UserCard user={data} /&gt;;
+}</code></pre>
+<p>The <code>dedupingInterval</code> is doing quiet but important work: it collapses concurrent requests for the same key into one network call, which matters when several components mount and ask for the same resource at once.</p>
+<h2>Layer 3: the service worker as a programmable cache</h2>
+<p>When you need offline support or full control, a service worker lets you write the cache policy as code. The key is to match the strategy to the resource: cache-first for static assets, network-first for data that must be fresh.</p>
+<pre data-lang="ts"><code>self.addEventListener(&quot;fetch&quot;, (event: FetchEvent) =&gt; {
+  const { request } = event;
+
+  // Cache-first for same-origin static assets.
+  if (request.destination === &quot;script&quot; || request.destination === &quot;style&quot;) {
+    event.respondWith(
+      caches.match(request).then(
+        (cached) =&gt; cached ?? fetch(request).then((res) =&gt; {
+          const copy = res.clone();
+          caches.open(&quot;assets-v1&quot;).then((c) =&gt; c.put(request, copy));
+          return res;
+        }),
+      ),
+    );
+  }
+});</code></pre>
+<p>Note the <code>res.clone()</code> — a Response body is a stream that can be consumed once. You clone it because you need to both return it to the page and store it in the cache. Forgetting this is a classic source of 'body already used' errors.</p>
+<h2>Layer 4: the CDN and cache keys</h2>
+<p>A CDN caches your responses at the edge, close to users. The subtlety here is the cache key — by default it is the URL, but if your responses vary by something else (language, auth state, encoding), you must declare it with <code>Vary</code>, or the CDN will serve one user's response to another:</p>
+<pre data-lang="http"><code># Tell the CDN: a gzipped response is not interchangeable with brotli.
+Vary: Accept-Encoding
+# For personalized HTML, do NOT cache shared — vary or bypass entirely.</code></pre>
+<p>A hard-won rule: never let a CDN cache an authenticated, personalized response under a shared key. Either bypass the edge cache for those routes, split personalization out into a client-side fetch, or key the cache on the user. Leaking one user's dashboard to another is the kind of incident that ends up in a postmortem.</p>
+<h2>A practical checklist</h2>
+<ol><li>Fingerprint static assets and serve them <code>immutable</code> with a one-year max-age.</li><li>Serve HTML with <code>no-cache</code> plus an <code>ETag</code> so users always get the current shell cheaply.</li><li>Use stale-while-revalidate on the client for data that can be briefly stale.</li><li>Reach for a service worker only when you need offline or fine-grained control — it is real complexity.</li><li>Audit <code>Vary</code> and cache keys at the CDN; never cache personalized responses under a shared key.</li></ol>
+<p>Caching is unglamorous and it is where the largest, cheapest performance gains live. Spend a day mapping these four layers for your app and you will usually find a header that is either too aggressive or not aggressive enough — and fixing it is often a one-line, high-impact change.</p></div>
+  <nav class="next" aria-label="More posts">
+    <a href="../../blog/ci-cd-pipeline-for-frontend-teams/"><span>← Older</span><b>Designing a CI/CD Pipeline for Frontend Teams</b></a>
+    
+  </nav>
+</div></main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"A Frontend Caching Playbook: From the Browser to the Edge","description":"Caching is the highest-leverage performance work most teams never do properly. A layered model — HTTP, service worker, data, and CDN — with the headers that actually matter.","datePublished":"2026-06-10","author":{"@type":"Person","name":"Parsa Khosravani","url":"https://parsakhosravani.github.io/parsa/"},"url":"https://parsakhosravani.github.io/parsa/blog/frontend-caching-playbook-browser-to-edge/"}</script>
+<footer><div class="wrap mono">
+  <span>© 2026 Hadi (Parsa) Khosravani</span>
+  <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
+</div></footer>
+<script src="../../app.js" defer></script>
+</body></html>

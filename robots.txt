@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://parsakhosravani.github.io/parsa/sitemap.xml

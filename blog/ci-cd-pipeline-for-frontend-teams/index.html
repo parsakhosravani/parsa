@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Designing a CI/CD Pipeline for Frontend Teams · Parsa Khosravani</title>
+<meta name="description" content="A fast, trustworthy pipeline is infrastructure that pays for itself daily. How I structure CI stages, cache aggressively, and ship with preview deploys.">
+<link rel="canonical" href="https://parsakhosravani.github.io/parsa/blog/ci-cd-pipeline-for-frontend-teams/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Designing a CI/CD Pipeline for Frontend Teams · Parsa Khosravani">
+<meta property="og:description" content="A fast, trustworthy pipeline is infrastructure that pays for itself daily. How I structure CI stages, cache aggressively, and ship with preview deploys.">
+<meta property="og:url" content="https://parsakhosravani.github.io/parsa/blog/ci-cd-pipeline-for-frontend-teams/">
+<meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@parsakhosravani">
+<meta name="theme-color" content="#0f120f">
+<link rel="icon" type="image/png" href="../../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main"><div class="wrap">
+  <a class="brand" href="../../"><img src="../../img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
+  <ul>
+    <li><a href="../../#production">Production</a></li>
+    <li><a href="../../#story">Story</a></li>
+    <li><a href="../../#voices">References</a></li>
+    <li><a href="../../#work">Projects</a></li>
+    <li><a href="../../#writing">Writing</a></li>
+  </ul>
+  <a class="hire" href="../../#contact">Hire me</a>
+</div></nav>
+<main id="main" class="art"><div class="wrap">
+  <a class="back" href="../../#writing">← All writing</a>
+  <h1>Designing a CI/CD Pipeline for Frontend Teams</h1>
+  <div class="meta"><time datetime="2026-05-05">5 May 2026</time><span>10 min read</span><span>Infrastructure · CI/CD · DevEx</span></div>
+  <div class="prose"><p>A pipeline is the one piece of infrastructure every engineer on the team touches, every day. When it is slow or flaky, it taxes the whole team's momentum and quietly erodes trust in green checkmarks. I treat the pipeline as a product with real users — my teammates — and optimize it accordingly.</p>
+<h2>Stage it for fast failure</h2>
+<p>Order jobs so the cheapest, most likely failures run first. There is no point spending four minutes on a build if a thirty-second lint would have caught the problem. I split CI into parallel jobs that fan out from a single install step, with the fast checks gating the expensive ones.</p>
+<pre data-lang="yaml"><code>name: CI
+on: pull_request
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+  verify:
+    needs: install
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        task: [lint, typecheck, test]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run ${{ matrix.task }}</code></pre>
+<p>The matrix runs lint, typecheck, and unit tests as three independent jobs in parallel. Total wall-clock time is the slowest single task, not their sum — and a lint failure surfaces without waiting on the test suite.</p>
+<h2>Pin dependencies with a frozen lockfile</h2>
+<p>Always install with the lockfile-frozen flag in CI — <code>pnpm install --frozen-lockfile</code>, <code>npm ci</code>, or <code>yarn --immutable</code>. This guarantees the exact dependency tree the lockfile describes and fails loudly if the lockfile is out of sync, rather than silently resolving a different version than what runs locally. Non-reproducible installs are the root cause of an astonishing share of 'works on my machine' bugs.</p>
+<h2>Cache the right things</h2>
+<p>Two caches matter most: the package manager store and the build/test tool cache. The <code>setup-node</code> action handles the dependency cache when you point it at your lockfile. For build tools, cache their own incremental caches keyed on a stable hash:</p>
+<pre data-lang="yaml"><code>- name: Cache build artifacts
+  uses: actions/cache@v4
+  with:
+    path: |
+      .next/cache
+      node_modules/.cache
+    key: build-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+    restore-keys: |
+      build-${{ hashFiles('pnpm-lock.yaml') }}-</code></pre>
+<p>The <code>restore-keys</code> fallback is the trick: an exact key match is ideal, but if today's commit has no cache yet, it restores the most recent cache for the same lockfile and builds incrementally on top of it. In a monorepo, a remote cache from Nx or Turborepo takes this further — unchanged packages are restored, not rebuilt, across the whole team and CI.</p>
+<h2>Preview deploys close the feedback loop</h2>
+<p>Every pull request should produce a live, shareable URL. Reviewers click instead of pulling the branch and running it locally; designers and PMs sign off on the real thing. This single practice did more for review quality on my teams than any process change.</p>
+<ul><li>Build the PR, deploy it to an isolated environment, and post the URL back as a status or comment.</li><li>Tear the environment down when the PR closes so preview infra does not accumulate cost.</li><li>Run smoke tests or Lighthouse against the preview URL to catch regressions before merge.</li></ul>
+<h2>Make flaky tests a build-breaking bug</h2>
+<p>A pipeline is only valuable if people trust it. The moment a red build might be 'just flaky', engineers start re-running jobs reflexively and real failures slip through. Quarantine flaky tests immediately, file them as bugs, and fix or delete them. A small, reliable suite beats a large, untrustworthy one every time.</p>
+<blockquote>The goal is not a pipeline that is merely correct, but one the team believes. A green check should mean 'ship it' without a second thought.</blockquote>
+<p>Treat your pipeline like the product it is: measure its runtime, watch its failure rate, and invest in it deliberately. Minutes saved per run multiply across every engineer and every push — it is some of the highest-ROI infrastructure work you can do.</p></div>
+  <nav class="next" aria-label="More posts">
+    <a href="../../blog/module-federation-micro-frontends-in-practice/"><span>← Older</span><b>Module Federation in Practice: Micro-Frontends Without the Hype</b></a>
+    <a href="../../blog/frontend-caching-playbook-browser-to-edge/" style="text-align:right"><span>Newer →</span><b>A Frontend Caching Playbook: From the Browser to the Edge</b></a>
+  </nav>
+</div></main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Designing a CI/CD Pipeline for Frontend Teams","description":"A fast, trustworthy pipeline is infrastructure that pays for itself daily. How I structure CI stages, cache aggressively, and ship with preview deploys.","datePublished":"2026-05-05","author":{"@type":"Person","name":"Parsa Khosravani","url":"https://parsakhosravani.github.io/parsa/"},"url":"https://parsakhosravani.github.io/parsa/blog/ci-cd-pipeline-for-frontend-teams/"}</script>
+<footer><div class="wrap mono">
+  <span>© 2026 Hadi (Parsa) Khosravani</span>
+  <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
+</div></footer>
+<script src="../../app.js" defer></script>
+</body></html>

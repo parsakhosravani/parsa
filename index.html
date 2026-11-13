@@ -1,270 +1,283 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hadi (Parsa) Khosravani · Senior Frontend Engineer</title>
-<meta name="description" content="Senior Frontend Engineer with 6+ years in React, Next.js and TypeScript. Leading the frontend of a trading platform used by 11M+ people.">
-<meta property="og:title" content="Hadi (Parsa) Khosravani · Senior Frontend Engineer">
-<meta property="og:description" content="Real-time trading interfaces, design systems, testing and performance. React, Next.js, TypeScript.">
+<meta name="description" content="Senior Frontend Engineer with 6+ years in React, Next.js, Vue and TypeScript. I lead the frontend of a real-time trading platform used by 11M+ people.">
+<link rel="canonical" href="https://parsakhosravani.github.io/parsa/">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111410'/%3E%3Cpath d='M6 22l6-7 5 4 9-11' fill='none' stroke='%2337d67a' stroke-width='3'/%3E%3C/svg%3E">
+<meta property="og:title" content="Hadi (Parsa) Khosravani · Senior Frontend Engineer">
+<meta property="og:description" content="Senior Frontend Engineer with 6+ years in React, Next.js, Vue and TypeScript. I lead the frontend of a real-time trading platform used by 11M+ people.">
+<meta property="og:url" content="https://parsakhosravani.github.io/parsa/">
+<meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@parsakhosravani">
+<meta name="theme-color" content="#0f120f">
+<link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#111410; --panel:#181c17; --line:#2a3028; --ink:#ecebe4; --mute:#9aa093;
-  --up:#37d67a; --down:#ff6b57; --gold:#e6c36a;
-  --serif:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
-a{color:inherit}
-.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
-.mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
-
-/* ticker */
-.tape{border-bottom:1px solid var(--line);overflow:hidden;background:#0c0f0b;position:sticky;top:0;z-index:5}
-.tape-track{display:flex;width:max-content;animation:roll 38s linear infinite}
-.tape:hover .tape-track{animation-play-state:paused}
-.tick{font-family:var(--mono);font-size:.8rem;padding:9px 22px;white-space:nowrap;border-right:1px solid var(--line);color:var(--mute)}
-.tick b{color:var(--ink);font-weight:500;margin-right:8px}
-.up{color:var(--up)} .down{color:var(--down)}
-@keyframes roll{to{transform:translateX(-50%)}}
-
-/* hero */
-header.hero{padding:64px 0 56px;border-bottom:1px solid var(--line);position:relative}
-.status{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:99px;padding:6px 14px;margin-bottom:34px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--up);box-shadow:0 0 0 0 rgba(55,214,122,.6);animation:pulse 2.2s infinite}
-@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(55,214,122,0)}100%{box-shadow:0 0 0 0 rgba(55,214,122,0)}}
-h1{font:600 clamp(2.7rem,9vw,6rem)/.98 var(--serif);letter-spacing:-.025em}
-h1 em{font-weight:400;font-style:italic;color:var(--gold)}
-.lede{max-width:620px;margin-top:26px;font-size:1.12rem;color:#cfd2c6}
-.lede strong{color:var(--ink);font-weight:600}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.btn{font-family:var(--mono);font-size:.84rem;text-decoration:none;padding:13px 20px;border:1px solid var(--line);border-radius:4px;transition:.18s}
-.btn.primary{background:var(--up);color:#07130b;border-color:var(--up);font-weight:500}
-.btn:hover{border-color:var(--ink);transform:translateY(-2px)}
-.btn.primary:hover{background:#5be897}
-.spark{width:100%;height:90px;margin-top:48px;display:block}
-.spark path.l{fill:none;stroke:var(--up);stroke-width:2;stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.4s .3s ease-out forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-
-/* numbers */
-.nums{display:grid;grid-template-columns:repeat(2,1fr);border-bottom:1px solid var(--line)}
-.num{padding:26px 22px;border-right:1px solid var(--line);border-top:1px solid var(--line)}
-.num:nth-child(-n+2){border-top:0}
-.num:nth-child(2n){border-right:0}
-.num .v{font:600 clamp(2rem,6vw,3rem)/1 var(--serif)}
-.num .k{margin-top:10px;font-size:.92rem;color:var(--mute)}
-@media(min-width:780px){.nums{grid-template-columns:repeat(4,1fr)}.num{border-top:0}.num:nth-child(2n){border-right:1px solid var(--line)}.num:last-child{border-right:0}}
-
-section{padding:68px 0;border-bottom:1px solid var(--line)}
-.sec-h{display:flex;align-items:baseline;gap:16px;margin-bottom:38px}
-.sec-h h2{font:600 clamp(1.8rem,5vw,2.6rem)/1.1 var(--serif);letter-spacing:-.015em}
-
-/* chapters */
-.ch{display:grid;gap:8px 34px;padding:30px 0;border-top:1px solid var(--line)}
-.ch:first-of-type{border-top:0;padding-top:0}
-.ch-meta .n{font:italic 400 1.05rem var(--serif);color:var(--gold)}
-.ch-meta .d{font-family:var(--mono);font-size:.8rem;color:var(--mute);margin-top:4px}
-.ch h3{font:600 1.5rem/1.2 var(--serif)}
-.ch .role{color:var(--mute);margin:4px 0 14px;font-size:.98rem}
-.ch ul{list-style:none}
-.ch li{position:relative;padding-left:20px;margin-bottom:9px;color:#d5d8cc}
-.ch li::before{content:"▸";position:absolute;left:0;color:var(--up);font-size:.8rem;top:.2em}
-.ch li b{color:var(--ink);font-weight:600}
-@media(min-width:780px){.ch{grid-template-columns:190px 1fr}}
-
-/* work */
-.grid{display:grid;gap:16px}
-@media(min-width:780px){.grid{grid-template-columns:1fr 1fr}}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:26px;text-decoration:none;display:flex;flex-direction:column;gap:10px;transition:.2s}
-.card:hover{border-color:var(--up);transform:translateY(-3px)}
-.card h3{font:600 1.35rem var(--serif)}
-.card p{color:#c6c9bd;font-size:.97rem;flex:1}
-.card .go{font-family:var(--mono);font-size:.8rem;color:var(--up)}
-.oss{margin-top:16px;border:1px solid var(--line);border-radius:6px}
-.oss a{display:flex;justify-content:space-between;gap:14px;padding:16px 22px;text-decoration:none;border-top:1px solid var(--line);font-family:var(--mono);font-size:.88rem}
-.oss a:first-child{border-top:0}
-.oss a:hover{background:var(--panel)}
-.oss span{color:var(--mute)}
-
-/* stack */
-.stack{display:grid;gap:26px}
-@media(min-width:780px){.stack{grid-template-columns:repeat(3,1fr)}}
-.stack h4{margin-bottom:12px}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chips span{font-family:var(--mono);font-size:.8rem;border:1px solid var(--line);padding:6px 11px;border-radius:3px}
-.edu{margin-top:40px;padding-top:26px;border-top:1px solid var(--line);color:#c6c9bd}
-.edu b{color:var(--ink)}
-
-/* contact */
-.contact{border-bottom:0;text-align:left}
-.contact h2{font:600 clamp(2.2rem,8vw,4.6rem)/1.02 var(--serif);letter-spacing:-.02em;margin-bottom:26px}
-.contact h2 em{font-style:italic;font-weight:400;color:var(--gold)}
-footer{padding:26px 0 40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-
-.rv{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
-.rv.in{opacity:1;transform:none}
-:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.spark path.l{stroke-dashoffset:0}}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="tape" aria-hidden="true"><div class="tape-track" id="tape"></div></div>
-
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main"><div class="wrap">
+  <a class="brand" href=""><img src="img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
+  <ul>
+    <li><a href="#production">Production</a></li>
+    <li><a href="#story">Story</a></li>
+    <li><a href="#voices">References</a></li>
+    <li><a href="#work">Projects</a></li>
+    <li><a href="#writing">Writing</a></li>
+  </ul>
+  <a class="hire" href="#contact">Hire me</a>
+</div></nav>
+<div class="tape" aria-hidden="true"><div class="tape-track" id="tape"><span class="tick"><b>USERS</b><span class="up">11M+ ▲</span></span><span class="tick"><b>LATENCY</b><span class="down">−40% ▼</span></span><span class="tick"><b>TEST COVERAGE</b><span class="up">+70% ▲</span></span><span class="tick"><b>CONVERSION</b><span class="up">+48% ▲</span></span><span class="tick"><b>PAGE LOAD</b><span class="down">−20% ▼</span></span><span class="tick"><b>VISA PROCESSING</b><span class="down">−54% ▼</span></span><span class="tick"><b>MENTOR SESSIONS</b><span class="up">42 ▲</span></span><span class="tick"><b>YEARS SHIPPING</b><span class="up">6+ ▲</span></span></div></div>
+<main id="main">
 <header class="hero">
   <div class="wrap">
-    <div class="status mono"><span class="dot"></span>Open to roles in the EU · relocation</div>
-    <h1>Hadi <em>(Parsa)</em><br>Khosravani</h1>
-    <p class="lede"><strong>Senior Frontend Engineer.</strong> I build interfaces where a slow second costs someone money: real-time trading screens, design systems, and the tests and monitoring that keep them honest. Six years of React, Next.js and TypeScript.</p>
-    <div class="cta">
-      <a class="btn primary" href="mailto:hadikhosravani98@gmail.com">Get in touch →</a>
-      <a class="btn" href="https://github.com/parsakhosravani" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn" href="https://linkedin.com/in/parsakhosravani" target="_blank" rel="noopener">LinkedIn</a>
+    <div>
+      <div class="who rv in">
+        <img src="img/profile.jpg" alt="Portrait of Parsa Khosravani" width="64" height="64">
+        <div><div class="mono">Senior Frontend Engineer · Tehran</div><span class="status"><span class="dot"></span>Open to roles in the EU · relocating</span></div>
+      </div>
+      <h1>I build interfaces<br>for numbers that<br><em>never sit still.</em></h1>
+      <p class="lede">I'm <b>Hadi (Parsa) Khosravani</b>. I lead the frontend of a real-time trading platform used by <b>11M+ people</b> at Mofid Securities. For six years I've shipped React, Next.js, Vue and TypeScript across trading, travel and e-commerce, with the tests and monitoring that keep them fast.</p>
+      <div class="cta">
+        <a class="btn primary" href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>Get in touch</a>
+        <a class="btn" href="https://github.com/parsakhosravani"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.1.9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .5Z"/></svg>GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/parsakhosravani/"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6h.1c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2ZM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2ZM7.1 20.5H3.5V9h3.6v11.5ZM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0Z"/></svg>LinkedIn</a>
+      </div>
     </div>
-    <svg class="spark" viewBox="0 0 1000 90" preserveAspectRatio="none" aria-hidden="true">
-      <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#37d67a" stop-opacity=".25"/><stop offset="1" stop-color="#37d67a" stop-opacity="0"/></linearGradient></defs>
-      <path d="M0 78 L70 70 L130 74 L200 58 L260 63 L330 49 L400 55 L470 38 L540 44 L610 30 L680 35 L760 20 L830 26 L910 10 L1000 6 L1000 90 L0 90Z" fill="url(#g)"/>
-      <path class="l" d="M0 78 L70 70 L130 74 L200 58 L260 63 L330 49 L400 55 L470 38 L540 44 L610 30 L680 35 L760 20 L830 26 L910 10 L1000 6"/>
-    </svg>
+    <div class="rv in">
+      <div class="ob" id="ob" role="figure" aria-label="Live demo: a simulated order book updating in real time">
+        <div class="ob-top">
+          <div class="ob-sym"><b>DEMO/IRR</b><span class="ob-last">184.20</span><span class="ob-chg up">+0.00%</span></div>
+          <div class="ob-live"><span class="dot"></span>LIVE <button class="ob-pause" type="button" aria-pressed="false">Pause</button></div>
+        </div>
+        <canvas class="ob-chart" aria-hidden="true"></canvas>
+        <div class="ob-grid">
+          <div class="ob-side bid"><div class="ob-h"><span>Bid</span><span>Size</span></div><div class="rows"></div></div>
+          <div class="ob-side ask"><div class="ob-h"><span>Ask</span><span>Size</span></div><div class="rows"></div></div>
+        </div>
+        <div class="ob-foot"><span>spread <b data-spread>0.05</b></span><span>msgs/s <b data-ups>0</b></span><span>paint <b data-frame>0ms</b></span><span>seq <b data-seq>0</b></span></div>
+      </div>
+      <p class="ob-note">A simulated feed, rendered the way I build the real ones: batched per frame, only changed cells touch the DOM.</p>
+    </div>
   </div>
 </header>
 
 <div class="wrap">
   <div class="nums">
-    <div class="num rv"><div class="v">11M+</div><div class="k">people on the platform I lead the frontend for</div></div>
-    <div class="num rv"><div class="v down">−40%</div><div class="k">real-time data latency</div></div>
-    <div class="num rv"><div class="v up">+70%</div><div class="k">automated test coverage</div></div>
-    <div class="num rv"><div class="v up">+48%</div><div class="k">conversion, A/B tested</div></div>
+    <div class="num rv"><div class="v">11M+</div><div class="k">people on the trading platform I lead the frontend for</div></div>
+    <div class="num rv"><div class="v down">−40%</div><div class="k">real-time data latency after the streaming rework</div></div>
+    <div class="num rv"><div class="v up">+70%</div><div class="k">automated test coverage with Vitest & Cypress</div></div>
+    <div class="num rv"><div class="v up">+48%</div><div class="k">conversion from campaign features, A/B tested</div></div>
   </div>
 </div>
 
-<section id="story">
+<section class="s" id="production">
   <div class="wrap">
-    <div class="sec-h"><span class="mono">01</span><h2>The story so far</h2></div>
-
-    <article class="ch rv">
-      <div class="ch-meta"><div class="n">Chapter four</div><div class="d">Aug 2023 – now</div></div>
-      <div>
-        <h3>Mofid Securities</h3>
-        <p class="role">Senior Frontend Engineer · Tehran · Iran's largest retail brokerage</p>
-        <ul>
-          <li>Lead the frontend of a trading platform used by <b>11M+ people</b>.</li>
-          <li>Brought real-time streaming into dense data grids and live-price components, cutting latency by <b>40%</b> with sub-second updates.</li>
-          <li>Leading the incremental migration from AngularJS to <b>Next.js and TypeScript</b>, without interrupting live trading.</li>
-          <li>Built the company design system and Storybook library, now the shared reference for design and engineering.</li>
-          <li>Raised automated coverage by <b>70%</b> with Vitest and Cypress; added Sentry error tracking and profiling.</li>
-          <li>Shipped the mobile experience as a Progressive Web App with native-like performance.</li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="ch rv">
-      <div class="ch-meta"><div class="n">Chapter three</div><div class="d">2022 – 2023</div></div>
-      <div>
-        <h3>AMR Tech</h3>
-        <p class="role">Frontend Engineer · booking, payments and visa flows</p>
-        <ul>
-          <li>Cut page load time by <b>20%</b> with dependency audits, a new asset-loading strategy and dynamic imports for heavy components.</li>
-          <li>Built an AI image-processing pipeline that auto-filled visa application forms from uploaded documents: <b>54%</b> less processing time.</li>
-          <li>Wrote a Figma variables script that synced design tokens straight into the codebase.</li>
-          <li>Set up the testing baseline with Jest and Cypress across booking and payment flows.</li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="ch rv">
-      <div class="ch-meta"><div class="n">Chapter two</div><div class="d">Mar 2021 – Aug 2022</div></div>
-      <div>
-        <h3>Khanoumi</h3>
-        <p class="role">Frontend Engineer · Tehran · e-commerce, 80+ brands, 10,000+ products</p>
-        <ul>
-          <li>Migrated the storefront from ASP.NET to <b>Nuxt.js</b>, moving the team to a component-based frontend.</li>
-          <li>Designed a shared API layer on React Query that standardised data fetching and caching.</li>
-          <li>Lifted conversion by <b>48%</b> with gamification features (lucky wheel, campaign events), validated by A/B tests.</li>
-          <li>Created a unified design system of reusable components.</li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="ch rv">
-      <div class="ch-meta"><div class="n">Chapter one</div><div class="d">Aug 2020 – Feb 2021</div></div>
-      <div>
-        <h3>YecomSoft</h3>
-        <p class="role">Frontend Developer · Tehran · digital publishing</p>
-        <ul>
-          <li>Built a bilingual Persian/English audiobook store with full RTL support.</li>
-          <li>Automated EPUB conversion with JSX scripting in InDesign, halving production time.</li>
-        </ul>
-      </div>
-    </article>
+    <div class="sec-h rv"><div><span class="eyebrow">01 · In production</span><h2>This is what I <em>ship.</em></h2></div><p>Mofid Online, the brokerage's trading terminal. Order book, depth, live prices and order entry, all streaming at once, in a right-to-left interface.</p></div>
+    <div class="frame rv">
+      <div class="frame-bar"><i></i><i></i><i></i><span>mofidonline.com · trading terminal</span></div>
+      <img src="img/mofid-dashboard.jpg" alt="Screenshot of the Mofid Online trading terminal showing watchlist, order book, price chart and order entry" width="1600" height="927" loading="lazy" decoding="async">
+    </div>
+    <div class="prod-notes">
+      <div class="pn rv"><h3>Streaming without jank</h3><p>Lightstreamer feeds into AG Grid and live-price components. Updates are batched so the grid stays readable at market open.</p></div>
+      <div class="pn rv"><h3>Migrating a moving target</h3><p>AngularJS to Next.js, one screen at a time, while people keep trading. In finance, trust is the whole game.</p></div>
+      <div class="pn rv"><h3>Guardrails that scale</h3><p>A Storybook design system, Sentry profiling and a 70% jump in test coverage, so many teams can change things safely.</p></div>
+    </div>
   </div>
 </section>
 
-<section id="work">
+<section class="s" id="story">
   <div class="wrap">
-    <div class="sec-h"><span class="mono">02</span><h2>Things I build after hours</h2></div>
-    <div class="grid">
-      <a class="card rv" href="https://checkrealm.vercel.app" target="_blank" rel="noopener">
-        <span class="mono">Game · Browser</span>
-        <h3>CheckRealm</h3>
-        <p>A chess-themed strategy game that runs in the browser. Familiar pieces, a different kind of board to conquer.</p>
-        <span class="go">Play it ↗</span>
-      </a>
-      <a class="card rv" href="https://t.me/valorians_bot" target="_blank" rel="noopener">
-        <span class="mono">Game · Telegram Mini App · Next.js</span>
-        <h3>Valorians Legend</h3>
-        <p>A Norse-saga strategy game inside Telegram: raids, camps and a leaderboard, with painted art and strategy-first play.</p>
-        <span class="go">Open in Telegram ↗</span>
-      </a>
+    <div class="sec-h rv"><div><span class="eyebrow">02 · The story so far</span><h2>Four chapters,<br><em>three frameworks.</em></h2></div><p>Vue on e-commerce sale days, React at startup speed, and Angular-to-Next.js at market scale. Newest first.</p></div>
+    
+<article class="ch">
+  <div class="ch-side rv">
+    <span class="ch-num">Chapter four · now</span>
+    <div class="ch-co"><img src="img/logo-mofid.png" alt="Mofid Securities logo" width="44" height="44" loading="lazy"><h3><a href="https://www.linkedin.com/company/mofidsecurities" style="text-decoration:none">Mofid Securities</a></h3></div>
+    <span class="ch-meta">Senior Frontend Engineer<br>Tehran · Aug 2023 – present</span>
+    <span class="fw" style="color:#ff6b81">Angular → Next.js</span>
+  </div>
+  <div class="ch-body rv">
+    <h4>When the numbers never sit still</h4>
+    <p class="story">Mofid is Iran's largest retail brokerage. Live market products have a particular tension: the data is always moving, people make decisions in motion, and the interface has to stay readable while everything underneath it changes. I like that kind of problem. It's deeply technical, but the result is human: the trader either feels confident or they don't.</p>
+    <ul><li>Lead the frontend of a trading platform used by <b>11M+ people</b>.</li><li>Integrated <b>Lightstreamer</b> streaming with AG Grid and live-price components, cutting latency by <b>40%</b> with sub-second updates.</li><li>Leading the incremental migration from <b>AngularJS to Next.js and TypeScript</b>, without interrupting live trading.</li><li>Built the company design system in Storybook, now the shared reference for design and engineering.</li><li>Raised automated test coverage by <b>70%</b> with Vitest and Cypress; added Sentry error tracking and profiling.</li></ul>
+    <div class="photos two"><figure><img src="img/mofid-team.jpg" alt="The Mofid frontend team" loading="lazy" decoding="async"><figcaption>The Mofid frontend team</figcaption></figure><figure><img src="img/mofid-programmers-day.jpg" alt="Mofid Securities card for Programmers' Day" loading="lazy" decoding="async"><figcaption>Programmers' Day at Mofid</figcaption></figure></div>
+  </div>
+</article>
+<article class="ch">
+  <div class="ch-side rv">
+    <span class="ch-num">Chapter three</span>
+    <div class="ch-co"><img src="img/logo-amr.png" alt="AMR Tech logo" width="44" height="44" loading="lazy"><h3><a href="https://www.linkedin.com/company/amr-tech-co" style="text-decoration:none">AMR Tech</a></h3></div>
+    <span class="ch-meta">Frontend Engineer<br>Dubai · Aug 2022 – Jul 2023</span>
+    <span class="fw" style="color:#61dafb">React</span>
+  </div>
+  <div class="ch-body rv">
+    <h4>Startup pace, startup nights</h4>
+    <p class="story">Travel and visa flows for an OTA-style startup, where the roadmap changed fast and deadlines came hard. React was the tool I used to keep complicated experiences from feeling heavy, and the chapter taught me how to ship fast without shipping random.</p>
+    <ul><li>Cut page load time by <b>20%</b> with dependency audits, a new asset-loading strategy and dynamic imports for heavy components like charts.</li><li>Built an AI image-processing pipeline that auto-filled visa application forms from uploaded documents: <b>54% less processing time</b>.</li><li>Wrote a Figma variables script that synced design tokens straight into the codebase.</li><li>Set up the testing baseline with Jest and Cypress across booking and payment flows.</li></ul>
+    <div class="photos"><figure><img src="img/amr-talk.jpg" alt="Knowledge-sharing talk: React &amp; Next.js" loading="lazy" decoding="async"><figcaption>Knowledge-sharing talk: React &amp; Next.js</figcaption></figure><figure><img src="img/amr-meetup.jpg" alt="Team meetup" loading="lazy" decoding="async"><figcaption>Team meetup</figcaption></figure><figure><img src="img/amr-architecture.jpg" alt="Architecture notes on the whiteboard" loading="lazy" decoding="async"><figcaption>Architecture notes on the whiteboard</figcaption></figure></div>
+  </div>
+</article>
+<article class="ch">
+  <div class="ch-side rv">
+    <span class="ch-num">Chapter two</span>
+    <div class="ch-co"><img src="img/logo-khanoumi.png" alt="Khanoumi logo" width="44" height="44" loading="lazy"><h3><a href="https://www.linkedin.com/company/khanoumi" style="text-decoration:none">Khanoumi</a></h3></div>
+    <span class="ch-meta">Frontend Engineer<br>Tehran · Mar 2021 – Aug 2022</span>
+    <span class="fw" style="color:#42b883">Vue · Nuxt</span>
+  </div>
+  <div class="ch-body rv">
+    <h4>When traffic gets real</h4>
+    <p class="story">An e-commerce retailer with 80+ brands and 10,000+ products. Campaign days were something else: Black Friday-style traffic with more than 50,000 customers depending on the store not falling over at exactly the wrong moment. That's where I learned frontend isn't decoration. It's infrastructure for trust.</p>
+    <ul><li>Migrated the storefront from ASP.NET to <b>Nuxt.js</b> while the business kept selling.</li><li>Built campaign mechanics, including the lucky wheel and in-mall kiosk events, that lifted conversion by <b>48%</b> in A/B tests.</li><li>Designed a shared API layer on React Query that standardised data fetching and caching.</li><li>Created a unified design system of reusable components for faster, calmer campaign launches.</li></ul>
+    <div class="photos"><figure><img src="img/khanoumi-lucky-wheel.jpg" alt="Khanoumi lucky wheel game screen" loading="lazy" decoding="async"><figcaption>The lucky wheel campaign game</figcaption></figure><figure><img src="img/khanoumi-kiosk.jpg" alt="In-mall kiosk running the campaign" loading="lazy" decoding="async"><figcaption>In-mall kiosk running the campaign</figcaption></figure><figure><img src="img/khanoumi-mall.jpg" alt="Campaign day at the mall" loading="lazy" decoding="async"><figcaption>Campaign day at the mall</figcaption></figure></div>
+  </div>
+</article>
+<article class="ch">
+  <div class="ch-side rv">
+    <span class="ch-num">Chapter one</span>
+    <div class="ch-co"><span class="ph" aria-hidden="true">Y</span><h3>YecomSoft</h3></div>
+    <span class="ch-meta">Frontend Developer<br>Tehran · Aug 2020 – Feb 2021</span>
+    <span class="fw" style="color:#e8c46c">JavaScript</span>
+  </div>
+  <div class="ch-body rv">
+    <h4>Learning how real work feels</h4>
+    <p class="story">Where things stopped being theoretical. Suddenly the question wasn't whether the code runs, but whether people could use it and whether it helped the business. One side of the work taught me product polish; the other taught me that a good internal tool can save a team more pain than any flashy feature.</p>
+    <ul><li>Built a bilingual Persian/English audiobook store with full RTL support.</li><li>Automated EPUB conversion with JSX scripting in InDesign, <b>halving production time</b>.</li></ul>
+    
+  </div>
+</article>
+  </div>
+</section>
+
+<section class="s" id="voices">
+  <div class="wrap">
+    <div class="sec-h rv"><div><span class="eyebrow">03 · References</span><h2>What people I've<br>worked with <em>say.</em></h2></div><p>From LinkedIn recommendations by managers and teammates. Full versions are on <a href="https://www.linkedin.com/in/parsakhosravani/details/recommendations/">my profile</a>.</p></div>
+    <div class="quotes">
+      <div class="q big rv"><blockquote>Parsa works at an impressive speed, quickly delivering on tasks while maintaining high-quality standards. … He also actively seeks out technical challenges and approaches them with determination, consistently finding the best solutions.</blockquote><div class="by"><a href="https://www.linkedin.com/in/ierfaaan/">Erfan Abbasi</a><span>Senior Transformation Manager at Mofid Securities · Managed Parsa directly</span></div></div>
+      <div class="qcol">
+        <div class="q rv"><blockquote>Parsa is an exceptional front-end developer with a versatile skill set that extends far beyond his expertise in React and Vue.js.</blockquote><div class="by"><a href="https://www.linkedin.com/in/merkousha/">Massoud Beygi</a><span>Results-Driven Team Player · Managed Parsa directly</span></div></div>
+        <div class="q rv"><blockquote>Parsa is excellent at React development. He consistently creates complex and efficient React applications, delivering top-notch solutions.</blockquote><div class="by"><a href="https://www.linkedin.com/in/behzad88/">Behzad Abbasi</a><span>Frontend Developer at Damedic · Was senior to Parsa</span></div></div>
+      </div>
     </div>
+    <div class="quotes" style="margin-top:16px">
+      <div class="q rv"><blockquote>I highly recommend Parsa as a front-end developer. His exceptional teamwork, keen attention to detail, unstoppable work ethic, and adaptability make him a valuable asset to any project. With his dedication and skills, he consistently delivers outstanding results and contributes positively to the team's dynamics.</blockquote><div class="by"><a href="https://www.linkedin.com/in/mahsa-navidi-335542156/">Mahsa Navidi</a><span>Product Strategy Lead · Worked with Parsa on the same team</span></div></div>
+      <div class="mentor rv">
+        <div class="mstats">
+          <div><b>42</b><span>mentoring sessions</span></div>
+          <div><b>1,335</b><span>minutes</span></div>
+          <div><b>100%</b><span>attendance</span></div>
+        </div>
+        <div>
+          <p>I mentor frontend developers on <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a>: career paths, CVs, React and state management.</p>
+          <p class="mq">“I had the pleasure of being mentored by Parsa, an exceptional Front-End Developer with deep knowledge of React and JavaScript. His guidance greatly improved my technical skills and problem-solving approach.”<span>Hosein Yarzade, Front-End Developer, Daracard</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="work">
+  <div class="wrap">
+    <div class="sec-h rv"><div><span class="eyebrow">04 · After hours</span><h2>Things I <em>build</em><br>for fun.</h2></div><p>Games, challenges and experiments. Most of them are live, so try them.</p></div>
+    <div class="grid"><article class="card feat rv">
+  <span class="mono">Featured · TypeScript</span>
+  <h3>CheckRealm</h3>
+  <p>A chess-themed strategy game for the browser. Familiar pieces, a different kind of board to conquer.</p>
+  <div class="tags"><span>TypeScript</span><span>Game</span><span>Canvas</span></div>
+  <div class="links"><a href="https://checkrealm.vercel.app">Live demo ↗</a><a class="alt" href="https://github.com/parsakhosravani/checkrealm">Source ↗</a></div>
+</article><article class="card feat rv">
+  <span class="mono">Featured · Next.js</span>
+  <h3>Valorians Legend</h3>
+  <p>A Norse-saga strategy game inside Telegram: PvP raids, PvE camps and a leaderboard, with painted art and strategy-first play.</p>
+  <div class="tags"><span>Next.js</span><span>Telegram Mini App</span><span>Game UI</span></div>
+  <div class="links"><a href="https://t.me/valorians_bot">Play in Telegram ↗</a><a class="alt" href="https://github.com/parsakhosravani/valorians-frontend">Source ↗</a></div>
+</article><article class="card rv">
+  <span class="mono">TypeScript</span>
+  <h3>Lobox Frontend Challenge</h3>
+  <p>A polished frontend challenge implementation focused on clean component architecture and interaction details.</p>
+  <div class="tags"><span>TypeScript</span><span>Frontend</span><span>UI</span></div>
+  <div class="links"><a href="https://lobox-frontend-challenge.vercel.app">Live demo ↗</a><a class="alt" href="https://github.com/parsakhosravani/lobox-frontend-challenge">Source ↗</a></div>
+</article><article class="card rv">
+  <span class="mono">Next.js</span>
+  <h3>Next.js Prisma Postgres</h3>
+  <p>Full-stack Next.js app using Prisma as a next-generation ORM over PostgreSQL for type-safe data access.</p>
+  <div class="tags"><span>Next.js</span><span>Prisma</span><span>PostgreSQL</span></div>
+  <div class="links"><a href="https://nextjs-prisma-postgres-five.vercel.app">Live demo ↗</a><a class="alt" href="https://github.com/parsakhosravani/nextjs-prisma-postgres">Source ↗</a></div>
+</article><article class="card rv">
+  <span class="mono">TypeScript</span>
+  <h3>Mini Game</h3>
+  <p>An interactive browser mini-game built in TypeScript, exploring state, animation, and game loop logic.</p>
+  <div class="tags"><span>TypeScript</span><span>Canvas</span><span>Interaction</span></div>
+  <div class="links"><a href="https://mini-game-lac.vercel.app">Live demo ↗</a><a class="alt" href="https://github.com/parsakhosravani/mini-game">Source ↗</a></div>
+</article><article class="card rv">
+  <span class="mono">TypeScript</span>
+  <h3>Support Agent Dashboard</h3>
+  <p>A TypeScript dashboard for customer-support agents, focused on clear data presentation and workflow.</p>
+  <div class="tags"><span>TypeScript</span><span>Dashboard</span><span>React</span></div>
+  <div class="links"><a class="alt" href="https://github.com/parsakhosravani/Customer-Support-Agent-Dashboard">Source ↗</a></div>
+</article><article class="card rv">
+  <span class="mono">Design System</span>
+  <h3>Design System</h3>
+  <p>Reactx Design System — reusable UI components and design tokens for consistent product interfaces.</p>
+  <div class="tags"><span>Design System</span><span>Components</span><span>UI</span></div>
+  <div class="links"><a href="https://studio.backlight.dev/doc/1Xi2juxDnPKEmY4XdxAp">Live demo ↗</a><a class="alt" href="https://github.com/parsakhosravani/design-system">Source ↗</a></div>
+</article></div>
     <div class="oss rv">
-      <a href="https://github.com/Apolloic/loadzilla" target="_blank" rel="noopener">Apolloic/loadzilla <span>TypeScript · open source ↗</span></a>
-      <a href="https://github.com/Apolloic/react-courier" target="_blank" rel="noopener">Apolloic/react-courier <span>TypeScript · open source ↗</span></a>
-      <a href="https://github.com/reactx/reactx" target="_blank" rel="noopener">reactx/reactx <span>React components for web and native ↗</span></a>
+      <h3 class="eyebrow">Open source I've contributed to</h3>
+      <div class="oss-list">
+        <a href="https://github.com/Apolloic/loadzilla">Apolloic/loadzilla <span>TypeScript ↗</span></a>
+        <a href="https://github.com/Apolloic/react-courier">Apolloic/react-courier <span>TypeScript ↗</span></a>
+        <a href="https://github.com/reactx/reactx">reactx/reactx <span>React components for web & native ↗</span></a>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="stack">
+<section class="s" id="writing">
   <div class="wrap">
-    <div class="sec-h"><span class="mono">03</span><h2>Toolbox</h2></div>
+    <div class="sec-h rv"><div><span class="eyebrow">05 · Writing</span><h2>Notes from <em>the trenches.</em></h2></div><p>Performance, architecture and the framework trade-offs I've lived through in React, Vue and Angular.</p></div>
+    <div class="posts"><a class="post rv" href="blog/frontend-caching-playbook-browser-to-edge/"><time datetime="2026-06-10">10 Jun 2026</time><div><h3>A Frontend Caching Playbook: From the Browser to the Edge</h3><p>Caching is the highest-leverage performance work most teams never do properly. A layered model — HTTP, service worker, data, and CDN — with the headers that actually matter.</p></div><span class="rt">11 min read</span></a><a class="post rv" href="blog/ci-cd-pipeline-for-frontend-teams/"><time datetime="2026-05-05">5 May 2026</time><div><h3>Designing a CI/CD Pipeline for Frontend Teams</h3><p>A fast, trustworthy pipeline is infrastructure that pays for itself daily. How I structure CI stages, cache aggressively, and ship with preview deploys.</p></div><span class="rt">10 min read</span></a><a class="post rv" href="blog/module-federation-micro-frontends-in-practice/"><time datetime="2026-03-18">18 Mar 2026</time><div><h3>Module Federation in Practice: Micro-Frontends Without the Hype</h3><p>Micro-frontends are an organizational tool, not a default architecture. When Module Federation genuinely helps, how it works, and the failure modes to plan for.</p></div><span class="rt">12 min read</span></a><a class="post rv" href="blog/feature-sliced-design-taming-a-growing-codebase/"><time datetime="2026-02-02">2 Feb 2026</time><div><h3>Feature-Sliced Design: Taming a Growing React Codebase</h3><p>Folder structure is architecture. How layered, feature-first organization with enforced import rules keeps a large frontend from collapsing into spaghetti.</p></div><span class="rt">9 min read</span></a><a class="post rv" href="blog/stop-fighting-react-rerenders/"><time datetime="2025-11-18">18 Nov 2025</time><div><h3>Stop Fighting Re-renders: A Pragmatic Guide to React Performance</h3><p>memo, useMemo, and useCallback are not magic. Here is the mental model I use to decide when they actually help — and when they just add noise.</p></div><span class="rt">9 min read</span></a><a class="post rv" href="blog/composables-that-scale-vue-3/"><time datetime="2025-09-30">30 Sept 2025</time><div><h3>Composables That Scale: Reusable Logic in Vue 3</h3><p>The Composition API gives you freedom — and the freedom to make a mess. Here are the conventions I use to keep composables predictable as a codebase grows.</p></div><span class="rt">8 min read</span></a><a class="post rv" href="blog/going-standalone-modernizing-angular/"><time datetime="2025-07-22">22 Jul 2025</time><div><h3>Going Standalone: Modernizing Angular Without NgModules</h3><p>Standalone components changed how I structure Angular apps. A field guide to migrating incrementally without freezing feature work.</p></div><span class="rt">10 min read</span></a></div>
+  </div>
+</section>
+
+<section class="s" id="toolbox">
+  <div class="wrap">
+    <div class="sec-h rv"><div><span class="eyebrow">06 · Toolbox</span><h2>What I <em>reach for.</em></h2></div></div>
     <div class="stack">
-      <div class="rv"><h4 class="mono">Core</h4><div class="chips"><span>TypeScript</span><span>React</span><span>Next.js</span><span>Nuxt.js</span><span>Redux</span><span>Zustand</span><span>React Query</span></div></div>
-      <div class="rv"><h4 class="mono">Quality &amp; performance</h4><div class="chips"><span>Vitest</span><span>Jest</span><span>Cypress</span><span>Sentry</span><span>Profiling</span><span>PWA</span><span>Real-time streaming</span></div></div>
-      <div class="rv"><h4 class="mono">Systems &amp; delivery</h4><div class="chips"><span>Design systems</span><span>Storybook</span><span>Figma tokens</span><span>Docker</span><span>GitHub Actions</span><span>CI/CD</span></div></div>
+      <div class="rv"><h3 class="eyebrow">Languages & frameworks</h3><div class="chips"><span>TypeScript</span><span>React</span><span>Next.js</span><span>Vue / Nuxt</span><span>Angular</span></div></div>
+      <div class="rv"><h3 class="eyebrow">State & data</h3><div class="chips"><span>React Query</span><span>Redux</span><span>Zustand</span><span>Lightstreamer</span><span>AG Grid</span><span>WebSockets</span></div></div>
+      <div class="rv"><h3 class="eyebrow">Quality & performance</h3><div class="chips"><span>Vitest</span><span>Jest</span><span>Cypress</span><span>Sentry</span><span>Profiling</span><span>PWA</span></div></div>
+      <div class="rv"><h3 class="eyebrow">Systems & delivery</h3><div class="chips"><span>Storybook</span><span>Design tokens</span><span>Figma</span><span>Docker</span><span>GitHub Actions</span><span>Vercel</span></div></div>
     </div>
-    <p class="edu rv"><b>BSc Computer Engineering</b>, Islamic Azad University, Karaj (2016 – 2020). Persian native, English professional.</p>
+    <div class="edu rv"><span><b>BSc Computer Engineering</b>, Islamic Azad University, Karaj · 2016–2020</span><span><b>Languages</b>: Persian (native), English (professional)</span></div>
   </div>
 </section>
 
 <section class="contact" id="contact">
   <div class="wrap">
-    <span class="mono">04 · Next chapter</span>
-    <h2 class="rv" style="margin-top:14px">Let's write<br>the <em>next one</em> together.</h2>
+    <span class="eyebrow">07 · Next chapter</span>
+    <h2 class="rv">Let's write<br>the <em>next one</em> together.</h2>
     <p class="lede rv">I'm looking for a senior frontend role in the Netherlands or Germany and I'm ready to relocate. If your product has hard real-time, performance or design-system problems, I'd like to hear about it.</p>
+    <p class="rv" style="margin-top:30px"><a class="mail" href="mailto:parsakhosravani@gmail.com">parsakhosravani@gmail.com</a><button class="btn copy" type="button" data-copy="parsakhosravani@gmail.com">Copy</button></p>
     <div class="cta rv">
-      <a class="btn primary" href="mailto:hadikhosravani98@gmail.com">hadikhosravani98@gmail.com</a>
-      <a class="btn" href="https://linkedin.com/in/parsakhosravani" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn" href="https://github.com/parsakhosravani" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/parsakhosravani/"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6h.1c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2ZM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2ZM7.1 20.5H3.5V9h3.6v11.5ZM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0Z"/></svg>LinkedIn</a>
+      <a class="btn" href="https://github.com/parsakhosravani"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.1.9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .5Z"/></svg>GitHub</a>
+      <a class="btn" href="https://adplist.org/mentors/parsa-khosravani">ADPList</a>
+      <a class="btn" href="https://x.com/parsakhosravani">X</a>
     </div>
   </div>
 </section>
-
-<div class="wrap"><footer class="mono"><span>© <span id="y"></span> Hadi Khosravani</span><span>Tehran → Europe</span></footer></div>
-
-<script>
-const T=[["USERS","11M+","up","▲"],["LATENCY","−40%","down","▼"],["COVERAGE","+70%","up","▲"],["CONVERSION","+48%","up","▲"],["LOAD TIME","−20%","down","▼"],["FORM PROCESSING","−54%","down","▼"],["YEARS","6+","up","▲"],["STACK","REACT · NEXT · TS","up","●"]];
-const h=T.map(t=>`<span class="tick"><b>${t[0]}</b><span class="${t[2]}">${t[1]} ${t[3]}</span></span>`).join("");
-document.getElementById("tape").innerHTML=h+h+h+h;
-document.getElementById("y").textContent=new Date().getFullYear();
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
-document.querySelectorAll(".rv").forEach(el=>io.observe(el));
-</script>
-</body>
-</html>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Hadi (Parsa) Khosravani","alternateName":"Parsa Khosravani","jobTitle":"Senior Frontend Engineer","worksFor":{"@type":"Organization","name":"Mofid Securities"},"url":"https://parsakhosravani.github.io/parsa/","image":"https://parsakhosravani.github.io/parsa/img/profile.jpg","sameAs":["https://github.com/parsakhosravani","https://www.linkedin.com/in/parsakhosravani/","https://adplist.org/mentors/parsa-khosravani","https://x.com/parsakhosravani"]}</script>
+<footer><div class="wrap mono">
+  <span>© 2026 Hadi (Parsa) Khosravani</span>
+  <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
+</div></footer>
+<script src="app.js" defer></script>
+</body></html>

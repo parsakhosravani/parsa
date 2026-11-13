@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Going Standalone: Modernizing Angular Without NgModules · Parsa Khosravani</title>
+<meta name="description" content="Standalone components changed how I structure Angular apps. A field guide to migrating incrementally without freezing feature work.">
+<link rel="canonical" href="https://parsakhosravani.github.io/parsa/blog/going-standalone-modernizing-angular/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Going Standalone: Modernizing Angular Without NgModules · Parsa Khosravani">
+<meta property="og:description" content="Standalone components changed how I structure Angular apps. A field guide to migrating incrementally without freezing feature work.">
+<meta property="og:url" content="https://parsakhosravani.github.io/parsa/blog/going-standalone-modernizing-angular/">
+<meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@parsakhosravani">
+<meta name="theme-color" content="#0f120f">
+<link rel="icon" type="image/png" href="../../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main"><div class="wrap">
+  <a class="brand" href="../../"><img src="../../img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
+  <ul>
+    <li><a href="../../#production">Production</a></li>
+    <li><a href="../../#story">Story</a></li>
+    <li><a href="../../#voices">References</a></li>
+    <li><a href="../../#work">Projects</a></li>
+    <li><a href="../../#writing">Writing</a></li>
+  </ul>
+  <a class="hire" href="../../#contact">Hire me</a>
+</div></nav>
+<main id="main" class="art"><div class="wrap">
+  <a class="back" href="../../#writing">← All writing</a>
+  <h1>Going Standalone: Modernizing Angular Without NgModules</h1>
+  <div class="meta"><time datetime="2025-07-22">22 Jul 2025</time><span>10 min read</span><span>Angular · Standalone · Migration</span></div>
+  <div class="prose"><p>At Mofid I inherited a large Angular application built the classic way: a forest of NgModules, a shared module that imported everything, and a dependency graph nobody fully understood. Standalone components offered a way out — but you cannot stop the world to rewrite an app in production. Here is how we migrated incrementally.</p>
+<h2>What standalone actually removes</h2>
+<p>An NgModule did three jobs: it declared components, it imported dependencies, and it provided services. Standalone components fold the first two into the component itself. Instead of declaring a component in a module and importing that module elsewhere, the component states its own dependencies:</p>
+<pre data-lang="ts"><code>import { Component } from &quot;@angular/core&quot;;
+import { CommonModule } from &quot;@angular/common&quot;;
+import { RouterLink } from &quot;@angular/router&quot;;
+
+@Component({
+  selector: &quot;app-user-card&quot;,
+  standalone: true,
+  imports: [CommonModule, RouterLink],
+  template: `
+    &lt;a [routerLink]=&quot;['/users', user.id]&quot;&gt;{{ user.name }}&lt;/a&gt;
+  `,
+})
+export class UserCardComponent {
+  @Input({ required: true }) user!: User;
+}</code></pre>
+<p>The dependency list lives next to the thing that uses it. No more hunting through a shared module to figure out why a pipe is or is not available.</p>
+<h2>Bootstrap without a root module</h2>
+<p>The migration starts at the entry point. Replace <code>platformBrowserDynamic().bootstrapModule(AppModule)</code> with <code>bootstrapApplication</code>, and move your providers into the application config:</p>
+<pre data-lang="ts"><code>import { bootstrapApplication } from &quot;@angular/platform-browser&quot;;
+import { provideRouter } from &quot;@angular/router&quot;;
+import { provideHttpClient, withInterceptors } from &quot;@angular/common/http&quot;;
+import { AppComponent } from &quot;./app/app.component&quot;;
+import { routes } from &quot;./app/app.routes&quot;;
+import { authInterceptor } from &quot;./app/auth.interceptor&quot;;
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([authInterceptor])),
+  ],
+});</code></pre>
+<h2>Migrate leaves first</h2>
+<p>The safe order is bottom-up. Start with presentational components that have no children to worry about, flip them to <code>standalone: true</code>, and remove them from their NgModule's declarations. The Angular schematic automates a lot of this:</p>
+<pre data-lang="bash"><code>ng generate @angular/core:standalone</code></pre>
+<p>It runs in stages — convert components, prune now-empty modules, then switch bootstrap. Run one stage, commit, ship. We did this over several sprints without ever blocking feature work, because standalone and NgModule-based code interoperate cleanly. A standalone component can be imported into an old NgModule, and an NgModule's exports can be imported into a standalone component via its <code>imports</code> array.</p>
+<h2>Lazy routes get dramatically simpler</h2>
+<p>This was the payoff our team felt most. Lazy loading no longer needs a feature module — you point a route at a component or a route file directly:</p>
+<pre data-lang="ts"><code>import { Routes } from &quot;@angular/router&quot;;
+
+export const routes: Routes = [
+  {
+    path: &quot;reports&quot;,
+    loadComponent: () =&gt;
+      import(&quot;./reports/reports.component&quot;).then((m) =&gt; m.ReportsComponent),
+  },
+  {
+    path: &quot;admin&quot;,
+    loadChildren: () =&gt;
+      import(&quot;./admin/admin.routes&quot;).then((m) =&gt; m.adminRoutes),
+  },
+];</code></pre>
+<h2>What I would tell my past self</h2>
+<ul><li>Do not big-bang it. Incremental migration is fully supported and far less risky.</li><li>Delete the god <code>SharedModule</code> last, and replace it with a barrel file of standalone imports rather than another module.</li><li>Adopt the new <code>inject()</code> function while you are in there — it pairs naturally with standalone and cleans up constructor injection.</li><li>Lean on the schematic, but review every diff. It is good, not infallible, especially around providers.</li></ul>
+<blockquote>Standalone did not just remove boilerplate — it made the dependency graph legible. New engineers could finally read a component and know exactly what it needed.</blockquote>
+<p>Angular gets unfairly maligned for ceremony, and NgModules were a big part of that reputation. Standalone components are the framework shedding weight it no longer needs — and an app that migrates to them is genuinely easier to reason about.</p></div>
+  <nav class="next" aria-label="More posts">
+    <span></span>
+    <a href="../../blog/composables-that-scale-vue-3/" style="text-align:right"><span>Newer →</span><b>Composables That Scale: Reusable Logic in Vue 3</b></a>
+  </nav>
+</div></main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Going Standalone: Modernizing Angular Without NgModules","description":"Standalone components changed how I structure Angular apps. A field guide to migrating incrementally without freezing feature work.","datePublished":"2025-07-22","author":{"@type":"Person","name":"Parsa Khosravani","url":"https://parsakhosravani.github.io/parsa/"},"url":"https://parsakhosravani.github.io/parsa/blog/going-standalone-modernizing-angular/"}</script>
+<footer><div class="wrap mono">
+  <span>© 2026 Hadi (Parsa) Khosravani</span>
+  <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
+</div></footer>
+<script src="../../app.js" defer></script>
+</body></html>

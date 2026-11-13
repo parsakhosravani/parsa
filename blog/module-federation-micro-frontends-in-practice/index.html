@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module Federation in Practice: Micro-Frontends Without the Hype · Parsa Khosravani</title>
+<meta name="description" content="Micro-frontends are an organizational tool, not a default architecture. When Module Federation genuinely helps, how it works, and the failure modes to plan for.">
+<link rel="canonical" href="https://parsakhosravani.github.io/parsa/blog/module-federation-micro-frontends-in-practice/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Module Federation in Practice: Micro-Frontends Without the Hype · Parsa Khosravani">
+<meta property="og:description" content="Micro-frontends are an organizational tool, not a default architecture. When Module Federation genuinely helps, how it works, and the failure modes to plan for.">
+<meta property="og:url" content="https://parsakhosravani.github.io/parsa/blog/module-federation-micro-frontends-in-practice/">
+<meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@parsakhosravani">
+<meta name="theme-color" content="#0f120f">
+<link rel="icon" type="image/png" href="../../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main"><div class="wrap">
+  <a class="brand" href="../../"><img src="../../img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
+  <ul>
+    <li><a href="../../#production">Production</a></li>
+    <li><a href="../../#story">Story</a></li>
+    <li><a href="../../#voices">References</a></li>
+    <li><a href="../../#work">Projects</a></li>
+    <li><a href="../../#writing">Writing</a></li>
+  </ul>
+  <a class="hire" href="../../#contact">Hire me</a>
+</div></nav>
+<main id="main" class="art"><div class="wrap">
+  <a class="back" href="../../#writing">← All writing</a>
+  <h1>Module Federation in Practice: Micro-Frontends Without the Hype</h1>
+  <div class="meta"><time datetime="2026-03-18">18 Mar 2026</time><span>12 min read</span><span>Architecture · Micro-Frontends · Module Federation</span></div>
+  <div class="prose"><p>Micro-frontends get pitched as a frontend silver bullet and adopted by teams who would be better served by a well-structured monolith. So let me start with the uncomfortable part: most apps do not need them. They are an answer to an organizational problem — multiple teams needing to deploy parts of one app independently — not a technical upgrade. If you have one team, you almost certainly do not want them.</p>
+<h2>The problem they actually solve</h2>
+<p>At a certain scale, a single deployable frontend becomes a coordination bottleneck. Team A cannot ship until Team B's half-finished work is feature-flagged off; a shared release train means everyone moves at the speed of the slowest reviewer. Micro-frontends let each team own, build, and deploy a slice of the application on its own cadence. That independence is the entire value proposition — and the entire source of the complexity.</p>
+<h2>How Module Federation works</h2>
+<p>Webpack Module Federation (and its Vite equivalents) lets one build expose modules that another build loads at runtime, over the network, rather than at compile time. A 'host' application consumes modules exposed by 'remotes'. The remote builds and deploys independently; the host pulls in its latest exposed entry at runtime.</p>
+<pre data-lang="js"><code>// remote (the team that owns the cart) — webpack.config.js
+new ModuleFederationPlugin({
+  name: &quot;cart&quot;,
+  filename: &quot;remoteEntry.js&quot;,
+  exposes: {
+    &quot;./CartWidget&quot;: &quot;./src/CartWidget&quot;,
+  },
+  shared: {
+    react: { singleton: true, requiredVersion: &quot;^18.0.0&quot; },
+    &quot;react-dom&quot;: { singleton: true, requiredVersion: &quot;^18.0.0&quot; },
+  },
+});</code></pre>
+<pre data-lang="js"><code>// host (the shell app) — webpack.config.js
+new ModuleFederationPlugin({
+  name: &quot;shell&quot;,
+  remotes: {
+    cart: &quot;cart@https://cart.example.com/remoteEntry.js&quot;,
+  },
+  shared: {
+    react: { singleton: true, requiredVersion: &quot;^18.0.0&quot; },
+    &quot;react-dom&quot;: { singleton: true, requiredVersion: &quot;^18.0.0&quot; },
+  },
+});</code></pre>
+<p>The host then imports the remote module as if it were local, lazily — because it crosses a network boundary:</p>
+<pre data-lang="tsx"><code>import { lazy, Suspense } from &quot;react&quot;;
+
+// Resolved at runtime from the remote's deployed bundle.
+const CartWidget = lazy(() =&gt; import(&quot;cart/CartWidget&quot;));
+
+export function Header() {
+  return (
+    &lt;Suspense fallback={&lt;CartSkeleton /&gt;}&gt;
+      &lt;CartWidget /&gt;
+    &lt;/Suspense&gt;
+  );
+}</code></pre>
+<h2>The <code>singleton</code> flag is not optional</h2>
+<p>That <code>shared</code> config is the part teams get wrong and then spend a week debugging. React must be a singleton across the host and every remote — two copies of React in one page break hooks instantly, because hooks rely on a single shared internal dispatcher. Marking <code>react</code> and <code>react-dom</code> as <code>singleton: true</code> tells Module Federation to load exactly one copy and share it. Anything stateful that must be unique per page belongs here.</p>
+<blockquote>If you see 'Invalid hook call' or 'cannot read useState of null' in a federated app, your first suspect is two Reacts on the page. Check your shared singletons before anything else.</blockquote>
+<h2>Version skew is the real tax</h2>
+<p>Independent deployment means the host and remotes are versioned separately and can drift. The host might load a remote built against a newer shared contract, or vice versa. Plan for it deliberately:</p>
+<ul><li>Define the shared contract — the props a remote exposes — as an explicit, versioned interface, and treat changes to it as breaking.</li><li>Set <code>requiredVersion</code> on shared dependencies so incompatible versions fail fast and loudly instead of corrupting state silently.</li><li>Wrap every remote in an error boundary; a remote can fail to load entirely, and that must degrade gracefully rather than blank the page.</li></ul>
+<pre data-lang="tsx"><code>class RemoteBoundary extends React.Component&lt;
+  { fallback: React.ReactNode; children: React.ReactNode },
+  { failed: boolean }
+&gt; {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    return this.state.failed ? this.props.fallback : this.props.children;
+  }
+}</code></pre>
+<h2>Operational realities to budget for</h2>
+<p>Beyond the build config, federation changes how you operate. You now have multiple deploy pipelines, multiple things that can be down independently, and a harder debugging story because a bug might live in a remote you do not own. Observability has to span boundaries — a single trace should follow a request through host and remotes alike, or production incidents become guesswork.</p>
+<h2>So should you use it?</h2>
+<ol><li>Do you have multiple teams that are genuinely blocked by a shared release cycle? If no, stop — use a monorepo with good module boundaries instead.</li><li>Can you commit to governing shared dependencies and a versioned contract across teams? If no, the version skew will hurt.</li><li>Do you have the observability and error-handling maturity to operate several independently-deployed surfaces? If no, build that first.</li></ol>
+<p>Module Federation is a genuinely impressive piece of engineering, and when the organizational problem is real it is the right tool. Just adopt it for the autonomy it buys your teams — not because the architecture diagram looks modern. The runtime complexity is real, and you pay it every day you run the system.</p></div>
+  <nav class="next" aria-label="More posts">
+    <a href="../../blog/feature-sliced-design-taming-a-growing-codebase/"><span>← Older</span><b>Feature-Sliced Design: Taming a Growing React Codebase</b></a>
+    <a href="../../blog/ci-cd-pipeline-for-frontend-teams/" style="text-align:right"><span>Newer →</span><b>Designing a CI/CD Pipeline for Frontend Teams</b></a>
+  </nav>
+</div></main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Module Federation in Practice: Micro-Frontends Without the Hype","description":"Micro-frontends are an organizational tool, not a default architecture. When Module Federation genuinely helps, how it works, and the failure modes to plan for.","datePublished":"2026-03-18","author":{"@type":"Person","name":"Parsa Khosravani","url":"https://parsakhosravani.github.io/parsa/"},"url":"https://parsakhosravani.github.io/parsa/blog/module-federation-micro-frontends-in-practice/"}</script>
+<footer><div class="wrap mono">
+  <span>© 2026 Hadi (Parsa) Khosravani</span>
+  <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
+</div></footer>
+<script src="../../app.js" defer></script>
+</body></html>

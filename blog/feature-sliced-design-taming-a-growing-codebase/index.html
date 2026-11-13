@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feature-Sliced Design: Taming a Growing React Codebase · Parsa Khosravani</title>
+<meta name="description" content="Folder structure is architecture. How layered, feature-first organization with enforced import rules keeps a large frontend from collapsing into spaghetti.">
+<link rel="canonical" href="https://parsakhosravani.github.io/parsa/blog/feature-sliced-design-taming-a-growing-codebase/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Feature-Sliced Design: Taming a Growing React Codebase · Parsa Khosravani">
+<meta property="og:description" content="Folder structure is architecture. How layered, feature-first organization with enforced import rules keeps a large frontend from collapsing into spaghetti.">
+<meta property="og:url" content="https://parsakhosravani.github.io/parsa/blog/feature-sliced-design-taming-a-growing-codebase/">
+<meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@parsakhosravani">
+<meta name="theme-color" content="#0f120f">
+<link rel="icon" type="image/png" href="../../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main"><div class="wrap">
+  <a class="brand" href="../../"><img src="../../img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
+  <ul>
+    <li><a href="../../#production">Production</a></li>
+    <li><a href="../../#story">Story</a></li>
+    <li><a href="../../#voices">References</a></li>
+    <li><a href="../../#work">Projects</a></li>
+    <li><a href="../../#writing">Writing</a></li>
+  </ul>
+  <a class="hire" href="../../#contact">Hire me</a>
+</div></nav>
+<main id="main" class="art"><div class="wrap">
+  <a class="back" href="../../#writing">← All writing</a>
+  <h1>Feature-Sliced Design: Taming a Growing React Codebase</h1>
+  <div class="meta"><time datetime="2026-02-02">2 Feb 2026</time><span>9 min read</span><span>Architecture · React · Maintainability</span></div>
+  <div class="prose"><p>Every large frontend I have worked on eventually hits the same wall: nobody can change anything without touching everything. A 'small' edit ripples across the codebase because imports go in every direction and there is no agreed-upon notion of what depends on what. Feature-Sliced Design (FSD) is the methodology that fixed this for me — not because it is clever, but because it makes the dependency direction explicit and enforceable.</p>
+<h2>Layers with a one-way dependency rule</h2>
+<p>FSD organizes code into a fixed set of layers, ordered by responsibility. The non-negotiable rule: a module may only import from layers below it, never above or sideways at the same level (with one deliberate exception). From top to bottom:</p>
+<ul><li><code>app</code> — providers, routing, global styles; the composition root.</li><li><code>pages</code> — route-level compositions that assemble widgets and features.</li><li><code>widgets</code> — self-contained UI blocks like a header or a sidebar.</li><li><code>features</code> — user-facing interactions, e.g. 'add to cart' or 'toggle subscription'.</li><li><code>entities</code> — business domain models like <code>user</code> or <code>product</code>.</li><li><code>shared</code> — framework-agnostic utilities, UI kit, and API clients with no business logic.</li></ul>
+<p>Because dependencies only ever point downward, you can reason about impact. A change in <code>shared</code> may affect everything above it, but a change in a <code>feature</code> can never break an <code>entity</code>. That single constraint is what keeps the graph acyclic and the codebase navigable.</p>
+<h2>Slices and the public API rule</h2>
+<p>Within a layer, code is divided into slices by business domain — <code>user</code>, <code>cart</code>, <code>auth</code>. Each slice exposes a public API through an index barrel, and everything else inside it is private. Outside code imports from the slice's entry point, never reaches into its internals:</p>
+<pre data-lang="ts"><code>// entities/user/index.ts — the slice's public API
+export { UserCard } from &quot;./ui/UserCard&quot;;
+export { useUser } from &quot;./model/useUser&quot;;
+export type { User } from &quot;./model/types&quot;;
+
+// ✅ allowed: import through the public API
+import { UserCard, type User } from &quot;@/entities/user&quot;;
+
+// ❌ forbidden: reaching into private internals
+import { UserCard } from &quot;@/entities/user/ui/UserCard&quot;;</code></pre>
+<p>This is the same encapsulation principle that makes well-designed packages pleasant to use, applied inside your own app. The internal structure of a slice becomes free to refactor, because nothing outside depends on it.</p>
+<h2>Enforce it with tooling, not goodwill</h2>
+<p>Conventions that rely on people remembering them decay the moment a deadline looms. Encode the layering rules in the linter so violations fail CI. The <code>import/no-restricted-paths</code> rule or the dedicated <code>eslint-plugin-boundaries</code> make the architecture self-policing:</p>
+<pre data-lang="js"><code>// eslint — forbid upward and illegal cross-layer imports
+&quot;import/no-restricted-paths&quot;: [&quot;error&quot;, {
+  zones: [
+    // entities must never import from features or above
+    { target: &quot;./src/entities&quot;, from: &quot;./src/features&quot; },
+    { target: &quot;./src/entities&quot;, from: &quot;./src/widgets&quot; },
+    { target: &quot;./src/shared&quot;, from: &quot;./src/entities&quot; },
+  ],
+}]</code></pre>
+<blockquote>An architecture that lives only in a wiki is a suggestion. An architecture encoded in the linter is a guarantee. Make the wrong thing impossible, not merely discouraged.</blockquote>
+<h2>What it costs, and when to adopt it</h2>
+<p>FSD is not free. It adds indirection and a learning curve, and on a small app it is overkill — a few well-named folders will do. Reach for it when a codebase has crossed the threshold where multiple people step on each other, where 'where does this go?' is a recurring question, and where refactors feel dangerous because the blast radius is unknowable.</p>
+<p>You do not have to adopt the methodology by the letter — I have shipped pragmatic variants on every team. What matters is the underlying idea: explicit layers, a one-way dependency rule, slices with public APIs, and tooling that enforces all three. Get those right and a large frontend stays as easy to change at year three as it was at month one.</p></div>
+  <nav class="next" aria-label="More posts">
+    <a href="../../blog/stop-fighting-react-rerenders/"><span>← Older</span><b>Stop Fighting Re-renders: A Pragmatic Guide to React Performance</b></a>
+    <a href="../../blog/module-federation-micro-frontends-in-practice/" style="text-align:right"><span>Newer →</span><b>Module Federation in Practice: Micro-Frontends Without the Hype</b></a>
+  </nav>
+</div></main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Feature-Sliced Design: Taming a Growing React Codebase","description":"Folder structure is architecture. How layered, feature-first organization with enforced import rules keeps a large frontend from collapsing into spaghetti.","datePublished":"2026-02-02","author":{"@type":"Person","name":"Parsa Khosravani","url":"https://parsakhosravani.github.io/parsa/"},"url":"https://parsakhosravani.github.io/parsa/blog/feature-sliced-design-taming-a-growing-codebase/"}</script>
+<footer><div class="wrap mono">
+  <span>© 2026 Hadi (Parsa) Khosravani</span>
+  <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
+</div></footer>
+<script src="../../app.js" defer></script>
+</body></html>

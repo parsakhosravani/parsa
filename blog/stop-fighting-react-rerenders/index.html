@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stop Fighting Re-renders: A Pragmatic Guide to React Performance · Parsa Khosravani</title>
+<meta name="description" content="memo, useMemo, and useCallback are not magic. Here is the mental model I use to decide when they actually help — and when they just add noise.">
+<link rel="canonical" href="https://parsakhosravani.github.io/parsa/blog/stop-fighting-react-rerenders/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stop Fighting Re-renders: A Pragmatic Guide to React Performance · Parsa Khosravani">
+<meta property="og:description" content="memo, useMemo, and useCallback are not magic. Here is the mental model I use to decide when they actually help — and when they just add noise.">
+<meta property="og:url" content="https://parsakhosravani.github.io/parsa/blog/stop-fighting-react-rerenders/">
+<meta property="og:image" content="https://parsakhosravani.github.io/parsa/img/profile.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@parsakhosravani">
+<meta name="theme-color" content="#0f120f">
+<link rel="icon" type="image/png" href="../../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main"><div class="wrap">
+  <a class="brand" href="../../"><img src="../../img/profile.jpg" alt="" width="30" height="30">Parsa Khosravani</a>
+  <ul>
+    <li><a href="../../#production">Production</a></li>
+    <li><a href="../../#story">Story</a></li>
+    <li><a href="../../#voices">References</a></li>
+    <li><a href="../../#work">Projects</a></li>
+    <li><a href="../../#writing">Writing</a></li>
+  </ul>
+  <a class="hire" href="../../#contact">Hire me</a>
+</div></nav>
+<main id="main" class="art"><div class="wrap">
+  <a class="back" href="../../#writing">← All writing</a>
+  <h1>Stop Fighting Re-renders: A Pragmatic Guide to React Performance</h1>
+  <div class="meta"><time datetime="2025-11-18">18 Nov 2025</time><span>9 min read</span><span>React · Performance · Hooks</span></div>
+  <div class="prose"><p>Every React codebase I have joined eventually accumulates a layer of <code>useMemo</code> and <code>useCallback</code> calls that nobody can explain. They were added during a performance scare, they never got removed, and now they are just ambient anxiety in the diff. Let me share the model I use to keep this under control.</p>
+<h2>First, understand what a re-render actually costs</h2>
+<p>A re-render is React calling your component function again and diffing the result against the previous tree. For most components this is cheap — a few microseconds. The expensive part is almost never the render itself; it is one of three things: a genuinely heavy computation in the render path, a large subtree re-rendering when it did not need to, or an effect firing more often than it should.</p>
+<p>So before reaching for memoization, profile. The React DevTools Profiler will tell you which components render and how long they take. If a component renders in 0.3ms, wrapping it in <code>React.memo</code> buys you nothing and costs you a comparison on every render.</p>
+<h2>The reference-equality trap</h2>
+<p>The real reason re-renders bite you is reference equality. Every render creates new object and function literals, and any child that depends on those references will re-render or re-run effects. Consider this innocent-looking component:</p>
+<pre data-lang="tsx"><code>function Dashboard({ userId }: { userId: string }) {
+  // New object every render — breaks memoized children downstream.
+  const filters = { userId, status: &quot;active&quot; };
+
+  return &lt;ExpensiveList filters={filters} /&gt;;
+}</code></pre>
+<p>Even if <code>ExpensiveList</code> is wrapped in <code>React.memo</code>, it re-renders every time <code>Dashboard</code> does, because <code>filters</code> is a brand new object each time. This is where <code>useMemo</code> earns its keep:</p>
+<pre data-lang="tsx"><code>function Dashboard({ userId }: { userId: string }) {
+  const filters = useMemo(
+    () =&gt; ({ userId, status: &quot;active&quot; }),
+    [userId],
+  );
+
+  return &lt;ExpensiveList filters={filters} /&gt;;
+}</code></pre>
+<p>Now <code>filters</code> keeps a stable reference until <code>userId</code> changes. The memo is not about the cost of creating the object — that is trivial — it is about preserving identity so the memoized child can bail out.</p>
+<h2>useCallback follows the same rule</h2>
+<p><code>useCallback</code> is just <code>useMemo</code> for functions. It matters only when the function is passed to a memoized child or used as a dependency of another hook. A callback passed straight to a native <code>&lt;button onClick&gt;</code> does not need it — the DOM does not care about reference identity.</p>
+<pre data-lang="tsx"><code>// Pointless: the button re-renders with the parent anyway.
+const onClick = useCallback(() =&gt; setOpen(true), []);
+return &lt;button onClick={onClick}&gt;Open&lt;/button&gt;;
+
+// Worth it: handler flows into a memoized, expensive child.
+const onSelect = useCallback(
+  (id: string) =&gt; dispatch({ type: &quot;select&quot;, id }),
+  [dispatch],
+);
+return &lt;VirtualizedTable onSelect={onSelect} /&gt;;</code></pre>
+<h2>A decision checklist</h2>
+<ol><li>Is there a measured performance problem? If not, stop here.</li><li>Is the cost in computation or in re-rendering a subtree? Profile to find out.</li><li>If computation: memoize the value with <code>useMemo</code> and a precise dependency array.</li><li>If subtree re-renders: wrap the child in <code>React.memo</code>, then stabilize the props feeding it with <code>useMemo</code>/<code>useCallback</code>.</li><li>Re-profile. If the numbers did not move, revert the change — dead memoization is a liability, not a safety net.</li></ol>
+<h2>The structural fix you should reach for first</h2>
+<p>Before any memoization, ask whether you can move state down or lift content up. The cheapest re-render is the one that never happens. If a piece of state only affects a small part of the tree, colocate it there. If a large static subtree sits inside a frequently-updating parent, pass it as <code>children</code> so it keeps its identity:</p>
+<pre data-lang="tsx"><code>function Ticker({ children }: { children: React.ReactNode }) {
+  const [tick, setTick] = useState(0);
+  useEffect(() =&gt; {
+    const id = setInterval(() =&gt; setTick((t) =&gt; t + 1), 1000);
+    return () =&gt; clearInterval(id);
+  }, []);
+
+  return (
+    &lt;div&gt;
+      &lt;span&gt;{tick}&lt;/span&gt;
+      {children /* does NOT re-render when tick changes */}
+    &lt;/div&gt;
+  );
+}</code></pre>
+<blockquote>Memoization is a tool for preserving identity, not a substitute for good component boundaries. Get the structure right and you will reach for it far less often.</blockquote>
+<p>The React 19 compiler is starting to automate a lot of this, and that is genuinely exciting — but the mental model still matters. Understanding why a re-render happens will always beat sprinkling hooks until the profiler turns green.</p></div>
+  <nav class="next" aria-label="More posts">
+    <a href="../../blog/composables-that-scale-vue-3/"><span>← Older</span><b>Composables That Scale: Reusable Logic in Vue 3</b></a>
+    <a href="../../blog/feature-sliced-design-taming-a-growing-codebase/" style="text-align:right"><span>Newer →</span><b>Feature-Sliced Design: Taming a Growing React Codebase</b></a>
+  </nav>
+</div></main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Stop Fighting Re-renders: A Pragmatic Guide to React Performance","description":"memo, useMemo, and useCallback are not magic. Here is the mental model I use to decide when they actually help — and when they just add noise.","datePublished":"2025-11-18","author":{"@type":"Person","name":"Parsa Khosravani","url":"https://parsakhosravani.github.io/parsa/"},"url":"https://parsakhosravani.github.io/parsa/blog/stop-fighting-react-rerenders/"}</script>
+<footer><div class="wrap mono">
+  <span>© 2026 Hadi (Parsa) Khosravani</span>
+  <span><a href="https://github.com/parsakhosravani">GitHub</a> · <a href="https://www.linkedin.com/in/parsakhosravani/">LinkedIn</a> · <a href="https://adplist.org/mentors/parsa-khosravani">ADPList</a> · <a href="https://x.com/parsakhosravani">X</a></span>
+</div></footer>
+<script src="../../app.js" defer></script>
+</body></html>
