@@ -18,11 +18,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script>try{if(localStorage.getItem("lamp")==="1")document.documentElement.classList.add("night")}catch(e){}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"></div>
-<div class="bar"><a class="me" href="#top">Parsa Khosravani</a><span class="now" aria-hidden="true"></span><a class="write" href="#chapter-five">Write chapter five</a></div>
+<div class="bar"><a class="me" href="#top">Parsa Khosravani</a><span class="now" aria-hidden="true"></span><span class="bar-r"><button class="lamp" type="button" aria-pressed="false" title="Reading lamp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg><span>Lamp</span></button><a class="write" href="#chapter-five">Write chapter five</a></span></div>
 
 <nav class="rail" aria-label="Journey">
   <ol><i class="fill"></i>
@@ -39,6 +40,7 @@
     <h1>Hadi <em>(Parsa)</em><br>Khosravani</h1>
     <p class="sub">Six years of building interfaces, told in four chapters.<br>The fifth one isn't written yet.</p>
     <p class="fa-line" lang="fa" dir="rtl">داستان من، در چهار فصل</p>
+    <p class="readtime">About 5 minutes to read · best with tea</p>
     <a class="begin" href="#contents">Begin reading<span></span></a>
   </div>
 </section>
@@ -54,6 +56,7 @@
 </section>
 
 <article class="chapter" id="prologue" data-stop="Prologue"><header class="opener rv">
+  <svg class="emb" viewBox="0 0 80 80" aria-hidden="true"><path d="M20 30h40a13 13 0 0 1 13 13v5a10 10 0 0 1-18 6l-4-5H29l-4 5a10 10 0 0 1-18-6v-5a13 13 0 0 1 13-13z"/><path d="M23 38v11M17.5 43.5h11"/><circle cx="53" cy="40" r="2.2"/><circle cx="60" cy="46" r="2.2"/></svg>
   <div class="num">Prologue · <span lang="fa" dir="rtl">پیش‌گفتار</span></div>
   <h2>How I ended up here</h2>
   <div class="where"><i>Karaj</i> · 2016 – 2020 · Computer Engineering</div>
@@ -62,6 +65,7 @@
       <div class="text"><p class="rv first">I did not get into software because it looked calm. I got into it because I liked the feeling of figuring things out, especially when the problem looked bigger than me at first.</p><p class="rv">Frontend stuck with me because it has both sides of the job in one place: the clean engineering part and the human part. You can optimize a render path in the morning and still spend the afternoon thinking about what a user feels when a page hesitates for half a second.</p><p class="rv">Outside work, I have always liked games like Dota and Counter-Strike for the same reason I like engineering teams: timing matters, communication matters, and one small mistake can change the whole round. That mindset follows me into product work more than I expected.</p></div>
       <p class="lesson rv">The problems that look bigger than me are the fun ones.</p></article>
 <article class="chapter" id="yecomsoft" data-stop="Chapter I · Tehran"><header class="opener rv">
+  <svg class="emb" viewBox="0 0 80 80" aria-hidden="true"><path d="M12 22c10-4 19-4 28 2 9-6 18-6 28-2v38c-10-4-19-4-28 2-9-6-18-6-28-2z"/><path d="M40 24v38"/><path d="M19 32c5-1.5 10-1.5 14 .5M19 40c5-1.5 10-1.5 14 .5M47 32c4-2 9-2 14-.5"/></svg>
   <div class="num">Chapter one · <span lang="fa" dir="rtl">فصل ۱</span></div>
   <h2>The early days</h2>
   <div class="where"><i>Tehran</i> · 2020 – 2021 · YecomSoft</div>
@@ -70,6 +74,7 @@
       <div class="text"><p class="rv first">YecomSoft was where things stopped being theoretical for me. Suddenly the work was not just about whether code runs. It was about whether people could use it, whether teams could depend on it, and whether shipping it actually helped the business.</p><p class="rv">I worked on a bilingual audiobook store and on EPUB automation scripts, and that mix was surprisingly useful for shaping how I think. One side taught me product polish, the other taught me that a good internal tool can save a team more pain than any flashy feature.</p><p class="rv">That chapter gave me my first real taste of ownership. Not senior ownership yet, but the kind where you start seeing software as a system of tradeoffs instead of a list of tickets.</p></div>
       <p class="lesson rv">Software is a system of trade-offs, not a list of tickets.</p></article>
 <article class="chapter" id="khanoumi" data-stop="Chapter II · Tehran"><header class="opener rv">
+  <svg class="emb" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="44" r="25"/><circle cx="40" cy="44" r="4.5"/><path d="M40 19v20.5M40 48.5V69M18.3 31.5 36.1 41.8M43.9 46.2l17.8 10.3M61.7 31.5 43.9 41.8M36.1 46.2 18.3 56.5"/><path d="M35 9h10l-5 8z"/></svg>
   <div class="num">Chapter two · <span lang="fa" dir="rtl">فصل ۲</span></div>
   <h2>When traffic gets real</h2>
   <div class="where"><i>Tehran</i> · 2021 – 2022 · Khanoumi</div>
@@ -81,9 +86,34 @@
         <figure class="pol rv"><img src="img/khanoumi-kiosk.jpg" alt="the same wheel, on a kiosk in the mall" loading="lazy" decoding="async"><figcaption>the same wheel, on a kiosk in the mall</figcaption></figure>
         <figure class="pol rv wide"><img src="img/khanoumi-mall.jpg" alt="Crowd at a Khanoumi campaign event in a shopping mall" loading="lazy" decoding="async"><figcaption>campaign day. nobody was calm.</figcaption></figure>
       </div>
+      <div class="spin rv" data-wheel="[{&quot;msg&quot;:&quot;You won a 30-minute coffee chat. Claim it in chapter five.&quot;,&quot;href&quot;:&quot;#chapter-five&quot;,&quot;go&quot;:&quot;Claim it&quot;},{&quot;msg&quot;:&quot;Skip the queue: straight to the live-markets chapter.&quot;,&quot;href&quot;:&quot;#mofid&quot;,&quot;go&quot;:&quot;Take me there&quot;},{&quot;msg&quot;:&quot;You won something to read with your tea.&quot;,&quot;href&quot;:&quot;__NOTE__&quot;,&quot;go&quot;:&quot;Open a random note&quot;},{&quot;msg&quot;:&quot;You won a game. Mind the knights.&quot;,&quot;href&quot;:&quot;https://checkrealm.vercel.app&quot;,&quot;go&quot;:&quot;Play CheckRealm&quot;},{&quot;msg&quot;:&quot;You won the recipe for this page.&quot;,&quot;href&quot;:&quot;https://github.com/parsakhosravani/parsa&quot;,&quot;go&quot;:&quot;See the code&quot;},{&quot;msg&quot;:&quot;Nothing. That's e-commerce. Spin again?&quot;,&quot;href&quot;:&quot;&quot;,&quot;go&quot;:&quot;&quot;}]" data-notes="[&quot;blog/frontend-caching-playbook-browser-to-edge/&quot;,&quot;blog/ci-cd-pipeline-for-frontend-teams/&quot;,&quot;blog/module-federation-micro-frontends-in-practice/&quot;,&quot;blog/feature-sliced-design-taming-a-growing-codebase/&quot;,&quot;blog/stop-fighting-react-rerenders/&quot;,&quot;blog/composables-that-scale-vue-3/&quot;,&quot;blog/going-standalone-modernizing-angular/&quot;]">
+  <p class="spin-intro">I built one of these for a whole shopping mall.<br>Here's a smaller one, just for you.</p>
+  <div class="spin-stage">
+    <svg class="spin-ptr" viewBox="0 0 24 30" aria-hidden="true"><path d="M2 2h20L12 28z"/></svg>
+    <svg class="spin-wheel" viewBox="0 0 220 220" role="img" aria-label="A lucky wheel with six prizes">
+      <g class="spin-rot">
+        <path d="M110 110L110.00 10.00A100 100 0 0 1 196.60 60.00Z" fill="#1d6f6c" opacity="1"/><text x="138.00" y="61.50" transform="rotate(-60 138.00 61.50)">Coffee chat</text><path d="M110 110L196.60 60.00A100 100 0 0 1 196.60 160.00Z" fill="#c9821f" opacity="0.82"/><text x="166.00" y="110.00" transform="rotate(0 166.00 110.00)">Skip ahead</text><path d="M110 110L196.60 160.00A100 100 0 0 1 110.00 210.00Z" fill="#b2493b" opacity="1"/><text x="138.00" y="158.50" transform="rotate(60 138.00 158.50)">A note</text><path d="M110 110L110.00 210.00A100 100 0 0 1 23.40 160.00Z" fill="#1d6f6c" opacity="0.82"/><text x="82.00" y="158.50" transform="rotate(300 82.00 158.50)">Side quest</text><path d="M110 110L23.40 160.00A100 100 0 0 1 23.40 60.00Z" fill="#c9821f" opacity="1"/><text x="54.00" y="110.00" transform="rotate(360 54.00 110.00)">The source</text><path d="M110 110L23.40 60.00A100 100 0 0 1 110.00 10.00Z" fill="#b2493b" opacity="0.82"/><text x="82.00" y="61.50" transform="rotate(420 82.00 61.50)">Nothing!</text>
+        <circle cx="110" cy="110" r="100" fill="none" stroke="#fff" stroke-width="3"/>
+      </g>
+      <circle cx="110" cy="110" r="15" class="hub"/>
+    </svg>
+  </div>
+  <button class="pill spin-btn" type="button">Spin the wheel</button>
+  <p class="spin-out" aria-live="polite"></p>
+</div>
       <div class="text"><p class="rv">Using Vue and Nuxt there taught me that frontend is not decoration. It is infrastructure for trust. If the app is slow, broken, or confusing during the peak, nobody cares how nice the component architecture looks. They just leave.</p><p class="rv">We built campaign mechanics like lucky wheel and event experiences that clearly lifted conversion, but what stayed with me most was the responsibility of keeping the experience standing when the attention was at its highest.</p></div>
       <p class="lesson rv">On sale day, uptime feels personal.</p></article>
-<article class="chapter" id="amr" data-stop="Chapter III · Dubai"><header class="opener rv">
+<div class="transit" aria-label="Tehran to Dubai">
+  <svg viewBox="0 0 600 150" class="transit-svg" aria-hidden="true">
+    <path class="t-ghost" d="M60 112 Q300 -6 540 112"/>
+    <path class="t-line" d="M60 112 Q300 -6 540 112" pathLength="1"/>
+    <circle cx="60" cy="112" r="5" class="t-city"/><circle cx="540" cy="112" r="5" class="t-city"/>
+    <text x="60" y="140" text-anchor="middle">Tehran</text><text x="540" y="140" text-anchor="middle">Dubai</text>
+    <path class="t-plane" d="M9 0 L-6 -7 L-3 0 L-6 7 Z"/>
+  </svg>
+  <p class="t-note"><span>Summer 2022</span>About 1,200 km south, into startup life.</p>
+</div><article class="chapter" id="amr" data-stop="Chapter III · Dubai"><header class="opener rv">
+  <svg class="emb" viewBox="0 0 80 80" aria-hidden="true"><path d="M6 68h68"/><path d="M40 8l3 16v44h-6V24z"/><path d="M22 68V46h9v22M49 68V36h9v32M61 68V52h7v16M11 68V54h7v14"/></svg>
   <div class="num">Chapter three · <span lang="fa" dir="rtl">فصل ۳</span></div>
   <h2>Startup pace, startup nights</h2>
   <div class="where"><i>Dubai</i> · 2022 – 2023 · AMR Tech</div>
@@ -98,7 +128,17 @@
       <div class="text"><p class="rv">One of the most satisfying things we built was an AI image-processing flow that helped populate visa forms automatically.</p><p class="rv">I liked that project because it was not trying to impress anyone with buzzwords. It was trying to remove boring, error-prone work from people's days and give them back time.</p><p class="rv">That chapter taught me a lot about going through deadline pressure with a team. There is a specific feeling to shipping after an overnight push, checking the result the next day, and realizing you are more capable than you thought. Exhausting, yes. But unforgettable too.</p></div>
       <aside class="voice rv"><blockquote>Parsa is excellent at React development. He consistently creates complex and efficient React applications, delivering top-notch solutions. … But what really sets him apart is his fantastic teamwork.</blockquote><div class="by"><a href="https://www.linkedin.com/in/behzad88/">Behzad Abbasi</a>, Frontend Developer at Damedic · was senior to Parsa</div></aside>
       <p class="lesson rv">Ship fast. Never ship random.</p></article>
-<article class="chapter" id="mofid" data-stop="Chapter IV · Tehran"><header class="opener rv">
+<div class="transit" aria-label="Dubai to Tehran">
+  <svg viewBox="0 0 600 150" class="transit-svg" aria-hidden="true">
+    <path class="t-ghost" d="M540 112 Q300 -6 60 112"/>
+    <path class="t-line" d="M540 112 Q300 -6 60 112" pathLength="1"/>
+    <circle cx="60" cy="112" r="5" class="t-city"/><circle cx="540" cy="112" r="5" class="t-city"/>
+    <text x="60" y="140" text-anchor="middle">Tehran</text><text x="540" y="140" text-anchor="middle">Dubai</text>
+    <path class="t-plane" d="M9 0 L-6 -7 L-3 0 L-6 7 Z"/>
+  </svg>
+  <p class="t-note"><span>Summer 2023</span>Back home, with stronger opinions about deadlines.</p>
+</div><article class="chapter" id="mofid" data-stop="Chapter IV · Tehran"><header class="opener rv">
+  <svg class="emb" viewBox="0 0 80 80" aria-hidden="true"><path d="M8 68h64"/><path d="M20 18v40M40 12v40M60 26v32"/><rect x="15.5" y="28" width="9" height="20" rx="1"/><rect x="35.5" y="20" width="9" height="22" rx="1"/><rect x="55.5" y="34" width="9" height="14" rx="1"/></svg>
   <div class="num">Chapter four · <span lang="fa" dir="rtl">فصل ۴</span></div>
   <h2>When the numbers never sit still</h2>
   <div class="where"><i>Tehran</i> · 2023 – now · Mofid Securities</div>
@@ -145,7 +185,7 @@
 </section>
 
 <section class="last" id="chapter-five" data-stop="Chapter V · not written yet">
-  <header class="opener rv"><div class="num">Chapter five · <span lang="fa" dir="rtl">فصل ۵</span></div><h2>Not written yet<span class="cursor" aria-hidden="true"></span></h2><div class="where"><i>To be continued</i></div></header>
+  <header class="opener rv"><svg class="emb" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 10l15 24-15 34-15-34z"/><path d="M40 37v15"/><circle cx="40" cy="34" r="3"/><path d="M14 72c8-3 14 3 22 0s14-3 22 0"/></svg><div class="num">Chapter five · <span lang="fa" dir="rtl">فصل ۵</span></div><h2><span data-type>Not written yet</span><span class="cursor" aria-hidden="true"></span></h2><div class="where"><i>To be continued</i></div></header>
   <div class="blank rv" aria-hidden="true"><div class="lines"><i></i><i></i><i></i><i></i></div></div>
   <div class="text">
     <p class="rv first">I don't know exactly how this chapter starts yet. What I do know is the kind of work I want to keep doing: interfaces for data that never sits still, migrations that don't shake anyone's trust, and design systems that let a team breathe on its busiest day.</p>

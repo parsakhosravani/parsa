@@ -50,3 +50,89 @@
   addEventListener("resize", update);
   update();
 })();
+
+(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const root = document.documentElement;
+
+  // reading lamp
+  const lamp = document.querySelector(".lamp");
+  if (lamp) {
+    const sync = () => { const on = root.classList.contains("night"); lamp.setAttribute("aria-pressed", on); lamp.title = on ? "Back to daylight" : "Reading lamp"; };
+    sync();
+    lamp.addEventListener("click", () => {
+      root.classList.toggle("night");
+      try { localStorage.setItem("lamp", root.classList.contains("night") ? "1" : "0"); } catch {}
+      sync();
+    });
+  }
+
+  // emblems draw themselves
+  document.querySelectorAll(".emb *").forEach(el => el.setAttribute("pathLength", "1"));
+
+  // flights between chapters follow the scroll
+  const flights = [...document.querySelectorAll(".transit")].map(t => {
+    const line = t.querySelector(".t-line"), plane = t.querySelector(".t-plane");
+    return { t, line, plane, len: line.getTotalLength() };
+  });
+  let busy = false;
+  function fly() {
+    busy = false;
+    const vh = innerHeight;
+    flights.forEach(f => {
+      const r = f.t.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > vh + 200) return;
+      let p = (vh * .85 - r.top) / (vh * .6);
+      p = Math.min(1, Math.max(0, p));
+      if (reduce) p = p > 0 ? 1 : 0;
+      f.line.style.strokeDashoffset = 1 - p;
+      const d = Math.max(0.001, Math.min(f.len - 0.001, p * f.len));
+      const a = f.line.getPointAtLength(d), b = f.line.getPointAtLength(Math.min(f.len, d + 1));
+      const ang = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+      f.plane.setAttribute("transform", `translate(${a.x} ${a.y}) rotate(${ang})`);
+    });
+  }
+  if (flights.length) {
+    addEventListener("scroll", () => { if (!busy) { busy = true; requestAnimationFrame(fly); } }, { passive: true });
+    addEventListener("resize", fly); fly();
+  }
+
+  // the lucky wheel
+  document.querySelectorAll("[data-wheel]").forEach(box => {
+    const prizes = JSON.parse(box.dataset.wheel), notes = JSON.parse(box.dataset.notes);
+    const rot = box.querySelector(".spin-rot"), btn = box.querySelector(".spin-btn"), out = box.querySelector(".spin-out");
+    let angle = 0, spins = 0;
+    btn.addEventListener("click", () => {
+      btn.disabled = true; out.textContent = "";
+      // the house is generous: the first spin never lands on "Nothing!"
+      const i = spins++ === 0 ? Math.floor(Math.random() * 5) : Math.floor(Math.random() * prizes.length);
+      const target = 360 - (i * 60 + 30) + (Math.random() * 30 - 15);
+      angle += 360 * 5 + ((target - angle) % 360 + 360) % 360;
+      rot.style.transform = `rotate(${angle}deg)`;
+      setTimeout(() => {
+        const p = prizes[i];
+        const href = p.href === "__NOTE__" ? notes[Math.floor(Math.random() * notes.length)] : p.href;
+        out.innerHTML = "";
+        out.append(p.msg + " ");
+        if (href) { const a = document.createElement("a"); a.href = href; a.textContent = p.go + " →"; out.append(a); }
+        btn.disabled = false; btn.textContent = "Spin again";
+      }, reduce ? 50 : 4300);
+    });
+  });
+
+  // chapter five types itself
+  const ty = document.querySelector("[data-type]");
+  if (ty && !reduce) {
+    const full = ty.textContent;
+    ty.parentElement.setAttribute("aria-label", full);
+    ty.textContent = "";
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      let n = 0;
+      const step = () => { ty.textContent = full.slice(0, ++n); if (n < full.length) setTimeout(step, 70 + Math.random() * 90); };
+      setTimeout(step, 400);
+    }, { threshold: .6 });
+    io.observe(ty.parentElement);
+  }
+})();
